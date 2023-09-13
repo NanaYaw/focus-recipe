@@ -92,7 +92,23 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.active_storage.service = :cloud
-  
+
   config.require_master_key = true
+
+
+   config.action_mailer.default_url_options = {
+    host: """",
+    protocol: "http"
+  }
+
+  config.action_mailer.smtp_settings = {
+    authentication: "plain",
+    address: "smtp.mailgun.org",
+    port: 587,
+    domain: """",
+    user_name: """",
+    password: """",
+    enable_starttls_auto: true
+  }
 
 end
