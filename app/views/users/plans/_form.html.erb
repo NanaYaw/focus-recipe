@@ -1,0 +1,21 @@
+<%= form_with(model: plan) do |form| %>
+  <% if plan.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(plan.errors.count, "error") %> prohibited this plan from being saved:</h2>
+      <ul>
+        <% plan.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group flex flex-col gap-4">
+    <div>
+      <%= form.label :plan_name, style: "display: block" %>
+      <%= form.text_field :plan_name, class: "w-full" %>
+    </div>
+    <div class="flex justify-end">
+      <%= form.submit class: "button button--primary" %>
+    </div>
+  </div>
+<% end %>

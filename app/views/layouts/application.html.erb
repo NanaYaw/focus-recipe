@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "application/head" %>
+  </head>
+  <body>
+    <div class="flex flex-col h-full min-h-screen">
+      <%= render 'shared/navbar' %>
+      <div class="flex-grow">
+        <%= yield %>
+      </div>
+      <%= render 'application/footer' %>
+    </div>
+    <!------------  MODAL  -------------->
+    <%= turbo_frame_tag "modal" %>
+    <!------------ END MODAL --------------->
+  </body>
+</html>

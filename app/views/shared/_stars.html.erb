@@ -1,0 +1,17 @@
+<div class="star-rating">
+  <div class="flex gap-0.5 back-stars">
+    <% (1..5).map do |n| %>
+      <%= button_to update_rating_recipe_reviews_path(recipe), 
+          method: :patch, 
+          params: { review: { rating: n, id: review.id, recipe_id: recipe.id } }, 
+          class: "p-0 m-0 " do %>
+        <% unless review.stars == nil %>
+          <%= inline_svg_tag(
+          "svg/star.svg", 
+          size: '30% * 20%', 
+          class: "w-4 h-4 hover:fill-yellow-500 hover:stroke-yellow-500 #{star_rating_class(review, n)}"
+        ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>

@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "favorite_button" do %>
+  <%= button_to recipe_favorites_path(recipe), method: :post, class: "flex text-red-600 items-center" do %>
+    <i class="bi bi-heart"></i>
+  <% end %>
+<% end %>

@@ -1,0 +1,105 @@
+<div class="w-full min-h-screen bg-gray-50">
+  <div class="page-container">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5 lg:gap-6">
+      <div class="card p-4 sm:p-5 shadow-sm rounded-lg bg-white">
+        <div class="flex items-center gap-4">
+          <%= inline_svg_tag(
+          "svg/weight-scale.svg", 
+          size: '30% * 20%', 
+          class: "w-14 h-14 mask is-squircle fill-purple-700 bg-purple-200 p-2"
+        ) %>
+          <span class="text-lg font-bold leading-tight text-gray-700">Groceries</span>
+        </div>
+        <div class="w-full flex">
+          <div class="w-auto flex flex-col mt-16 mb-5 border-1 rounded-md p-2 border-gray-200 bg-slate-100">
+            <span class="text-xs text-gray-400">Post made</span>
+            <span class="font-bolder text-lg"><%= Grocery.all.count() %></span>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <%= link_to groceries_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+            Groceries <i class="bi bi-arrow-right"></i>
+          <% end %>
+          <%= link_to new_grocery_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+            Add New <i class="bi bi-plus"></i>
+          <% end %>
+        </div>
+      </div>
+      <!------------------->
+      <div class="card p-4 sm:p-5 shadow-sm rounded-lg bg-white">
+        <div class="flex items-center gap-4">
+          <%= inline_svg_tag(
+          "svg/weight-scale.svg", 
+          size: '30% * 20%', 
+          class: "w-14 h-14 mask is-squircle fill-accent bg-accent/30 p-2"
+        ) %>
+          <span class="text-lg font-bold leading-tight text-gray-700">Groceries Categories</span>
+        </div>
+        <div class="w-full flex">
+          <div class="w-auto flex flex-col mt-16 mb-5 border-1 rounded-md p-2 border-gray-200 bg-slate-100">
+            <span class="text-xs text-gray-400">Post made</span>
+            <span class="font-bolder text-lg"><%= GroceryCategory.all.count() %></span>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <%= link_to grocery_categories_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+            Grocery Category <i class="bi bi-arrow-right"></i>
+          <% end %>
+          <%= link_to new_grocery_category_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+            Add New <i class="bi bi-plus"></i>
+          <% end %>
+        </div>
+      </div>
+      <!------------------->
+      <div class="card p-4 sm:p-5  shadow-sm rounded-lg bg-white">
+        <div class="flex items-center gap-4">
+          <%= inline_svg_tag(
+          "svg/weight-scale.svg", 
+          size: '30% * 20%', 
+          class: "w-14 h-14 mask is-squircle bg-gold-50 fill-gold-400 stroke-gold-700 p-2"
+        ) %>
+          <span class="text-lg font-bold leading-tight  text-gray-700">Ingredient States</span>
+        </div>
+        <div class="w-full flex">
+          <div class="w-auto flex flex-col mt-16 mb-5 border-1 rounded-md p-2 border-gray-200 bg-slate-100">
+            <span class="text-xs text-gray-400">Post made</span>
+            <span class="font-bolder text-lg"><%= IngredientState.all.count() %></span>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <%= link_to ingredient_states_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+            Ingredient State <i class="bi bi-arrow-right"></i>
+          <% end %>
+          <%= link_to new_ingredient_state_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+            Add New <i class="bi bi-plus"></i>
+          <% end %>
+        </div>
+      </div>
+      <!------------------->
+      <div class="card p-4 sm:p-5  shadow-sm rounded-lg bg-white">
+        <div class="flex items-center gap-4">
+          <%= inline_svg_tag(
+          "svg/weight-scale.svg", 
+          size: '30% * 20%', 
+          class: "w-14 h-14 mask is-squircle fill-rose-700 bg-rose-200 hover:fill-rose-200 hover:stroke-rose-200 hover:bg-rose-700 p-2"
+        ) %>
+          <span class="text-lg font-bold leading-tight  text-gray-700">Recipes</span>
+        </div>
+        <div class="w-full flex">
+          <div class="w-auto flex flex-col mt-16 mb-5 border-1 rounded-md p-2 border-gray-200 bg-slate-100">
+            <span class="text-xs text-gray-400">Post made</span>
+            <span class="font-bolder text-lg"><%= Recipe.all.count() %></span>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <%= link_to recipes_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+            Recipes <i class="bi bi-arrow-right"></i>
+          <% end %>
+          <%= link_to new_recipe_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+            Add New <i class="bi bi-plus"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

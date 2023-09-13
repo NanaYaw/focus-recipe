@@ -1,0 +1,27 @@
+<div class="page-container">
+  <%= render "users/plans/shared/top_cta" %>
+  <div class="flex justify-between my-6">
+    <h1 class="px-3 py-2 text-3xl border-l-4 border-accent">Plans</h1>
+    <%= link_to  new_plan_path, method: :get, data: {turbo_frame: 'modal'}, class: "flex items-center gap-2 text-xl button button--secondary" do %>
+      <i class="bi bi-plus text-2xl"></i>
+      <span>New plan</span>
+    <% end %>
+  </div>
+  <div class="flex flex-col gap-4">
+    <div class="flex gap-4" id="plans">
+      <% @plans.each do |plan| %>
+        <%= link_to  plan_path(plan) do %>
+          <%= render plan %>
+        <% end %>
+      <% end %>
+    </div>
+    <% if @plans.empty? %>
+      <div class="flex w-full h-auto">
+        <%= link_to  new_plan_path, class: "flex flex-col items-center justify-center  h-44 w-48 p-4 rounded-md border border-primary hover:border-accent bg-primary/30" do %>
+          <span class="text-3xl font-bold">+</span>
+          <span class="text-2xl">New plan</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

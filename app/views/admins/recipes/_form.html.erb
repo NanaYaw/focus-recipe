@@ -1,0 +1,43 @@
+<div class="grid">
+  <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  bg-accent/20">
+    <span class="text-gray-700 text-3xl"><%= recipe.title %></span>
+    <%# <span class="shadow-xl"> %>
+    <%= button_to  edit_title_recipe_path(recipe), method: :get,  data: {turbo_frame: "modal"}, class: "flex px-3 py-2 rounded-md text-xl shadow-md gap-2 bg-accent hover:bg-primary text-gray-700" do %>
+      <i class="bi bi-pencil"></i>
+      Edit Title
+    <% end %>
+    <%# </span> %>
+  </h1>
+  <div class="p-4 border border-accent/20">
+    <!--------- START recipe_form_update ----------->
+    <%= turbo_stream_from "recipe_form_update" %>
+    <!--------- END recipe_form_update ----------->
+    <div  data-value-id="<%= recipe.id %>"  class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4" id="recipe-update-33">
+      <!----- Ingredients  ------>
+      <%= render 'admins/recipes/ingredient/recipe_sub_ingredient', recipe_ingredient: @recipe_ingredients, recipe: recipe, edit: edit %>
+      <!----- Instructions ------>
+      <%= render "admins/recipes/direction/recipe_sub_direction", id: recipe[:id], directions: recipe[:directions], edit: edit %>
+    </div>
+    <%# <div class="flex flex-col w-full bg-gray-50 p-3 my-4">
+    <label>Description</label>
+    <textarea col="50"></textarea>
+    </div> %>
+    <div class="flex flex-col w-full bg-gray-50 p-3 my-4">
+      <%# <label>Recipe Image</label> %>
+      <%# <input name="image" type="file"> %>
+      <div class="mb-3">
+        <%= image_tag recipe.image, size: "300" if recipe.image.attached? %>
+        <%= form_with(model: recipe) do |form| %>
+          <div class="flex flex-col">
+            <%= form.label :image, class: 'form-label' %>
+            <%= form.file_field :image, class: 'form-control', direct_upload: true %>
+          </div>
+          <div class="flex justify-end">
+            <%= form.submit :Update, :class => "button button--primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <!-----  ------>
+</div>

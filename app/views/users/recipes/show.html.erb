@@ -1,0 +1,105 @@
+<div class="page-container">
+  <div class="grid mb-16">
+    <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  bg-accent/20">
+      <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
+    </h1>
+    <div class="my-4">
+      <% if @recipe.image.attached? %>
+        <%= image_tag url_for(@recipe&.image.variant(resize_to_fit: [nil, 300, linear: true]))  %>
+      <% else %>
+        <span class="text-red-700"> No image attached yet!!!</span>
+      <% end %>
+    </div>
+    <%= turbo_stream_from :servings %>
+    <div class="w-full py-2 my-4 flex justify-between">
+      <span><% mealplan =  @recipe.meal_plans.find(params[:meal_plan_id]) %></span>
+      <div class="flex gap-4">
+        <div class="flex items-center gap-2">
+          <%= button_to delete_serving_meal_plan_path(params[:meal_plan_id]), 
+              params: {plan_id: mealplan[:plan_id], day: mealplan[:day], meal_type: mealplan[:meal_type]}, 
+              method: :delete, 
+              class: "bg-gray-200 text-gray-600 px-2 text-2xl rounded-md" do %>
+            <i class="bi bi-dash"></i>
+          <% end %>
+          <%= render "serving", serving: mealplan.number_of_persons_to_be_served %>
+          <%= button_to create_serving_meal_plan_path(params[:meal_plan_id]), 
+              params: {plan_id: mealplan[:plan_id], day: mealplan[:day], meal_type: mealplan[:meal_type]}, 
+              method: :patch, 
+              class: "bg-gray-200 text-gray-600 px-2 text-2xl rounded-md" do %>
+            <i class="bi bi-plus"></i>
+          <% end %>
+        </div>
+        <span class="flex items-center border-x border-gray-500 px-2">
+          <i class="bi bi-printer"></i>
+        </span>
+        <!----------------------------------------------->
+        <div class="flex items-center">
+          <%= turbo_stream_from "favorite" %>
+          <%#= turbo_frame_tag "favorite_button" %>
+          <% if @recipe.favorites[0].present? %>
+            <%= render "favorite_fill", recipe: @recipe %>
+          <% else %>
+            <%= render "favorite_empty", recipe: @recipe %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div  data-value-id="<%= @recipe.id %>"  class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" id="recipe-update-33">
+      <!----- Ingredients  ------>
+      <%= render 'users/recipes/recipe_sub_ingredient', recipe_ingredient: @recipe_ingredients, recipe: @recipe %>
+      <!----- Instructions ------>
+      <%= render "admins/recipes/direction/recipe_sub_direction", id: @recipe[:id], directions: @recipe[:directions] %>
+    </div>
+  </div>
+  <div class="sm:flex shadow-md my-8 p-4">
+    <div>
+      <h3 class="text-2xl text-gray-500">Reviews</h3>
+      <div class="flex gap-4">
+        <%= button_to "Write Review", recipe_review_path(@recipe), 
+          params: {recipe_id: @recipe.id}, 
+          method: :post,
+          data: { turbo_frame: "write-review" }, 
+          class: "button button--secondary" 
+        %>
+        <%= link_to pluralize(@recipe.reviews.size, "Review"), recipe_reviews_path(@recipe) %>
+      </div>
+      <%= turbo_frame_tag "write-review"  %>
+      <%# --------------------------------- %>
+      <ul class="flex flex-col gap-4 reviews">
+        <%= turbo_stream_from "review-list" %>
+        <% @reviews.each do |review| %>
+          <% unless review.parent_id || !review.persisted? %>
+            <li class="bg-gray-50 my-1 p-4" id="review-<%= review.id %>">
+              <%= render "shared/stars", recipe: @recipe, review: review  %>
+              <p>
+                <%= review.user.name if review.user.name.present? %>
+                <span class="text-xs text-gray-500 italic">
+                  <%= time_ago_in_words(review.created_at) %> ago
+                </span>
+              </p>
+              <p>
+                <%= review.comment %>
+              </p>
+              <%= render 'users/reviews/review', review: review.replies, recipe: @recipe if review.replies.any? %>
+              <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
+                params: {parent_id: review.id},
+                method: :post,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs"
+            %>
+              <%= turbo_frame_tag "review-#{review.id}" %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <%# --------------------------------- %>
+    </div>
+  </div>
+  <div class="flex justify-end gap-4 p-4 bg-gray-700 text-gray-200">
+    <% if admin_signed_in? %>
+      <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+    <% end %>
+    <%= link_to "Back to recipes", recipes_path %>
+    <%#= button_to "Destroy this recipe", @recipe, method: :delete %>
+  </div>
+</div>

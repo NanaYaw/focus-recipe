@@ -1,0 +1,7 @@
+<%= render TurboModalComponent.new(title: "New measurement unit") do %>
+  <%= render "form", measurement_unit: @measurement_unit %>
+  <br>
+  <div>
+    <%= link_to "Back to measurement units", measurement_units_path %>
+  </div>
+<% end %>

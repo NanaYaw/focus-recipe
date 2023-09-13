@@ -1,0 +1,21 @@
+<div  class="absolute right-4 top-2">
+  <button data-action="click->recipe#add_direction_fields" class="py-1 px-2 inline-flex justify-center items-center gap-2  rounded-md button--secondary text-gray-100">  
+    <i class="bi bi-plus-lg text-xl font-semibold"></i> Add
+  </button>
+  <div data-recipe-target="original" hidden class="w-full">
+    <div class="flex flex-col">
+      <label class="text-gray-400">Direction</label>
+      <input  name="direction[0]" value="">
+    </div>
+  </div>
+</div>
+<div hidden data-recipe-target="addDirection" class="w-full bg-gray-200 p-3 mb-4 shadow-sm relative">
+  <form id="recipe-direction">
+    <div data-recipe-target="dynamic" id="dynamic" class="flex flex-col gap-4 w-full my-2">
+    </div>
+    <input hidden name="id"  value="<%= id %>" />
+    <div class="w-full flex justify-end">
+      <button id="submit-direction-button" class="p-2 bg-black text-white" data-action="click->recipe#submitDirection" class="p-2 bg-black text-white">Submit</button>
+    </div>
+  </form>
+</div>

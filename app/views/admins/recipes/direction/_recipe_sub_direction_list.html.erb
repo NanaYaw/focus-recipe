@@ -1,0 +1,26 @@
+<ul id="recipe_<%= id %>" class="flex flex-col">
+  <% directions.each_with_index do |direction, index|  %>
+    <%= turbo_frame_tag "edit_ddirection_#{index}" do %>
+      <li data-controller="recipe"  class="w-full bg-gray-50 hover:bg-gray-200 gap-2 mb-1 py-1"  data-recipe-id-value="<%= id %>" data-recipe-ingredient-id-value="<%= index %>">
+        <div class="flex gap-2 items-center">
+          <div class="w-8 h-full text-white font-extrabold px-3 bg-gray-200"><%= index %></div>
+          <div class="w-full">
+            <div class=" w-full"><%= direction %></div>
+          </div>
+          <% if admin_signed_in? %>
+            <div class="flex gap-2 items-center">
+              <%= button_to edit_direction_recipes_url, 
+                method: :get, params: {recipe_id: id, direction_id: index}, 
+                data: {turbo_frame: "edit_direction"}, class: "bg-gray-300 hover:bg-gray-700 text-black hover:text-white px-1 rounded-md" do %>
+                <i class="bi bi-pencil"></i>
+              <% end %>
+              <button data-action="click->recipe#delete_direction" class="bg-gray-300 hover:bg-red-700 text-black hover:text-white px-1 rounded-md">
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

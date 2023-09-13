@@ -1,0 +1,14 @@
+<ul class="reviews">
+  <% @reviews.each do |review| %>
+    <li>
+      <p><%= review.user.name if review.user.name.present? %></p>
+      <p>
+        <span class="date">
+          <%= time_ago_in_words(review.created_at) %> ago
+        </span>
+      </p>
+      <%#= render "shared/stars", percent: review.stars_as_percent %>
+      <p><%= review.comment %></p>
+    </li>
+  <% end %>
+</ul>

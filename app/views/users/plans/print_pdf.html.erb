@@ -1,0 +1,128 @@
+<div  class="portrait-page">
+  <ul class="days">
+    <li>
+      Sunday
+    </li>
+    <li>
+      Monday
+    </li>
+    <li>
+      Tuesday
+    </li>
+    <li>
+      Wednesday
+    </li>
+    <li>
+      Thursday
+    </li>
+    <li>
+      Friday
+    </li>
+    <li>
+      Saturday
+    </li>
+  </ul>
+  <!----------    ---------->
+  <%# <div class="row"> %>
+  <% @meal_plans.each do |meal_type_key, meal_plan| %>
+    <div  style="width:100%;float:left">
+      <h2 class=""><%= meal_type_key.capitalize %></h2>
+      <div style="width:100%;float:left;">
+        <% meal_plan.each do | days| %>
+          <% days.each do |day_key, meal_data| %>
+            <div style="">
+              <% meal_data.each do |meal| %>
+                <% if meal.has_attribute? "id" %>
+                  <% margin = day_key == "saturday" ? "margin-right:0" : "margin-right: 13px" %>
+                  <div style="float:left;height:200px;width:13.1%;<%= margin %>;overflow:hidden;border:1px solid #f9f9f9">
+                    <% if meal.recipe&.image.attached? %>
+                      <%= image_tag meal.recipe.image.variant(resize_to_fill: [165, 120]) %>
+                    <% else %>
+                      <div style="width:100%;height:100px;background-color:#ccc"></div>
+                    <% end %>
+                    <h5 style="text-spacing:1; padding: 0 10px;font-size:10px"><%= meal.recipe.title %></h5>
+                  </div>
+                <% end %>
+              <% end %>
+              <% if meal_data.blank? %>
+                <div style="float:left;height:200px;width:13.1%;margin-right:13px;background:#f5f5f5;border:1px solid #f5f5f5">
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <%# </div> %>
+</div>
+<!-----------------------     ------------------------>
+<table>
+  <div class="portrait-page">
+    <div class="row1">
+      <% @groceries.each do |key, grocery| %>
+        <div class="grocery-list">
+          <div class="grocery-list-block">
+            <h2 class="head"><%= key %></h2>
+            <% grocery.each do |grocery_item| %>
+              <div class="p-1 bg-gray-200 my-0.5">
+                <%#=  grocery.measurement_unit %>
+                <%= grocery_item.grocery.name + " - " + grocery_item.quantity.to_s + " " + grocery_item.measurement_unit.name %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</table>
+<!-----------------------     ------------------------>
+<% @recipes.each do |meal_plan|  %>
+  <div class="portrait-page flex-wrap">
+    <div class="head-wrap">
+      <div class="recipe-image" style="" >
+        <% if meal_plan.recipe&.image.attached? %>
+          <%= image_tag meal_plan.recipe.image.variant(resize_to_fill: [600, 600]) %>
+        <% else %>
+          <%= image_tag '/images/sample.png', size: 600 %>
+          <%# <div style="float;left;width:600px;height:500px;background-color:#ccc"></div> %>
+        <% end %>
+      </div>
+      <div class="recipe-head" style="">
+        <h1><%= meal_plan.recipe.title %></h1>
+        <div class="background-color:#f1f1f1 padding:10px; border-radius: 10px">
+          <%= (meal_plan.recipe.reviews.map(&:stars).reduce(:+).to_f  / meal_plan.recipe.reviews.map(&:stars).size).round(1) %>
+          <%= meal_plan.number_of_persons_to_be_served %>
+        </div>
+      </div>
+    </div>
+    <div style="float:left;width:100%;margin-top:100px">
+      <div style="float:left;width:49%">
+        <h2>Ingredients</h2>
+        <ul class="">
+          <% meal_plan.recipe.ingredients.each do |ingredient| %>
+            <li>
+              <%= ingredient[:quantity] %>
+              <%= ingredient.measurement_unit.name %>,
+              <%= ingredient.grocery.name %> - <%= ingredient&.ingredient_state&.name %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+      <div style="float:right;width:49%">
+        <h2>Directions</h2>
+        <ul>
+          <%= meal_plan.recipe.directions.each do |direction| %>
+            <li><%= direction %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% unless meal_plan.recipe.description.nil? %>
+      <div style="margin-top:50px">
+        <h2>Description</h2>
+        <%= meal_plan.recipe.description %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

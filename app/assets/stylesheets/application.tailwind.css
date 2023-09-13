@@ -1,0 +1,78 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* @layer base {
+	:root {
+		--color-primary: 110 193 228;
+		--color-secondary: 84 89 95;
+		--color-tertiary: 122 122 122;
+		--color-accent: 97 206 112;
+	}
+} */
+
+@import 'colors.css';
+
+@import 'pagy.css';
+
+@import 'buttons.css';
+@import 'animations.css';
+@import 'layout.css';
+@import 'bootstrap-icons.css';
+
+/* Variables */
+/* :root {
+	color: var(--fill-color);
+	--text-color: rgba(000, 000, 000);
+	--fill-color: rgba(255, 195, 0);
+} */
+
+/* @layer utilities {
+	@variants responsive {
+		.masonry-3-col {
+			column-count: 3;
+			column-gap: 1em;
+		}
+		.masonry-2-col {
+			column-count: 2;
+			column-gap: 1em;
+		}
+		.break-inside {
+			break-inside: avoid;
+		}
+	}
+} */
+
+.signup_gradient_J0K:before {
+	top: 0;
+	left: 0;
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+	background-image: radial-gradient(
+			circle at top right,
+			#b2b3f1,
+			#fff 42%,
+			transparent 0
+		),
+		radial-gradient(circle at bottom left, #b2b3f1, #fff 42%, transparent 0);
+}
+
+/* .avatar > img {
+	height: 100%;
+	width: 100%;
+} */
+.mask {
+	-webkit-mask-position: center;
+	mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-size: contain;
+	mask-size: contain;
+}
+.mask.is-squircle {
+	-webkit-mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' fill='none'%3E%3Cpath fill='%23000' d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0z'/%3E%3C/svg%3E");
+	mask-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' fill='none'%3E%3Cpath fill='%23000' d='M100 0C20 0 0 20 0 100s20 100 100 100 100-20 100-100S180 0 100 0z'/%3E%3C/svg%3E");
+}

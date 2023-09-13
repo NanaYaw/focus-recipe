@@ -1,0 +1,42 @@
+<div class="page-container">
+  <div class="flex justify-between">
+    <h1 class="text-lg font-bold sm:text-3xl"><%= @plan.plan_name %></h1>
+    <div class="flex gap-2 text-xl">
+      <%# -------------------------------- %>
+      <%= link_to "Grocery list", grocery_list_plan_path(format: :pdf), class: "py-1 px-2 bg-accent rounded-md text-gray-500 hover:bg-accent/70 hover:text-gray-400" %>
+      <%# -------------------------------- %>
+      <%= button_to  edit_plan_path(@plan), method: :get, data: { turbo_frame: "modal" }, class: "py-1 px-2 bg-secondary rounded-md text-gray-200 hover:bg-secondary/90" do %>
+        <i class="bi bi-pencil"></i>
+      <% end %>
+      <%# -------------------------------- %>
+      <%= button_to @plan, method: :delete, class: "py-1 px-2 bg-red-600 rounded-md text-gray-200 hover:bg-red-700" do %>
+        <i class="bi bi-trash"></i>
+      <% end %>
+    </div>
+  </div>
+  <%= turbo_stream_from "mealplans_list" %>
+  <!-- #BEGIN Meal Plan -->
+  <% @meal_plans.each do |meal_type_key, meal_plan| %>
+    <div class="flex flex-col gap-8 mt-7" >
+      <div class="w-full">
+        <h2 class="text-2xl mb-1"><%= meal_type_key.capitalize %></h2>
+        <div class="grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
+          <% meal_plan.each do | days| %>
+            <% days.each do |day_key, meal_data| %>
+              <% meal_data.each do |meal| %>
+                <% if meal.has_attribute? "id" %>
+                  <%= render "users/plans/meal_plan", meal_type: meal_type_key, day: day_key, recipe: meal.recipe, plan_id: @plan.id, meals: meal  %>
+                <% end %>
+              <% end %>
+              <% if meal_data.blank? %>
+                <div id="meal_plan_<%= meal_type_key %>_<%= day_key %>">
+                  <%= render "users/plans/meal_plan_empty", meal_type: meal_type_key, day: day_key, plan_id: @plan.id  %>
+                </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

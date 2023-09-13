@@ -1,0 +1,140 @@
+body {
+	// background: #f1f1f1;
+}
+// .masonry-3-col {
+// 	column-count: 3;
+// 	column-gap: 1em;
+// }
+// .masonry-2-col {
+// 	column-count: 2;
+// 	column-gap: 1em;
+// }
+// .break-inside {
+// 	break-inside: avoid;
+// }
+
+// .row {
+// 	width: 100%;
+// 	display: -webkit-flex;
+// 	display: -webkit-box;
+// 	// display: -ms-flexbox;
+// 	display: flex;
+// 	// -webkit-flex-wrap: wrap;
+// 	// -ms-flex-wrap: wrap;
+// 	// flex-wrap: wrap;
+// 	-webkit-box-pack: center; /* wkhtmltopdf uses this one */
+// 	justify-content: center;
+// }
+
+// .row > div {
+// 	-webkit-box-flex: 1;
+// 	-webkit-flex: 1;
+// 	flex: 1 0 auto;
+// 	float: left;
+// 	// clear: both;
+// }
+
+// .row > div:last-child {
+// 	margin-right: 0;
+// }
+.portrait-page {
+	width: 100%;
+	float: left;
+	min-height: 1832px;
+	// background-color: #f1f1f1;
+	margin: 5px 0;
+}
+
+.row {
+	display: -webkit-box; /* wkhtmltopdf uses this one */
+	display: flex;
+	-webkit-box-pack: center; /* wkhtmltopdf uses this one */
+	justify-content: center;
+}
+
+.row > div {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+}
+
+.row > div:last-child {
+	margin-right: 0;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	-webkit-box-wrap: wrap;
+}
+
+.grocery-list {
+	width: 30%;
+	float: left;
+}
+.grocery-list-block {
+	margin: 0 10px;
+}
+.head {
+	background-color: chocolate;
+	padding: 1px 6px;
+	color: #f1f1f1;
+}
+
+.m {
+	margin: 5px;
+}
+.mx {
+	margin: 5px;
+}
+.my {
+	margin: 5px;
+}
+
+h1 {
+	font-size: 54px;
+	font-weight: bold;
+}
+
+.head-wrap {
+	position: relative;
+}
+
+.recipe-head {
+	position: absolute;
+	width: 700px;
+	min-height: 200px;
+	top: 50px;
+	left: 500px;
+	background-color: #f9f9f9;
+	padding: 5px 30px;
+}
+
+.recipe-image {
+	width: 600px;
+	padding-right: 10px;
+}
+
+ul > li {
+	margin: 10px 0;
+}
+
+ul.days {
+	width: 100%;
+	// background-color: red;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+ul.days > li {
+	float: left;
+	width: 11.8%;
+	min-height: 20px;
+	padding: 10px 10px;
+	background-color: #000;
+	color: #fff;
+	list-style-type: none;
+	margin-right: 14px;
+	font-size: 24px;
+	font-weight: bolder;
+}

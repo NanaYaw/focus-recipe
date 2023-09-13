@@ -1,0 +1,19 @@
+<%= form_with(model: recipe, url: url) do |form| %>
+  <% if recipe.errors.any? %>
+    <div class="text-red-700">
+      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+      <ul>
+        <% recipe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="w-full flex flex-col">
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+  <div class="flex justify-end mt-4">
+    <%= form.submit "Add Recipe", class: "px-2 py-1 button button--primary rounded-full text-white" %>
+  </div>
+<% end %>

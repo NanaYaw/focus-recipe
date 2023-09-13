@@ -1,0 +1,30 @@
+<div class="page-container">
+  <div class="grid mb-16">
+    <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  bg-accent/20">
+      <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
+    </h1>
+    <div class="">
+      <% if @recipe.image.attached? %>
+        <%= image_tag url_for(@recipe.image)  %>
+      <% else %>
+        <span class="text-red-700"> No image attached yet!!!</span>
+      <% end %>
+    </div>
+    <!--------- START recipe_form_update ----------->
+    <%= turbo_stream_from "recipe_form_update" %>
+    <!--------- END recipe_form_update ----------->
+    <div  data-value-id="<%= @recipe.id %>"  class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" id="recipe-update-33">
+      <!----- Ingredients  ------>
+      <%= render 'admins/recipes/ingredient/recipe_sub_ingredient', recipe_ingredient: @recipe_ingredients, recipe: @recipe %>
+      <!----- Instructions ------>
+      <%= render "admins/recipes/direction/recipe_sub_direction", id: @recipe[:id], directions: @recipe[:directions] %>
+    </div>
+  </div>
+  <div class="flex justify-end gap-4 p-4 bg-gray-700 text-gray-200">
+    <% if admin_signed_in? %>
+      <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+      <%= link_to "Back to recipes", recipes_path %>
+      <%#= button_to "Destroy this recipe", @recipe, method: :delete %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div id="recipe"  data-controller="recipe" data-recipe-ingredient-id-value="<%= ingredient.id %>" data-recipe-id-value="<%= ingredient.recipe_id %>" class="flex flex-col gap-4">
+  <form id="ingredient" class="flex flex-col gap-4">
+    <div class="flex flex-col">
+      <label class="text-gray-500">Quantity</label>
+      <input name="quantity" type="number" step=".1" value="<%= ingredient[:quantity] %>" placeholder="0.5" />
+    </div>
+    <div  class="w-full  flex flex-col">
+      <label class="text-gray-500">Measurement Uni</label>
+      <select value="<%= ingredient[:measurement_unit_id] %>" name="measurement_unit_id">
+        <% MeasurementUnit.all.map do |result| %>
+          <option value="<%= result.id %>" <%= "selected" if ingredient[:measurement_unit_id] == result.id %> ><%= result.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="w-full flex flex-col">
+      <label class="text-gray-500">Ingredient State</label>
+      <select value="<%= ingredient[:ingredient_state_id] %>" name="ingredient_state_id">
+        <% IngredientState.all.map do |result| %>
+          <option value="<%= result.id %>" <%= "selected" if ingredient[:ingredient_state_id] == result.id %> ><%= result.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="w-full  flex flex-col">
+      <label class="text-gray-500">Grocery</label>
+      <select value="<%= ingredient[:grocery_id] %>" name="grocery_id">
+        <% Grocery.all.map do |result| %>
+          <option value="<%= result.id %>"  <%= "selected" if ingredient[:grocery_id] == result.id %> ><%= result.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <input hidden name="id"  value="<%= ingredient.id %>" />
+    <input hidden name="recipe_id"  value="<%= ingredient.recipe_id %>" />
+    <div class="flex justify-end">
+      <button class="button--primary p-2"   value="submit" data-action="click->recipe#update_ingredient">Update Ingredient</button>
+    </div>
+  </form>
+</div>

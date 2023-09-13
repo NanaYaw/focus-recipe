@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  quantity: 9.99
+  grocery: one
+  ingredient_state: one
+  measurement_unit: one
+
+two:
+  quantity: 9.99
+  grocery: two
+  ingredient_state: two
+  measurement_unit: two

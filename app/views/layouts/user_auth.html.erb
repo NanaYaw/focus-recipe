@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= render "application/head" %>
+  </head>
+  <body>
+    <div class="sm:flex h-full min-h-screen">
+      <div class="w-4/12 bg-accent" style="background:<%=  %>">
+        lorem ipsum dolor sit amet, consectet
+      </div>
+      <div class="w-8/12 flex items-center justify-center">
+        <div>
+          <%= yield %>
+        </div>
+      </div>
+    </div>
+    <!------------  MODAL  -------------->
+    <%= turbo_frame_tag "modal" %>
+    <!------------ END MODAL --------------->
+  </body>
+</html>

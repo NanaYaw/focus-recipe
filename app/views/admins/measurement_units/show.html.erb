@@ -1,0 +1,9 @@
+<div class="max-w-5xl mx-auto h-full py-16">
+  <p style="color: green"><%= notice %></p>
+  <%=  @measurement_unit.name %>
+  <div class="flex justify-end gap-4">
+    <%= link_to "Edit this measurement unit", edit_measurement_unit_path(@measurement_unit) %> |
+    <%= link_to "Back to measurement units", measurement_units_path %>
+    <%= button_to "Destroy this measurement unit", @measurement_unit, method: :delete %>
+  </div>
+</div>

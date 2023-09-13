@@ -1,0 +1,22 @@
+<% review.each do | review | %>
+  <ul>
+    <li  class="bg-accent-50 border-l-4 border-accent p-4">
+      <p><%= review.user.name if review.user.name.present? %></p>
+      <p>
+        <span class="date">
+          <%= time_ago_in_words(review.created_at) %> ago
+        </span>
+      </p>
+      <%#= render "shared/stars", percent: review.stars_as_percent %>
+      <p><%= review.comment %></p>
+      <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
+                params: {parent_id: review.id},
+                method: :post,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs"
+            %>
+      <%= turbo_frame_tag "review-#{review.id}" %>
+      <%= render 'users/reviews/review', review: review.replies, recipe: @recipe if review.replies.any? %>
+    </li>
+  </ul>
+<% end %>

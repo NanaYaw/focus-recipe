@@ -1,0 +1,7 @@
+<%= @collection.each do |resource| %>
+  <%= rows_component.with_row do |rc| %>
+    <%= rc.with_body do %>
+      <%= render(partial: 'row', locals: { resource: resource }) %>
+    <% end %>
+  <% end %>
+<% end %>

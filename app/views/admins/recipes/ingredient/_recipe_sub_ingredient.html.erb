@@ -1,0 +1,20 @@
+<div class="flex flex-col gap-4  shadow-sm border border-gray-100 pt-2 px-4 pb-4 relative">
+  <h3 class=" text-xl text-black font-bold">Ingredients</h3>
+  <% if defined? edit%>
+    <div class="flex flex-row justify-between absolute top-2 right-3">
+      <%= link_to new_ingredient_recipe_path, 
+      method: :get,  data: {turbo_frame: "modal", "hs-overlay": "#hs-vertically-centered-modal"}, 
+      class: "py-1 px-2 inline-flex justify-center items-center gap-2  rounded-md button--secondary text-gray-100" do  %>
+        <i class="bi bi-plus-lg text-xl font-semibold"></i> Add
+      <% end %>
+    </div>
+  <% end %>
+  <div id="recipe-ingredients--list">
+    <ul id="recipe_<%= recipe.id %>" class="flex flex-col">
+      <% recipe_ingredient.each_with_index do |ingredient, index| %>
+        <%= render "admins/recipes/ingredient/recipe_sub_ingredient_list", ingredient: ingredient, index: index + 1 %>
+      <% end %>
+    </ul>
+  </div>
+  <%#= turbo_frame_tag "modal" %>
+</div>

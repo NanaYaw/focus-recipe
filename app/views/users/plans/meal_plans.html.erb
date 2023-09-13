@@ -1,0 +1,23 @@
+<%= render Modal::BigModalComponent.new(title: "Recipes") do %>
+  <div class="grid grid-cols-2 gap-6 mt-4 overflow-y-auto">
+    <% @meal_plans.each_with_index do |recipe, index| %>
+      <div  class="flex gap-4 transition duration-300 rounded-md cursor-pointer border bg-white dark:text-gray-300 border-gray-200 dark:border-white/[.05] hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-white/[.05] overflow-hidden"  id="meal_plan<%= dom_id recipe %>"
+            data-controller="mealplan" 
+            data-mealplan-plan-value="<%= @params[:plan_id] %>" 
+            data-mealplan-mealtype-value="<%= @params[:meal_type] %>" 
+            data-mealplan-meal-value="<%= recipe.id %>"
+            data-mealplan-day-value="<%= @params[:day] %>"
+            data-action="click->mealplan#update"
+        >
+        <% if recipe&.image.attached? %>
+          <%= image_tag recipe&.image, size: 200%>
+        <% else %>
+          <%= image_tag '', size: 200%>
+        <% end %>
+        <h1 class="text-lg text-gray-600">
+          <%= recipe.title %>
+        </h1>
+      </div>
+    <% end %>
+  </div>
+<% end %>

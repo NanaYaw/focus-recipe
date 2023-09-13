@@ -1,0 +1,8 @@
+@layer base {
+	:root {
+		--color-primary: 110 193 228;
+		--color-secondary: 84 89 95;
+		--color-tertiary: 122 122 122;
+		--color-accent: 97 206 112;
+	}
+}
