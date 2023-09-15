@@ -1,22 +1,50 @@
 <%= render Modal::BigModalComponent.new(title: "Recipes") do %>
-  <div class="grid grid-cols-2 gap-6 mt-4 overflow-y-auto">
-    <% @meal_plans.each_with_index do |recipe, index| %>
-      <div  class="flex gap-4 transition duration-300 rounded-md cursor-pointer border bg-white dark:text-gray-300 border-gray-200 dark:border-white/[.05] hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-white/[.05] overflow-hidden"  id="meal_plan<%= dom_id recipe %>"
+  <div class="grid grid-cols-3 gap-4 mt-4 overflow-y-auto">
+    <% if @meal_plans.count > 0 %>
+      <% @meal_plans.each_with_index do |recipe, index| %>
+        <div  class="flex flex-col transition duration-300 rounded-md cursor-pointer border bg-white dark:text-gray-300 border-gray-200 dark:border-white/[.05] hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-white/[.05] overflow-hidden"  id="meal_plan<%= dom_id recipe %>"
             data-controller="mealplan" 
             data-mealplan-plan-value="<%= @params[:plan_id] %>" 
             data-mealplan-mealtype-value="<%= @params[:meal_type] %>" 
             data-mealplan-meal-value="<%= recipe.id %>"
             data-mealplan-day-value="<%= @params[:day] %>"
             data-action="click->mealplan#update"
-        >
-        <% if recipe&.image.attached? %>
-          <%= image_tag recipe&.image, size: 200%>
-        <% else %>
-          <%= image_tag '', size: 200%>
-        <% end %>
-        <h1 class="text-lg text-gray-600">
-          <%= recipe.title %>
-        </h1>
+          >
+          <% if recipe&.image.attached? %>
+            <%= image_tag recipe&.image, size: "100%" %>
+          <% else %>
+            <%= image_tag '', size: 200%>
+          <% end %>
+          <div class="p-2">
+            <div class="flex justify-start gap-4">
+              <span class="flex gap-2">
+                <%# <span class="flex items-center w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1 -z-0">
+                  <i class="bi bi-star"></i>
+                </span> %>
+                <%= inline_svg_tag(
+                    "svg/star-half-stroke.svg", 
+                    size: '10% * 10%', 
+                    class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-0.5"
+                  ) %>
+                <%= recipe.average_stars %>
+              </span>
+              <span class="flex gap-2">
+                <%= inline_svg_tag(
+                    "svg/fork-and-knife.svg", 
+                    size: '10% * 10%', 
+                    class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
+                  ) %>
+                <%= recipe.cooking %></span>
+            </div>
+            <h1 class="text-lg text-gray-600 dark:text-gray-300 m-0 p-0">
+              <%= recipe.title %>
+            </h1>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="w-full">
+        <h2 class="text-2xl text-gray-300 dark:text-white">No recipes uploaded yet</h2>
       </div>
     <% end %>
   </div>

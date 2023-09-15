@@ -1,13 +1,22 @@
 class Users::PlansController < ApplicationController
   before_action :set_plan, only: %i[ show edit update destroy ]
+  before_action :ensure_frame_response, only: [ :new, :edit ]
 
   # GET /plans or /plans.json
   def index
-    @plans = Plan.all
+    if current_user.present?
+      plans = Plan.where(user_id: current_user.id)
+    else
+      plans = Plan.all
+    end
+
+    @colors = [{from: "blue", to: "purple"}, {from: 'gray', to: 'yellow'}, {from: 'red', to: 'green'}]
+
+    @plans = plans
   end
   
   def meal_plans
-    @meal_plans = Recipe.all
+    @meal_plans = Recipe.includes(:favorites).all
     param = {}
     param[:plan_id] = params[:plan_id]
     param[:meal_type] = params[:meal_type]
@@ -17,7 +26,6 @@ class Users::PlansController < ApplicationController
 
   # GET /plans/1 or /plans/1.json
   def show
-
     meal_types = MealType::MEAL_TYPE
     days = DaysOfTheWeek::DAYS_OF_THE_WEEK
 
@@ -54,10 +62,11 @@ class Users::PlansController < ApplicationController
     respond_to do |format|
       if @plan.save
         
-        # if meal_type
-          format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }
-          format.json { render :show, status: :created, location: @plan }
-        # end
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.prepend('plans', partial: 'users/plans/plan', locals: {plan: @plan})
+        }
+        format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }
+        format.json { render :show, status: :created, location: @plan }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
@@ -183,5 +192,10 @@ class Users::PlansController < ApplicationController
     # Only allow a list of trusted parameters through.
     def plan_params
       params.require(:plan).permit(:plan_name)
+    end
+
+    def ensure_frame_response
+      return unless Rails.env.development?
+      redirect_to root_path unless turbo_frame_request?
     end
 end

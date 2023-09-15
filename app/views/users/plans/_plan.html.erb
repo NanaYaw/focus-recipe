@@ -1,10 +1,15 @@
-<div class="p-4 border border-accent/70" id="<%= dom_id plan %>">
-  <p>
-    <strong>Plan name:</strong>
-    <%= plan.plan_name %>
-  </p>
-  <p>
-    <strong>User:</strong>
-    <%= plan.user_id %>
-  </p>
+<div class="w-full p-4">
+  <%= link_to  plan_path(plan), id: "#{dom_id plan}" do %>
+    <div class="flex flex-col">
+      <strong>Plan name:</strong>
+      <%= plan.plan_name %>
+    </div>
+  <% end %>
+  <div class="flex justify-end">
+    <button class="flex items-center justify-center btn h-7 w-7 rounded-full bg-slate-150 p-0 font-medium bg-gray-300 text-slate-800 hover:bg-slate-200 hover:shadow-lg hover:shadow-slate-200/50 focus:bg-slate-200 focus:shadow-lg focus:shadow-slate-200/50 active:bg-slate-200/80 dark:bg-navy-500 dark:text-navy-50 dark:hover:bg-navy-450 dark:hover:shadow-navy-450/50 dark:focus:bg-navy-450 dark:focus:shadow-navy-450/50 dark:active:bg-navy-450/90">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-45" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+      </svg>
+    </button>
+  </div>
 </div>

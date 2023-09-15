@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   resources :reviews
-  # devise_for :users
-  # devise_for :admins
 
   devise_for :users, path: 'users', controllers: {
     sessions: 'users/sessions',
@@ -58,7 +56,6 @@ Rails.application.routes.draw do
       end
       
       scope module: :users do
-        
         resources :meal_plans do
           patch 'number-of-persons-to-be-served' => "meal_plans#update_serving", as: :create_serving, on: :member
           delete 'number-of-persons-to-be-served' => 'meal_plans#delete_serving', as: :delete_serving, on: :member
@@ -86,7 +83,6 @@ Rails.application.routes.draw do
             patch "update_rating", on: :collection
           end
         end
-
       end
 
     end

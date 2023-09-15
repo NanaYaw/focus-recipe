@@ -1,3 +1,11 @@
-<h1> Ama's Home</h1>
-<%#= @lunch %>
-<%= @cc %>
+<div class="page-container">
+  <div class="looper">
+    <div class="looper__innerList gap-4" data-animate='true'>
+      <% @recipes.each do |recipe| %>
+        <div class="looper__listInstance p-4 border border-gray-300" style=" animation-duration:1s;animation-direction:right;">
+          <%= recipe.title %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

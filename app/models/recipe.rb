@@ -29,4 +29,7 @@ class Recipe < ApplicationRecord
     def average_stars
        reviews.average(:stars) || 0.0
     end
+    def cooking
+       meal_plans.sum(:number_of_persons_to_be_served) || 0
+    end
 end
