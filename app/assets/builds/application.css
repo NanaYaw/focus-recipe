@@ -1692,10 +1692,6 @@ h5{
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.to-purple-600{
-  --tw-gradient-to: #9333ea var(--tw-gradient-to-position);
-}
-
 .to-yellow-600{
   --tw-gradient-to: #ca8a04 var(--tw-gradient-to-position);
 }
