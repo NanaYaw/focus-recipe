@@ -50,7 +50,7 @@ gem "aws-sdk-s3", "~> 1.132"
 gem "image_processing", "~> 1.12"
 gem "wicked_pdf", "~> 2.7"
 gem "wkhtmltopdf-binary", "~> 0.12.6"
-gem "sassc-rails", "~> 2.1"
+# gem "sassc-rails", "~> 2.1"
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'
