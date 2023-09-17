@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  host: 127.0.0.1
   database: 'testoftests'
   username: deploy
   password: ultimate@1
