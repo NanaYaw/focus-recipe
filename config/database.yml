@@ -82,5 +82,6 @@ test:
 production:
   <<: *default
   database: 'testoftests'_app_production
-  username: 'testoftests'_app
-  password: <%= ENV["FOCUSRECIPES_APP_DATABASE_PASSWORD"] %>
+  username: deploy
+  password: ultimate@1
+  # password: <%= ENV["FOCUSRECIPES_APP_DATABASE_PASSWORD"] %>
