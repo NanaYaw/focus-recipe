@@ -81,8 +81,7 @@ test:
 #
 production:
   <<: *default
-  host: '127.0.0.1'
   database: 'testoftests'
   username: deploy
-  password: 'ultimate@1'
+  password: ultimate@1
   # password: <%= ENV["FOCUSRECIPES_APP_DATABASE_PASSWORD"] %>
