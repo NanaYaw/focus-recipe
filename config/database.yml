@@ -83,5 +83,5 @@ production:
   <<: *default
   database: 'testoftests'
   username: deploy
-  password: <%= ENV["FOCUSRECIPES_APP_DATABASE_PASSWORD"] %>
+  password: ultimate@1
   # password: <%= ENV["FOCUSRECIPES_APP_DATABASE_PASSWORD"] %>
