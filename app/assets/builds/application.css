@@ -823,10 +823,6 @@ h5{
   isolation: isolate;
 }
 
-.-z-0{
-  z-index: 0;
-}
-
 .z-10{
   z-index: 10;
 }
@@ -841,6 +837,10 @@ h5{
 
 .z-\[60\]{
   z-index: 60;
+}
+
+.-z-0{
+  z-index: 0;
 }
 
 .col-span-1{
@@ -1142,6 +1142,10 @@ h5{
   width: 0.875rem;
 }
 
+.w-3\/12{
+  width: 25%;
+}
+
 .w-4{
   width: 1rem;
 }
@@ -1170,6 +1174,10 @@ h5{
   width: 66.666667%;
 }
 
+.w-9\/12{
+  width: 75%;
+}
+
 .w-\[2\.375rem\]{
   width: 2.375rem;
 }
@@ -1184,6 +1192,10 @@ h5{
 
 .w-px{
   width: 1px;
+}
+
+.w-1\/6{
+  width: 16.666667%;
 }
 
 .min-w-full{
@@ -1204,6 +1216,10 @@ h5{
 
 .max-w-7xl{
   max-width: 80rem;
+}
+
+.max-w-\[33\%\]{
+  max-width: 33%;
 }
 
 .max-w-\[85rem\]{
@@ -1313,6 +1329,10 @@ h5{
 
 .gap-1\.5{
   gap: 0.375rem;
+}
+
+.gap-10{
+  gap: 2.5rem;
 }
 
 .gap-2{
@@ -1505,6 +1525,11 @@ h5{
 .border-gray-300{
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+
+.border-gray-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(156 163 175 / var(--tw-border-opacity));
 }
 
 .border-gray-500{
@@ -3582,6 +3607,10 @@ h5{
 
   .sm\:flex-row{
     flex-direction: row;
+  }
+
+  .sm\:flex-wrap{
+    flex-wrap: wrap;
   }
 
   .sm\:flex-nowrap{
