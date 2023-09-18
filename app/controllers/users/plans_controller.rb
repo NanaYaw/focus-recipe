@@ -34,7 +34,7 @@ class Users::PlansController < ApplicationController
     meal_types.each do |meal_type|
       days.each do |day|
           meal_plans << { meal_type => { 
-              day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :recipe_id, :day, :meal_type, :recipe_id).includes(:recipe)
+              day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, recipe: [:image_attachment])
             }
           }
       end

@@ -1102,6 +1102,10 @@ h5{
   height: 100vh;
 }
 
+.max-h-\[100vh\]{
+  max-height: 100vh;
+}
+
 .max-h-\[90vh\]{
   max-height: 90vh;
 }
@@ -1853,6 +1857,10 @@ h5{
 
 .pt-0{
   padding-top: 0px;
+}
+
+.pt-16{
+  padding-top: 4rem;
 }
 
 .pt-2{
