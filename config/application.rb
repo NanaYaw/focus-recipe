@@ -13,6 +13,7 @@ module AmaboadiwaaApp
     config.load_defaults 7.0
 
     config.view_component.show_previews = true
+    config.serve_static_assets = true
 
     # Configuration for the application, engines, and railties goes here.
     #

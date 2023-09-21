@@ -1,40 +1,35 @@
 <div class="page-container">
   <%# <div class="looper"> %>
-    <%# <div class="looper__innerList gap-4" data-animate='true'> %>
-      <%# @recipes.each do |recipe| %>
-        <%# <div class="looper__listInstance p-4 border border-gray-300" style=" animation-duration:1s;animation-direction:right;"> %>
-          <%#= recipe.title %>
-        <%# </div> %>
-      <%# end %>
+  <%# <div class="looper__innerList gap-4" data-animate='true'> %>
+  <%# @recipes.each do |recipe| %>
+    <%# <div class="looper__listInstance p-4 border border-gray-300" style=" animation-duration:1s;animation-direction:right;"> %>
+    <%#= recipe.title %>
     <%# </div> %>
-  <%# </div> %>
-
- <%#= debug @mealplans %> 
-
-<% if true %>
-  <ul>
-    <% @mealplans.each do |mealtype, mealplan| %>
-      <li>
-        <h3><%= mealtype %></h3>
-        <div class="grid grid-cols-7 gap-1">
-          
-            <% mealplan.each do |day, mealplan_recipe| %>
-              <% if mealplan_recipe.present? %>
-                <div class="p-4 border border-gray-300 h-92 overflow-hidden">
-                  <%= image_tag mealplan_recipe.recipe.image, size: 200 %>
-                  <%= mealplan_recipe.recipe.title %>
-                </div>
-              <% else %>
-                <div class=" p-4 border border-gray-300">
-                  +
-                </div>       
+    <%# end %>
+    <%# </div> %>
+    <%# </div> %>
+    <%#= debug @mealplans %>
+    <% if true %>
+      <ul>
+        <% @mealplans.each do |mealtype, mealplan| %>
+          <li>
+            <h3><%= mealtype %></h3>
+            <div class="grid grid-cols-7 gap-1">
+              <% mealplan.each do |day, mealplan_recipe| %>
+                <% if mealplan_recipe.present? %>
+                  <div class="p-4 border border-gray-300 h-92 overflow-hidden">
+                    <%= image_tag mealplan_recipe.recipe.image, size: 200 if mealplan_recipe.recipe.image.attached? %>
+                    <%= mealplan_recipe.recipe.title %>
+                  </div>
+                <% else %>
+                  <div class=" p-4 border border-gray-300">
+                    +
+                  </div>
+                <% end %>
               <% end %>
-            <% end %>
-         
-        </div>
-      </li>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     <% end %>
-  </ul>
-<% end %>
-
-</div>
+  </div>

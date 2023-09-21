@@ -130,7 +130,7 @@ end
 
 
 
-# RECIPE INGREDENTS
+# RECIPE INGREDENTS --------------------------------
 # recipe = Recipe.all
 
 # if( recipe.count > 0 )
@@ -144,7 +144,7 @@ end
 #   end
 # end
 
-# RECIPE IMAGES
+# RECIPE IMAGES -----------------------------------
 # if( recipe.count > 0 )
 #   recipe.each_with_index do |recipe, index|
 #     file = "app/assets/images/recipes/#{index + 1}.jpg"
@@ -158,7 +158,7 @@ end
 # end
 
 
-
+# FAVORITES -------------------------------------
 # Favorite.create(user_id: 1, recipe_id: 1)
 # Favorite.create(user_id: 1, recipe_id: 3)
 # Favorite.create(user_id: 1, recipe_id: 4)
@@ -171,6 +171,8 @@ end
 # Favorite.create(user_id: 2, recipe_id: 14)
 
 
+
+# REVIEWS ---------------------------------------
 # recipes = Recipe.all
 # users = User.all
 
