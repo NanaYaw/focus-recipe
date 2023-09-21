@@ -8,26 +8,16 @@
         <span>Create plan</span>
       <% end %>
     </div>
+    <% turbo_stream_from "plan" %>
     <div class="flex flex-col gap-4">
       <% if  @plans.count > 0 %>
         <div class="grid grid-cols-3 gap-4" id="plans">
-          <% @plans.each do |plan| %>
-            <div class="flex rounded-lg overflow-hidden shadow-md h-32 bg-white">
-              <%# <div class="h-full w-1 bg-gradient-to-b from-blue-500 to-yellow-600"></div> %>
-              <%= render plan %>
-            </div>
+          <% @plans.each do |plan| %>              
+            <%= render plan %>
           <% end %>
         </div>
       <% else %>
-        <h4 class="text-center py-4 sm:pt-24 sm:pb-10 text-gray-600">You have no plans yet, click and the button below and create one</h4>
-      <% end %>
-      <% if @plans.empty? %>
-        <div class="flex justify-center w-full h-auto">
-          <%= button_to new_plan_path, method: :get, data: {turbo_frame: "modal"}, class: "flex flex-col items-center justify-center  p-4 rounded-md border border-primary hover:border-accent bg-primary/30" do %>
-            <span class="text-3xl font-bold">+</span>
-            <span class="text-2xl">New plan</span>
-          <% end %>
-        </div>
+        <%= render "empty_add" %>
       <% end %>
     </div>
   </div>

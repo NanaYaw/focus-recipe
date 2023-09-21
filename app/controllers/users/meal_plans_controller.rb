@@ -109,12 +109,6 @@ class Users::MealPlansController < ApplicationController
   # DELETE /meal_plans/1 or /meal_plans/1.json
   def destroy
 
-    p params
-    p "-------------------------------------"
-    p @cc
-    p "-------------------------------------"
-    p @meal_plan
-
     @meal_plan.destroy
 
     respond_to do |format|
@@ -131,7 +125,8 @@ class Users::MealPlansController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_meal_plan
       @cc = {plan_id: meal_plan_params[:plan_id],  meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day]}
-      @meal_plan = MealPlan.find_by({plan_id: meal_plan_params[:plan_id],  meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day]})
+      # @meal_plan = MealPlan.find_by({plan_id: meal_plan_params[:plan_id],  meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day]})
+      @meal_plan = MealPlan.find_by(id: params[:id])
     end
 
     # Only allow a list of trusted parameters through.

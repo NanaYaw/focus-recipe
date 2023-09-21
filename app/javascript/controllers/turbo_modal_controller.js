@@ -6,6 +6,7 @@ export default class extends Controller {
 	// hide modal
 	// action: "turbo-modal#hideModal"
 	hideModal() {
+		console.log('modal closed');
 		this.element.parentElement.removeAttribute('src');
 		// Remove src reference from parent frame element
 		// Without this, turbo won't re-open the modal on subsequent click
@@ -16,10 +17,10 @@ export default class extends Controller {
 	// action: "turbo:submit-end->turbo-modal#submitEnd"
 	submitEnd(e) {
 		e.preventDefault();
-		// console.log(e.detail);
-		// if (e.detail.success) {
-		// 	this.hideModal();
-		// }
+		console.log(e.detail);
+		if (e.detail.success) {
+			this.hideModal();
+		}
 	}
 
 	// hide modal when clicking ESC

@@ -16,22 +16,20 @@
   </div>
   <%= turbo_stream_from "mealplans_list" %>
   <!-- #BEGIN Meal Plan -->
-  <% @meal_plans.each do |meal_type_key, meal_plan| %>
+  <% @meal_plans.each do |meal_type_key, plans| %>
     <div class="flex flex-col gap-8 mt-7" >
       <div class="w-full">
         <h2 class="text-2xl mb-1"><%= meal_type_key.capitalize %></h2>
         <div class="grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
-          <% meal_plan.each do | days| %>
-            <% days.each do |day_key, meal_data| %>
-              <% meal_data.each do |meal| %>
-                <% if meal.has_attribute? "id" %>
-                  <%= render "users/plans/meal_plan", meal_type: meal_type_key, day: day_key, recipe: meal.recipe, plan_id: @plan.id, meals: meal  %>
+          <% plans.each do | days| %>
+            <% days.each do |day_key, meal_plans| %>
+              <% meal_plans.each do |meal_plan| %>
+                <% if meal_plan.has_attribute? "id" %>
+                  <%= render "users/plans/meal_plan", meal_type: meal_type_key, day: day_key, recipe: meal_plan.recipe, plan_id: @plan.id, meals: meal_plan, id: meal_plan.id  %>
                 <% end %>
               <% end %>
-              <% if meal_data.blank? %>
-                <div id="meal_plan_<%= meal_type_key %>_<%= day_key %>">
-                  <%= render "users/plans/meal_plan_empty", meal_type: meal_type_key, day: day_key, plan_id: @plan.id  %>
-                </div>
+              <% if meal_plans.blank? %>
+                <%= render "users/plans/meal_plan_empty", meal_type: meal_type_key, day: day_key, plan_id: @plan.id  %>
               <% end %>
             <% end %>
           <% end %>

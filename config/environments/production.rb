@@ -95,6 +95,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.active_storage.service = :cloud
+  config.active_storage.variant_processor = :mini_magick
 
   config.require_master_key = true
 

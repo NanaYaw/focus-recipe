@@ -34,7 +34,7 @@ class Users::PlansController < ApplicationController
     meal_types.each do |meal_type|
       days.each do |day|
           meal_plans << { meal_type => { 
-              day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, recipe: [:image_attachment])
+              day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, :recipe)
             }
           }
       end
@@ -44,6 +44,8 @@ class Users::PlansController < ApplicationController
       h[e.keys.first] ||= []
       h[e.keys.first] << e.values.first
     end
+
+    # @meal_plans = meal_plans
   end
 
   # GET /plans/new
@@ -61,15 +63,18 @@ class Users::PlansController < ApplicationController
 
     respond_to do |format|
       if @plan.save
+          # format.html { redirect_to plan_url, notice: "Plan was successfully created." }
+          format.turbo_stream {
+            render turbo_stream: turbo_stream.action(:redirect, '/plans')
+          }
+      
+          # redirect_to @plan, :target => "_top"
+          # format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }
+          # format.json { render :show, status: :created, location: @plan }
         
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.prepend('plans', partial: 'users/plans/plan', locals: {plan: @plan})
-        }
-        format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }
-        format.json { render :show, status: :created, location: @plan }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @plan.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity 
+        # format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -153,16 +158,17 @@ class Users::PlansController < ApplicationController
       @mealplan.recipe_id = params[:recipe_id]
       @mealplan.meal_type = params[:meal_type]
     else
-      @mealplan = MealPlan.create!(meal_type: params[:meal_type], recipe_id: params[:recipe_id], day: params[:day], plan_id: params[:plan_id])
+      @mealplan = MealPlan.create!(plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day], recipe_id: params[:recipe_id])
     end
 
     if @mealplan.save!
+      # @recipe = Recipe.find(params[:recipe_id])
 
-      @recipe = Recipe.find(params[:recipe_id])
 
-      Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}", 
+
+      Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}",
       partial: "users/plans/meal_plan", 
-      locals: {meals: @recipe, meal_type: params[:meal_type], day: params[:day], recipe: @recipe, plan_id: @mealplan[:plan_id]}
+      locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
     else
       format.html { render :edit, status: :unprocessable_entity }
       format.json { render json: @plan.errors, status: :unprocessable_entity } 

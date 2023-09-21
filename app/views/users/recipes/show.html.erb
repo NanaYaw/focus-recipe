@@ -5,7 +5,7 @@
     </h1>
     <div class="my-4">
       <% if @recipe.image.attached? %>
-        <%= image_tag url_for(@recipe&.image.variant(resize_to_fit: [nil, 300, linear: true]))  %>
+        <%= image_tag @recipe&.image.variant(resize_to_fit: [300, "100%"]) %>
       <% else %>
         <span class="text-red-700"> No image attached yet!!!</span>
       <% end %>

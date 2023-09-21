@@ -6508,7 +6508,7 @@
   function setFormMode(mode) {
     session.setFormMode(mode);
   }
-  var Turbo = /* @__PURE__ */ Object.freeze({
+  var Turbo2 = /* @__PURE__ */ Object.freeze({
     __proto__: null,
     navigator: navigator$1,
     session,
@@ -7143,7 +7143,7 @@
       element = element.parentElement;
     }
   })();
-  window.Turbo = Turbo;
+  window.Turbo = Turbo2;
   start();
 
   // ../../node_modules/@hotwired/turbo-rails/app/javascript/turbo/cable.js
@@ -10375,6 +10375,9 @@
   Controller.values = {};
 
   // controllers/application.js
+  Turbo.StreamActions.redirect = function() {
+    Turbo.visit(this.target);
+  };
   var application = Application.start();
   application.debug = false;
   window.Stimulus = application;
@@ -10399,7 +10402,6 @@
       console.log("Modal Opened");
     }
     close(event) {
-      console.log(event);
       const modal = (0, import_cash_dom.default)(`#modal`);
       if (event.detail.success) {
         modal.hide();
@@ -10824,7 +10826,7 @@
     connect() {
       console.log("hello connected");
     }
-    update(event) {
+    async update(event) {
       const planValue = this.planValue;
       const mealValue = this.mealValue;
       const mealtypeValue = this.mealtypeValue;
@@ -10835,7 +10837,19 @@
       body["recipe_id"] = mealValue;
       body["meal_type"] = mealtypeValue;
       body["day"] = dayValue;
-      patch(`/plans/meal_update/`, { body, responseKind: "turbo-stream" });
+      let response = await patch(`/plans/meal_update/`, {
+        body,
+        responseKind: "turbo-stream"
+      });
+      console.log(response);
+      if (response.ok) {
+        response.text.then((result) => {
+          console.log("plans/meal_update triggered");
+          console.log(result);
+          const trigger = new CustomEvent("triggerModalClose");
+          window.dispatchEvent(trigger);
+        });
+      }
     }
   };
   // static targets = ['plan'];
@@ -10851,6 +10865,7 @@
     // hide modal
     // action: "turbo-modal#hideModal"
     hideModal() {
+      console.log("modal closed");
       this.element.parentElement.removeAttribute("src");
       this.modalTarget.remove();
     }
@@ -10858,6 +10873,10 @@
     // action: "turbo:submit-end->turbo-modal#submitEnd"
     submitEnd(e) {
       e.preventDefault();
+      console.log(e.detail);
+      if (e.detail.success) {
+        this.hideModal();
+      }
     }
     // hide modal when clicking ESC
     // action: "keyup@window->turbo-modal#closeWithKeyboard"

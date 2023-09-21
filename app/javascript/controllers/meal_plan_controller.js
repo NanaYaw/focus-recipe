@@ -14,17 +14,11 @@ export default class extends Controller {
 		console.log('hello connected');
 	}
 
-	update(event) {
-		// console.log(this.planValue);
-		// console.log(this.mealValue);
-		// console.log(this.mealtypeValue);
-
+	async update(event) {
 		const planValue = this.planValue;
 		const mealValue = this.mealValue;
 		const mealtypeValue = this.mealtypeValue;
 		const dayValue = this.dayValue;
-
-		// console.log(mealtypeValue);
 
 		let body = {};
 		body['plan_id'] = planValue;
@@ -32,6 +26,21 @@ export default class extends Controller {
 		body['recipe_id'] = mealValue;
 		body['meal_type'] = mealtypeValue;
 		body['day'] = dayValue;
-		patch(`/plans/meal_update/`, { body: body, responseKind: 'turbo-stream' });
+
+		let response = await patch(`/plans/meal_update/`, {
+			body: body,
+			responseKind: 'turbo-stream',
+		});
+
+		console.log(response);
+
+		if (response.ok) {
+			response.text.then((result) => {
+				console.log('plans/meal_update triggered');
+				console.log(result);
+				const trigger = new CustomEvent('triggerModalClose');
+				window.dispatchEvent(trigger);
+			});
+		}
 	}
 }

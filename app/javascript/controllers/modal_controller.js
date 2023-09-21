@@ -19,7 +19,7 @@ export default class extends Controller {
 	}
 
 	close(event) {
-		console.log(event);
+		// console.log(event);
 		const modal = cash(`#modal`);
 		if (event.detail.success) {
 			modal.hide();
