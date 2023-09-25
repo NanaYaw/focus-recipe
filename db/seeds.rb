@@ -4,24 +4,24 @@ ActiveRecord::Base.connection_pool.with_connection do |conn|
   conn.execute("TRUNCATE users, plans, profiles,  ingredients, groceries, grocery_categories, ingredient_states, measurement_units, meal_plans, recipes, reviews, favorites  RESTART IDENTITY")
 end
 
-User.create(
-    email: ""aa@EXAMPLE.COM"",
-    password: """",
-    password_confirmation: """",
-    # profile_attributes: {
-    #     first_name: "Joyce",
-    #     last_name: "Chau"
-    # }
-);
+# User.create(
+#     email: ""aa@EXAMPLE.COM"",
+#     password: """",
+#     password_confirmation: """",
+#     # profile_attributes: {
+#     #     first_name: "Joyce",
+#     #     last_name: "Chau"
+#     # }
+# );
 
 
-20.times do |num|
-  User.create(
-    email: Faker::Internet.email,
-    password: "rgfioghjrg",
-    password_confirmation: "rgfioghjrg",
-  );
-end
+# 20.times do |num|
+#   User.create(
+#     email: Faker::Internet.email,
+#     password: "rgfioghjrg",
+#     password_confirmation: "rgfioghjrg",
+#   );
+# end
 
 
 

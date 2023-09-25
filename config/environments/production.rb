@@ -100,20 +100,20 @@ Rails.application.configure do
   config.require_master_key = true
 
 
-   config.action_mailer.default_url_options = {
-    host: "172.104.241.86",
-    protocol: "http"
-  }
+  #  config.action_mailer.default_url_options = {
+  #   host: "172.104.241.86",
+  #   protocol: "http"
+  # }
 
-  config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "gmail.com",
-    user_name: """",
-    password: """",
-    openssl_verify_mode: 'none',
-    authentication: "plain",
-    enable_starttls_auto: true
-  }
+  # config.action_mailer.smtp_settings = {
+  #   address: "smtp.gmail.com",
+  #   port: 587,
+  #   domain: "gmail.com",
+  #   user_name: """",
+  #   password: """",
+  #   openssl_verify_mode: 'none',
+  #   authentication: "plain",
+  #   enable_starttls_auto: true
+  # }
 
 end
