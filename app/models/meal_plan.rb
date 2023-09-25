@@ -4,6 +4,8 @@ class MealPlan < ApplicationRecord
  
   enum meal_type: Hash[MealType::MEAL_TYPE.collect{|type| [type, type]}], _prefix: true
 
+  scope :cooking, -> { sum(:number_of_persons_to_be_served) || 0 }
+  
   default_scope { order(day: :asc) }
 
   # after_update_commit { broadcast_replace_to "mealplans_list" }

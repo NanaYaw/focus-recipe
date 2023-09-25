@@ -9,11 +9,12 @@ class Review < ApplicationRecord
 
   STARS = [1,2,3,4,5,nil]
   validates :stars, inclusion: {in: STARS, message: "Must be between 1 and 5 stars"}
+  
+  scope :average_stars, -> { average(:stars) || 0.0 }
 
   # def stars_as_percent
   #   (stars / 5.0) * 100.0
   # end
 
   
-
 end

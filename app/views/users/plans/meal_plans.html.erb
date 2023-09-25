@@ -10,7 +10,7 @@
         </div>
         <div class="w-full sm:w-8/12 h-full flex flex-wrap gap-4 overflow-y-auto overflow-x-hidden">
           <% if @meal_plans.count > 0 %>
-            <% @meal_plans.each_with_index do |recipe, index| %>
+            <% @meal_plans.with_attached_image.each do |recipe| %>
               <div  class="flex flex-col w-full sm:w-[47%] lg:w-[31.7%] transition duration-300 rounded-md cursor-pointer border bg-white dark:text-gray-300 border-gray-200 dark:border-white/[.05] hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-white/[.05] overflow-hidden"  id="meal_plan<%= dom_id recipe %>"
               data-controller="mealplan" 
               data-mealplan-plan-value="<%= @params[:plan_id] %>" 
@@ -36,7 +36,7 @@
                       size: '10% * 10%', 
                       class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-0.5"
                     ) %>
-                      <%= recipe.average_stars %>
+                      <%= recipe.reviews.average_stars %>
                     </span>
                     <span class="flex gap-2">
                       <%= inline_svg_tag(
@@ -44,7 +44,7 @@
                       size: '10% * 10%', 
                       class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
                     ) %>
-                      <%= recipe.cooking %></span>
+                      <%= recipe.meal_plans.cooking %></span>
                   </div>
                   <h1 class=" text-xs lg:text-lg text-gray-600 dark:text-gray-300 mt-4 p-0">
                     <%= recipe.title %>

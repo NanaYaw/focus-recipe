@@ -13,7 +13,7 @@ module AmaboadiwaaApp
     config.load_defaults 7.0
 
     config.view_component.show_previews = true
-    config.serve_static_assets = true
+    # config.serve_static_assets = true
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -22,6 +22,8 @@ module AmaboadiwaaApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.allow_insecure_token_lookup = true
+
 
     config.exceptions_app = ->(env) {
       ErrorsController.action(:show).call(env)

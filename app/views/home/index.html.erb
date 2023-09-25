@@ -1,35 +1,60 @@
-<div class="page-container">
-  <%# <div class="looper"> %>
-  <%# <div class="looper__innerList gap-4" data-animate='true'> %>
-  <%# @recipes.each do |recipe| %>
-    <%# <div class="looper__listInstance p-4 border border-gray-300" style=" animation-duration:1s;animation-direction:right;"> %>
-    <%#= recipe.title %>
-    <%# </div> %>
-    <%# end %>
-    <%# </div> %>
-    <%# </div> %>
-    <%#= debug @mealplans %>
-    <% if true %>
-      <ul>
-        <% @mealplans.each do |mealtype, mealplan| %>
-          <li>
-            <h3><%= mealtype %></h3>
-            <div class="grid grid-cols-7 gap-1">
-              <% mealplan.each do |day, mealplan_recipe| %>
-                <% if mealplan_recipe.present? %>
-                  <div class="p-4 border border-gray-300 h-92 overflow-hidden">
-                    <%= image_tag mealplan_recipe.recipe.image, size: 200 if mealplan_recipe.recipe.image.attached? %>
-                    <%= mealplan_recipe.recipe.title %>
-                  </div>
-                <% else %>
-                  <div class=" p-4 border border-gray-300">
-                    +
-                  </div>
-                <% end %>
+<div class="page-container w-full overflow-hidden">
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <div class="flex flex-col gap-6 max-w-2xl mx-auto text-center">
+    <p class="mb-7">
+      <span class="w-auto px-7 py-4 bg-primary rounded-full">Join our exclusive community</span>
+    </p>
+    <h2>Healthy eating has never been so delicous </h2>
+    <div class="w-full sm:w-10/12 mx-auto mb-2">
+      <p>Making healthy eating a sustainable and enjoyable part of your lifestyle. Whether you’re looking to lose weight, improve your overall health, or simply want to eat more nutritious food, we will inspire you to get in the kitchen and start cooking delicious, healthy meals.</p>
+    </div>
+    <p>
+      <%= link_to 'Get Started', '#', class: "px-7 py-4 bg-accent rounded-full hover:bg-primary text-gray-800" %>
+    </p>
+  </div>
+</div>
+
+
+  <div class="w-full overflow-hidden">
+  <div class="scroll_box inline-flex overflow-x-scroll my-10 px-0 overflow-hidden">
+    <% @recipes.each do | recipe | %>
+   
+      <div id="me" class="slide-box px-4 w-full h-[400px] overflow-hidden">
+        <div class="w-[280px] h-[400px] rounded-3xl bg-gray-300 block relative cursor-move overflow-hidden">
+          <div class="img-hover-zoom h-full w-full absolute top-0 bottom-0 z-0 left-0 right-0 overflow-hidden" style="touch-action: pan-y;">
+            <%= image_tag recipe.image.variant(resize_to_fill: [280, 400]).processed, class: "z-0" if recipe.image.attached? %>
+            <span class="top-0 left-0 right-0 bottom-0 w-full absolute z-0 block" style="background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.10), rgba(0, 0, 0, 0.73))"></span>
+          </div>
+          <div class="w-full flex flex-col gap-3 absolute bottom-0 z-20 p-4 text-white">
+            <div class="flex w-full">
+              <%= link_to single_recipes_path(recipe.id), target: "_top", class: "w-full py-1 cursor-pointer hover:text-gray-200 hover:underline" do %>
+                <%= recipe.title %>
               <% end %>
             </div>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
+            <div class="flex justify-start gap-4">
+              <span class="flex gap-2">
+                <%= inline_svg_tag(
+                "svg/star-half-stroke.svg", 
+                size: '10% * 10%', 
+                class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-0.5"
+              ) %>
+                <%= recipe.reviews.average_stars %>
+              </span>
+              <span class="flex gap-2">
+                <%= inline_svg_tag(
+                "svg/fork-and-knife.svg", 
+                size: '10% * 10%', 
+                class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
+              ) %>
+                <%= recipe.meal_plans.cooking %></span>
+            </div>
+          </div>
+          </div>
+      </div>
+      <% end %>
+   
+</div>
+
+<div class="page-container">
+</div>

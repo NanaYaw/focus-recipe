@@ -29,7 +29,7 @@ export default class extends Controller {
 
 		let response = await patch(`/plans/meal_update/`, {
 			body: body,
-			responseKind: 'turbo-stream',
+			responseKind: 'json',
 		});
 
 		console.log(response);

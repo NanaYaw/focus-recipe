@@ -133,3 +133,61 @@
 .rotate-45 {
 	--tw-rotate: 45deg;
 }
+
+.services-ticker-block {
+	position: relative;
+	display: flex;
+	align-items: center;
+	/* overflow: hidden; */
+	align-items: flex-start;
+	width: 100%;
+}
+/* body {
+	display: flex;
+} */
+/* .scroll_box {
+	position: relative;
+	white-space: nowrap;
+	padding: 0;
+	will-change: transform;
+	display: flex;
+	flex-direction: row;
+	border: 2px solid #eee;
+	width: 100%;
+	background-color: #eee;
+} */
+.stb-item {
+	padding: 0;
+	font-size: 60px;
+	display: inline-block;
+	margin-right: 5rem;
+	color: #2797fe;
+	font-family: 'Ivar Display';
+	font-weight: 400;
+	letter-spacing: 0.3rem;
+	text-decoration: none;
+	border: 1px solid #eee;
+	/* width: 25%;
+	overflow: hidden; */
+}
+.stb-item:hover {
+	color: #c02534;
+}
+
+.img-hover-zoom,
+.video-hover-zoom {
+	height: 100%; /* [1.1] Set it as per your need */
+	overflow: hidden; /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+.img-hover-zoom img,
+.video-hover-zoom video {
+	transition: transform 0.6s ease-in-out;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+.img-hover-zoom:hover img,
+.video-hover-zoom:hover video {
+	transform: scale(1.05);
+}

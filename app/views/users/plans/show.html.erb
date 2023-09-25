@@ -1,4 +1,4 @@
-<div class="page-container">
+<div class="page-container flex flex-col gap-4">
   <div class="flex justify-between">
     <h1 class="text-lg font-bold sm:text-3xl"><%= @plan.plan_name %></h1>
     <div class="flex gap-2 text-xl">
@@ -16,25 +16,20 @@
   </div>
   <%= turbo_stream_from "mealplans_list" %>
   <!-- #BEGIN Meal Plan -->
-  <% @meal_plans.each do |meal_type_key, plans| %>
-    <div class="flex flex-col gap-8 mt-7" >
-      <div class="w-full">
-        <h2 class="text-2xl mb-1"><%= meal_type_key.capitalize %></h2>
-        <div class="grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-4">
-          <% plans.each do | days| %>
-            <% days.each do |day_key, meal_plans| %>
-              <% meal_plans.each do |meal_plan| %>
-                <% if meal_plan.has_attribute? "id" %>
-                  <%= render "users/plans/meal_plan", meal_type: meal_type_key, day: day_key, recipe: meal_plan.recipe, plan_id: @plan.id, meals: meal_plan, id: meal_plan.id  %>
-                <% end %>
-              <% end %>
-              <% if meal_plans.blank? %>
-                <%= render "users/plans/meal_plan_empty", meal_type: meal_type_key, day: day_key, plan_id: @plan.id  %>
-              <% end %>
+  <ul class="flex flex-col gap-8 mb-2 ">
+    <% @mealplans.each do |mealtype, mealplan| %>
+      <li>
+        <h3 class=" capitalize "><%= mealtype %></h3>
+        <div class="grid grid-cols-7 gap-1">
+          <% mealplan.each do |day, mealplan_recipe| %>
+            <% if mealplan_recipe.present? %>
+              <%= render "users/plans/meal_plan", meal_type: mealtype, day: day, recipe: mealplan_recipe.recipe, plan_id: @plan.id, meals: mealplan_recipe, id: mealplan_recipe.id  %>
+            <% else %>
+              <%= render "users/plans/meal_plan_empty", meal_type: mealtype, day: day, plan_id: @plan.id  %>
             <% end %>
           <% end %>
         </div>
-      </div>
-    </div>
-  <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>

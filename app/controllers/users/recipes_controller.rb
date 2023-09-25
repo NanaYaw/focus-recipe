@@ -3,7 +3,7 @@ class Users::RecipesController < ApplicationController
     before_action :set_review
 
     def index
-        @pagy, @recipes = pagy(Recipe.all.order(created_at: :DESC))
+        @pagy, @recipes = pagy(Recipe.includes(image_attachment: :blob).order(created_at: :DESC))
     end
     
     def show
@@ -11,21 +11,15 @@ class Users::RecipesController < ApplicationController
 
         @recipe_ingredients = {}
 
-        meal_plan = MealPlan.includes(:plan).joins(recipe: :ingredients).where(id: params[:meal_plan_id])
+        meal_plan = MealPlan.where(id: params[:meal_plan_id]).includes(:plan, [recipe: [:ingredients, image_attachment: :blob]])
         
         meal_plan.each do |t|
           # ingredients = t.recipe.ingredients.select{|s| s.recipe_id == t.recipe.id}
 
-          
-
-          
           t.recipe.ingredients.each do |ingredient|
            
             quantity = IngredientQuantityCalculator.new(qty = ingredient.quantity, serving = t.number_of_persons_to_be_served).call
-            # # quantity = IngredientQuantityCalculator.new(qty = t.quantity, serving = 1).call
-            # p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-            # p quantity
-            # p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" 
+           
             @recipe_ingredients[ingredient.id] = {
               :id => ingredient.id, 
               :quantity => quantity, 
@@ -39,11 +33,14 @@ class Users::RecipesController < ApplicationController
 
     end
 
+    def single
+    end
+
 
 private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe
-      @recipe = Recipe.where(id: params[:id]).includes(:ingredients, :favorites)[0]
+      @recipe = Recipe.where(id: params[:id]).includes(:ingredients, :favorites, image_attachment: [:blob], plans: [:meal_plans])[0]
     end
 
     def set_review

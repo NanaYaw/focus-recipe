@@ -63,6 +63,7 @@ Rails.application.routes.draw do
 
         resources :plans do
           get 'meal-plans', on: :collection
+          get 'lazy-update', on: :collection
           patch :meal_update, on: :collection
           get 'grocery-list', on: :member
           
@@ -70,8 +71,9 @@ Rails.application.routes.draw do
         end
         
 
-        resources :recipes, only: [:index, :show] do
+        resources :recipes, only: [:index, :show, :single] do
           resources :favorites, only: [:create, :destroy]
+          get "single/:id" => "recipes#single", as: :single, on: :collection
 
           resources :reviews do
             patch "new", on: :member        

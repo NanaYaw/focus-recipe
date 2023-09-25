@@ -1,9 +1,9 @@
   <!-- Card -->
-<div id="meal_plan_<%= meal_type %>_<%= day %>"
+<div id="meal_plan_<%= meal_type %>_<%= day %>" src="/plans-loading" loading="eager" 
  class="group flex flex-col w-full min-h-52 border border-gray-300 hover:shadow-md rounded-md overflow-hidden dark:bg-slate-50 dark:border-gray-200 dark:shadow-slate-200/[.7]">
   <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day ), method: :post, class: "p-0 relative",  data: { turbo_frame: "modal" } do %>
     <div class="h-32 overflow-hidden flex flex-col justify-center items-center bg-blue-600">
-      <%= image_tag recipe&.image.variant(resize_to_fill: [158, 150]).processed if recipe&.image.attached? %>
+      <%= image_tag recipe&.image.variant(resize_to_fill: [168, 150]) if recipe&.image.attached? %>
     </div>
   <% end %>
   <div class="flex items-center justify-end gap-1 w-full h-7 bg-gray-100">
@@ -11,9 +11,7 @@
       <i class="bi bi-eye"></i>
     <% end %>
     <%# -------------------------------- %>
-    <%= link_to  meal_plans_plans_path(meal_type: meal_type, 
-      plan_id: plan_id, 
-      day: day, edit: true ), class: "p-0",  
+    <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day, edit: true ), class: "p-0",  
       data: { turbo_frame: "modal" } do %>
       <div class="text-gray-400 hover:text-black p-1" data-hs-overlay="#hs-task-created-alert">
         <i class="bi bi-pencil"></i>

@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # config.action_controller.default_url_options = "localhost:3000"
   config.action_controller.default_url_options = { host: 'http://localhost', port: 3000 }
 
@@ -63,6 +63,25 @@ Rails.application.configure do
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
+
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.delivery_method = :smtp
+  # host = 'aquosua.live' #replace with your own url
+  config.action_mailer.default_url_options = {
+    host: 'localhost:3000',
+    protocol: 'http',
+  }
+
+  config.action_mailer.smtp_settings = {
+    # authentication: "plain",
+    # address: "smtp.mailgun.org",
+    # port: 587,
+    # domain: "aquosua.live",
+    # user_name: """",
+    # password: """",
+    # enable_starttls_auto: true
+  }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

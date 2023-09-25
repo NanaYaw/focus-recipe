@@ -4,6 +4,10 @@ class Users::PlansController < ApplicationController
 
   # GET /plans or /plans.json
   def index
+    @plans = Plan.all 
+  end
+
+  def lazy_update
     if current_user.present?
       plans = Plan.where(user_id: current_user.id)
     else
@@ -13,10 +17,12 @@ class Users::PlansController < ApplicationController
     @colors = [{from: "blue", to: "purple"}, {from: 'gray', to: 'yellow'}, {from: 'red', to: 'green'}]
 
     @plans = plans
+
+    render :partial => 'users/plans/lazy_update', :locals => {plans: @plans}
   end
   
   def meal_plans
-    @meal_plans = Recipe.includes(:favorites).all
+    @meal_plans = Recipe.all.includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
     param = {}
     param[:plan_id] = params[:plan_id]
     param[:meal_type] = params[:meal_type]
@@ -26,26 +32,47 @@ class Users::PlansController < ApplicationController
 
   # GET /plans/1 or /plans/1.json
   def show
-    meal_types = MealType::MEAL_TYPE
-    days = DaysOfTheWeek::DAYS_OF_THE_WEEK
+    # meal_types = MealType::MEAL_TYPE
+    # days = DaysOfTheWeek::DAYS_OF_THE_WEEK
 
-    meal_plans = []
+    # meal_plans = []
 
-    meal_types.each do |meal_type|
-      days.each do |day|
-          meal_plans << { meal_type => { 
-              day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, :recipe)
-            }
-          }
+    # meal_types.each do |meal_type|
+    #   days.each do |day|
+    #       meal_plans << { meal_type => { 
+    #           day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, :recipe)
+    #         }
+    #       }
+    #   end
+    # end
+
+    # @meal_plans = meal_plans.each_with_object({}) do |e, h|
+    #   h[e.keys.first] ||= []
+    #   h[e.keys.first] << e.values.first
+    # end
+
+      @mealtypes = MealType::MEAL_TYPE
+      @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
+      @mealplan_data = MealPlan.where(plan_id: params[:id]).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
+
+      @mealplans = {}
+      @mealtypes.each do |mealtype|
+          if @mealplan_data[mealtype].present?
+              @mealplans[mealtype] = @mealplan_data[mealtype].each_with_object({}) do |mealplan, hash|
+                  @days.each do |day|
+                      hash[day] ||= nil
+                      
+                      if mealplan.day == day
+                          hash[mealplan.day] = mealplan
+                      end
+                  end
+              end
+          else
+              @mealplans[mealtype] = @days.each_with_object({}) do |day, hash|
+                  hash[day] = nil 
+              end
+          end
       end
-    end
-
-    @meal_plans = meal_plans.each_with_object({}) do |e, h|
-      h[e.keys.first] ||= []
-      h[e.keys.first] << e.values.first
-    end
-
-    # @meal_plans = meal_plans
   end
 
   # GET /plans/new
@@ -93,7 +120,7 @@ class Users::PlansController < ApplicationController
   end
 
   def grocery_list
-    @recipes = MealPlan.where(plan_id: params[:id]).joins( recipe: [:reviews]).uniq
+    @recipes = MealPlan.where(plan_id: params[:id]).includes( recipe: [:image_attachment,:reviews, :favorites, ingredients: [:grocery, :measurement_unit, :ingredient_state]]).uniq
     @groceries = GroceryShoppingList.new(@recipes.pluck(:recipe_id)).grocery_list
 
 
@@ -106,7 +133,7 @@ class Users::PlansController < ApplicationController
       days.each do |day|
         meal_plans << { 
           meal_type => {
-            day => MealPlan.where(plan_id: params[:id], meal_type: meal_type, day: day).select(:id, :recipe_id, :day, :meal_type, :recipe_id).includes(:recipe)
+            day => MealPlan.where(plan_id: params[:id], meal_type: meal_type, day: day).select(:id, :recipe_id, :day, :meal_type, :recipe_id).includes(recipe: {image_attachment: :blob})
           }
         }
         # @recipes.each do |recipe|
@@ -150,7 +177,7 @@ class Users::PlansController < ApplicationController
   end
 
   def meal_update
-    @mealplan = MealPlan.where({plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day]}).includes(:recipe)
+    @mealplan = MealPlan.where({plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day]}).includes(recipe: [:reviews, {image_attachment: :blob}])
     @mealplan = @mealplan[0]
    
     if (!@mealplan.blank?)
@@ -161,17 +188,17 @@ class Users::PlansController < ApplicationController
       @mealplan = MealPlan.create!(plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day], recipe_id: params[:recipe_id])
     end
 
+    
     if @mealplan.save!
+     
       # @recipe = Recipe.find(params[:recipe_id])
-
-
 
       Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}",
       partial: "users/plans/meal_plan", 
       locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
     else
       format.html { render :edit, status: :unprocessable_entity }
-      format.json { render json: @plan.errors, status: :unprocessable_entity } 
+      format.json { render json: @mealplan.errors, status: :unprocessable_entity } 
     end
   end
 

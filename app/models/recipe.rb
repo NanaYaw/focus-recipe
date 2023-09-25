@@ -7,7 +7,9 @@ class Recipe < ApplicationRecord
     has_many :reviews, dependent: :destroy
     has_many :favorites, dependent: :destroy
 
-    has_one_attached :image, dependent: :destroy
+    has_one_attached :image 
+    
+    
 
     validates :title, presence: true
     validate :acceptable_image
@@ -26,10 +28,6 @@ class Recipe < ApplicationRecord
         end
     end
 
-    def average_stars
-       reviews.average(:stars) || 0.0
-    end
-    def cooking
-       meal_plans.sum(:number_of_persons_to_be_served) || 0
-    end
+   
+   
 end

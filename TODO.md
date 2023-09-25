@@ -15,11 +15,22 @@ Todo:
   TODO: PDF generation css not working in production
   TODO: Plans show page fix all hotwire interactions(DELETE, UPDATE, CREATE) issues
   TODO: Fix the footer
+  TODO: Refactor meal plans show pages for efficiency
+  TODO: Design Home page
+  TODO: Fix image variant sizes on user Recipes
 
 - DOING -
-  TODO: Design Home page
-  TODO: User account email activation
-  TODO: Fix image variant sizes on user Recipes
-  TODO: User Accounts profile(Names, profile image, password change)
-  TODO: Refactor meal plans show pages for efficiency
   TODO: Content shifting
+  TODO: User account email activation
+  TODO: User Accounts profile(Names, profile image, password change)
+  [ ] Blurred modal UIs
+  [ ] EL transitions
+  [ ] Add profile image
+  [ ] Profile edit and settings
+  [ ] Print
+  [ ] User Role Management (Comments Reply)
+  [ ] Admin Hotwire UI loading states
+  [ ] N+1 query for pdfs
+  [ ] Pdf generation name
+  [ ] Reprovision server with ubuntu 2.0 to handle wickedpdf gen
+  [ ] UUIDS

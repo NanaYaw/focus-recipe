@@ -734,6 +734,40 @@ h5{
   --tw-backdrop-sepia:  ;
 }
 
+.container{
+  width: 100%;
+}
+
+@media (min-width: 640px){
+  .container{
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px){
+  .container{
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px){
+  .container{
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px){
+  .container{
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px){
+  .container{
+    max-width: 1536px;
+  }
+}
+
 .sr-only{
   position: absolute;
   width: 1px;
@@ -831,8 +865,16 @@ h5{
   z-index: 0;
 }
 
+.z-0{
+  z-index: 0;
+}
+
 .z-10{
   z-index: 10;
+}
+
+.z-20{
+  z-index: 20;
 }
 
 .z-40{
@@ -900,6 +942,11 @@ h5{
   margin-bottom: 0.25rem;
 }
 
+.my-10{
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
 .my-2{
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -958,6 +1005,10 @@ h5{
   margin-bottom: 1.5rem;
 }
 
+.mb-7{
+  margin-bottom: 1.75rem;
+}
+
 .ml-2{
   margin-left: 0.5rem;
 }
@@ -992,10 +1043,6 @@ h5{
 
 .mt-6{
   margin-top: 1.5rem;
-}
-
-.mt-7{
-  margin-top: 1.75rem;
 }
 
 .block{
@@ -1078,6 +1125,10 @@ h5{
   height: 1.5rem;
 }
 
+.h-64{
+  height: 16rem;
+}
+
 .h-7{
   height: 1.75rem;
 }
@@ -1088,6 +1139,10 @@ h5{
 
 .h-\[2\.375rem\]{
   height: 2.375rem;
+}
+
+.h-\[400px\]{
+  height: 400px;
 }
 
 .h-auto{
@@ -1150,10 +1205,6 @@ h5{
   width: 1rem;
 }
 
-.w-4\/12{
-  width: 33.333333%;
-}
-
 .w-5{
   width: 1.25rem;
 }
@@ -1166,16 +1217,20 @@ h5{
   width: 1.75rem;
 }
 
+.w-7\/12{
+  width: 58.333333%;
+}
+
 .w-8{
   width: 2rem;
 }
 
-.w-8\/12{
-  width: 66.666667%;
-}
-
 .w-\[2\.375rem\]{
   width: 2.375rem;
+}
+
+.w-\[280px\]{
+  width: 280px;
 }
 
 .w-auto{
@@ -1253,6 +1308,10 @@ h5{
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.cursor-move{
+  cursor: move;
 }
 
 .resize{
@@ -1424,12 +1483,20 @@ h5{
   overflow-y: hidden;
 }
 
+.overflow-x-scroll{
+  overflow-x: scroll;
+}
+
 .whitespace-nowrap{
   white-space: nowrap;
 }
 
 .rounded{
   border-radius: 0.25rem;
+}
+
+.rounded-3xl{
+  border-radius: 1.5rem;
 }
 
 .rounded-full{
@@ -1481,6 +1548,10 @@ h5{
 
 .border-l-4{
   border-left-width: 4px;
+}
+
+.border-l-8{
+  border-left-width: 8px;
 }
 
 .border-t{
@@ -1593,6 +1664,11 @@ h5{
 .bg-gray-300{
   --tw-bg-opacity: 1;
   background-color: rgb(209 213 219 / var(--tw-bg-opacity));
+}
+
+.bg-gray-400{
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
 }
 
 .bg-gray-50{
@@ -1761,6 +1837,11 @@ h5{
   padding: 1.25rem;
 }
 
+.px-0{
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1784,6 +1865,11 @@ h5{
 .px-6{
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.px-7{
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .py-0{
@@ -2912,6 +2998,72 @@ h5{
   --tw-rotate: 45deg;
 }
 
+.services-ticker-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* overflow: hidden; */
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* body {
+	display: flex;
+} */
+
+/* .scroll_box {
+	position: relative;
+	white-space: nowrap;
+	padding: 0;
+	will-change: transform;
+	display: flex;
+	flex-direction: row;
+	border: 2px solid #eee;
+	width: 100%;
+	background-color: #eee;
+} */
+
+.stb-item {
+  padding: 0;
+  font-size: 60px;
+  display: inline-block;
+  margin-right: 5rem;
+  color: #2797fe;
+  font-family: 'Ivar Display';
+  font-weight: 400;
+  letter-spacing: 0.3rem;
+  text-decoration: none;
+  border: 1px solid #eee;
+  /* width: 25%;
+	overflow: hidden; */
+}
+
+.stb-item:hover {
+  color: #c02534;
+}
+
+.img-hover-zoom,
+.video-hover-zoom {
+  height: 100%;
+  /* [1.1] Set it as per your need */
+  overflow: hidden;
+  /* [1.2] Hide the overflowing of child elements */
+}
+
+/* [2] Transition property for smooth transformation of images */
+
+.img-hover-zoom img,
+.video-hover-zoom video {
+  transition: transform 0.6s ease-in-out;
+}
+
+/* [3] Finally, transforming the image when container gets hovered */
+
+.img-hover-zoom:hover img,
+.video-hover-zoom:hover video {
+  transform: scale(1.05);
+}
+
 .before\:absolute::before{
   content: var(--tw-content);
   position: absolute;
@@ -3123,6 +3275,11 @@ h5{
 .hover\:text-white:hover{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.hover\:text-gray-50:hover{
+  --tw-text-opacity: 1;
+  color: rgb(249 250 251 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover{
@@ -3562,6 +3719,14 @@ h5{
     display: none;
   }
 
+  .sm\:w-10\/12{
+    width: 83.333333%;
+  }
+
+  .sm\:w-2\/12{
+    width: 16.666667%;
+  }
+
   .sm\:w-3\/12{
     width: 25%;
   }
@@ -3588,6 +3753,10 @@ h5{
 
   .sm\:max-w-lg{
     max-width: 32rem;
+  }
+
+  .sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .sm\:grid-cols-3{
@@ -3632,6 +3801,10 @@ h5{
 
   .sm\:gap-5{
     gap: 1.25rem;
+  }
+
+  .sm\:gap-6{
+    gap: 1.5rem;
   }
 
   .sm\:gap-8{
@@ -3755,6 +3928,22 @@ h5{
     display: flex;
   }
 
+  .md\:h-full{
+    height: 100%;
+  }
+
+  .md\:w-2\/12{
+    width: 16.666667%;
+  }
+
+  .md\:w-6\/12{
+    width: 50%;
+  }
+
+  .md\:w-8\/12{
+    width: 66.666667%;
+  }
+
   .md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3791,6 +3980,10 @@ h5{
     margin-right: auto;
   }
 
+  .lg\:w-4\/12{
+    width: 33.333333%;
+  }
+
   .lg\:w-\[31\.7\%\]{
     width: 31.7%;
   }
@@ -3803,12 +3996,12 @@ h5{
     max-width: 72rem;
   }
 
-  .lg\:grid-cols-5{
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+  .lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-7{
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+  .lg\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
   .lg\:gap-6{
@@ -3841,6 +4034,10 @@ h5{
 
   .xl\:max-w-7xl{
     max-width: 80rem;
+  }
+
+  .xl\:grid-cols-6{
+    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .xl\:gap-10{
