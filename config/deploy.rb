@@ -16,17 +16,17 @@ set :keep_releases, 5
 ask :branch, "main"
 
 
-# load 'lib/deploy/seed'
 namespace :deploy do
+  desc "Run seed"
   task :seed do
-    on primary fetch(:migration_role) do
-      within release_path do
-        with rails_env: fetch(:rails_env)  do
-          execute :rake, 'db:seed'
-        end
+    on roles(:all) do
+      within current_path do
+        execute :bundle, :exec, 'rails', 'db:seed', 'RAILS_ENV=production'
       end
     end
   end
+ 
+  after :migrating, :seed
 end
 
 # Default deploy_to directory is /var/www/my_app_name
