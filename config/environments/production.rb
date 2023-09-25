@@ -101,7 +101,7 @@ Rails.application.configure do
 
 
    config.action_mailer.default_url_options = {
-    host: "172.104.241.86/",
+    host: "172.104.241.86",
     protocol: "http"
   }
 
@@ -109,8 +109,8 @@ Rails.application.configure do
     authentication: "plain",
     address: "smtp.mailgun.org",
     port: 587,
-    # domain: """",
-    domain: "172.104.241.86/",
+    domain: """",
+    # domain: "172.104.241.86",
     user_name: """",
     password: """",
     enable_starttls_auto: true
