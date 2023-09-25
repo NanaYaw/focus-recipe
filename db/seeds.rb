@@ -120,31 +120,28 @@ if( recipes.count > 0 )
   # REVIEWS ---------------------------------------
 
   numbers = [1,2,3,4,5,]
-  recipes.each do |recipe|
+  (1..7).each do |i|
+    recipes.each do |recipe|
       # comment = comments.sample
       stars = [1,2,3,4].sample
-      # parent = Review.all.sample
 
-      (1..7).each do |i|
-        Review.create(
-            comment: Faker::Lorem.paragraph(sentence_count: numbers.sample),
-            user_id: user.sample.id,
-            recipe_id: recipe.id,
-            stars: stars,
-        )
-      end
-
+      Review.create(
+          comment: Faker::Lorem.paragraph(sentence_count: numbers.sample),
+          user_id: users.sample.id,
+          recipe_id: recipe.id,
+          stars: stars,
+      )
+    end
   end
 
   (1..4).each do |i|
     recipes.each do |recipe|
-        user = users.sample
         stars = [1,2,3,4].sample
         parent = Review.all.sample
 
         Review.create(
             comment: Faker::Lorem.paragraph(sentence_count: numbers.sample),
-            user_id: user.sample.id,
+            user_id: users.sample.id,
             recipe_id: recipe.id,
             parent_id: parent.id,
             stars: stars,
