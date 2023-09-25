@@ -7,6 +7,7 @@
 User.create(
     email: ""aa@EXAMPLE.COM"",
     password: """",
+    password_confirmation: """",
     # profile_attributes: {
     #     first_name: "Joyce",
     #     last_name: "Chau"
@@ -18,6 +19,7 @@ User.create(
   User.create(
     email: Faker::Internet.email,
     password: "rgfioghjrg",
+    password_confirmation: "rgfioghjrg",
   );
 end
 
