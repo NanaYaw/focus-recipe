@@ -7,7 +7,7 @@ end
 User.create(
     email: ""aa@EXAMPLE.COM"",
     password: """",
-    password_confirmation: """",
+    # password_confirmation: """",
     # profile_attributes: {
     #     first_name: "Joyce",
     #     last_name: "Chau"
@@ -19,7 +19,7 @@ User.create(
   User.create(
     email: Faker::Internet.email,
     password: "rgfioghjrg",
-    password_confirmation: "rgfioghjrg",
+    # password_confirmation: "rgfioghjrg",
   );
 end
 
@@ -82,7 +82,7 @@ recipes = Recipe.all
 users = User.all
 
 
-if( recipes.count > 0 )
+if( recipes.count > 0 && users.count > 0 )
 
   recipes.each_with_index do |recipe, index|
       quantity = [1,2,3,4,5,6,7,8].sample
