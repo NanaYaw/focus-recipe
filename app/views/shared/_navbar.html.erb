@@ -5,7 +5,7 @@
 <% end %>
   <nav class="relative max-w-[85rem] w-full mx-auto px-4 py-2 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8" aria-label="Global">
     <div class="flex items-center justify-between">
-      <a class="flex-none text-xl font-semibold text-white" href="/" aria-label="Brand">
+      <a class="flex-none text-xl font-semibold" href="/" aria-label="Brand">
          <%= image_tag "ama-boadiwaa-logo.png", width: 100 %>
       </a>
       <div class="sm:hidden">
@@ -50,7 +50,7 @@
             </div>
           </div>
         <% else %>
-          <%= link_to "Sign In", new_user_session_path, class: "font-medium text-white/[.8] hover:text-white button" %>
+          <%= link_to "Sign In", new_user_session_path, class: "font-medium  hover:text-gray-400 px-4 py-2" %>
           <%= link_to "Sign Up", new_user_registration_path, class: "font-medium text-white/[.8] hover:text-white button button--primary" %>
         <% end %>
       </div>
