@@ -21,6 +21,14 @@ window.addEventListener('load', () => {
 });
 
 function horizontalLoop(items, config) {
+	items.forEach((link) => {
+		link.addEventListener('mouseenter', () =>
+			gsap.to(tl, { timeScale: 0, overwrite: true })
+		);
+		link.addEventListener('mouseleave', () =>
+			gsap.to(tl, { timeScale: 1, overwrite: true })
+		);
+	});
 	items = gsap.utils.toArray(items);
 	config = config || {};
 	let onChange = config.onChange,

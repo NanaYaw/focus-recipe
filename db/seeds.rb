@@ -24,8 +24,6 @@ User.create(
 end
 
 
-
-
 # Grocery Categories -
 # Ingredient state -
 # Measurement unit -
@@ -54,7 +52,7 @@ end
 grocery = GroceryCategory.all
 
 if(grocery.length > 0)
-  (1..40).each do |i|
+  40.times.each do |i|
       Grocery.create!(
           name: Faker::Food.ingredient,
           grocery_category_id: grocery.sample.id
@@ -65,7 +63,7 @@ end
 #-----------------------------------------------------------------------------------------#
 
 
-(1..20).each do |i|
+30.times.each do |i|
   Recipe.create(
       title: Faker::Food.dish,
       description: Faker::Food.description,
@@ -120,8 +118,8 @@ if( recipes.count > 0 && users.count > 0 )
   # REVIEWS ---------------------------------------
 
   numbers = [1,2,3,4,5,]
-  (1..7).each do |i|
-    recipes.each do |recipe|
+  recipes.each do |recipe|
+    (1..7).each do |i|
       # comment = comments.sample
       stars = [1,2,3,4].sample
 
@@ -134,8 +132,8 @@ if( recipes.count > 0 && users.count > 0 )
     end
   end
 
-  (1..4).each do |i|
-    recipes.each do |recipe|
+  recipes.each do |recipe|
+    (1..4).each do |i|
         stars = [1,2,3,4].sample
         parent = Review.all.sample
 
