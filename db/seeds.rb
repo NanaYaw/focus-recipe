@@ -4,24 +4,24 @@ ActiveRecord::Base.connection_pool.with_connection do |conn|
   conn.execute("TRUNCATE users, plans, profiles,  ingredients, groceries, grocery_categories, ingredient_states, measurement_units, meal_plans, recipes, reviews, favorites  RESTART IDENTITY")
 end
 
-# User.create(
-#     email: ""aa@EXAMPLE.COM"",
-#     password: """",
-#     password_confirmation: """",
-#     # profile_attributes: {
-#     #     first_name: "Joyce",
-#     #     last_name: "Chau"
-#     # }
-# );
+User.create(
+    email: ""aa@EXAMPLE.COM"",
+    password: """",
+    password_confirmation: """",
+    # profile_attributes: {
+    #     first_name: "Joyce",
+    #     last_name: "Chau"
+    # }
+);
 
 
-# 20.times do |num|
-#   User.create(
-#     email: Faker::Internet.email,
-#     password: "rgfioghjrg",
-#     password_confirmation: "rgfioghjrg",
-#   );
-# end
+20.times do |num|
+  User.create(
+    email: Faker::Internet.email,
+    password: "rgfioghjrg",
+    password_confirmation: "rgfioghjrg",
+  );
+end
 
 
 
@@ -122,14 +122,13 @@ if( recipes.count > 0 )
   numbers = [1,2,3,4,5,]
   recipes.each do |recipe|
       # comment = comments.sample
-      user = users.sample
       stars = [1,2,3,4].sample
       # parent = Review.all.sample
 
       (1..7).each do |i|
         Review.create(
             comment: Faker::Lorem.paragraph(sentence_count: numbers.sample),
-            user_id: user.id,
+            user_id: user.sample.id,
             recipe_id: recipe.id,
             stars: stars,
         )
@@ -145,7 +144,7 @@ if( recipes.count > 0 )
 
         Review.create(
             comment: Faker::Lorem.paragraph(sentence_count: numbers.sample),
-            user_id: user.id,
+            user_id: user.sample.id,
             recipe_id: recipe.id,
             parent_id: parent.id,
             stars: stars,
