@@ -106,14 +106,14 @@ Rails.application.configure do
   }
 
   config.action_mailer.smtp_settings = {
-    authentication: "plain",
-    address: "smtp.mailgun.org",
+    address: "smtp.gmail.com",
     port: 587,
-    domain: """",
+    # domain: """",
     # domain: "172.104.241.86",
     user_name: """",
     password: """",
-    enable_starttls_auto: true
+    :authentication       => "plain",
+    :enable_starttls_auto => true
   }
 
 end
