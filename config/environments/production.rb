@@ -100,10 +100,10 @@ Rails.application.configure do
   config.require_master_key = true
 
 
-  #  config.action_mailer.default_url_options = {
-  #   host: "172.104.241.86",
-  #   protocol: "http"
-  # }
+   config.action_mailer.default_url_options = {
+    host: "172.104.241.86",
+    protocol: "http"
+  }
 
   # config.action_mailer.smtp_settings = {
   #   address: "smtp.gmail.com",
