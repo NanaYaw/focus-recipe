@@ -5,11 +5,10 @@
   </head>
   <body>
     <div class="flex flex-col sm:flex-row h-full min-h-screen">
-      <div class="w-full sm:w-2/12 md:w-2/12 lg:w-4/12 h-64 md:h-full bg-accent" style="background:<%=  %>">
-        lorem ipsum dolor sit amet, consectet
+      <div class="w-full sm:w-2/12 md:w-2/12 lg:w-4/12 h-32 sm:h-screen bg-accent bg-cover" style="background-image: url(<%= url_for("/assets/recipes/18.jpg") %>);background-size:cover;background-position:center">
       </div>
       <div class="w-full sm:10/12 md:w-8/12 flex items-center justify-center">
-        <div>
+        <div class="w-full md:w-4/12 lg:w-6/12 flex flex-col gap-4 p-4">
           <%= render "application/flash" %>
           <%= yield %>
         </div>

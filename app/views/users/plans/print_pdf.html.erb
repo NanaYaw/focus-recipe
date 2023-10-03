@@ -91,8 +91,22 @@
       <div class="recipe-head" style="">
         <h1><%= meal_plan.recipe.title %></h1>
         <div class="background-color:#f1f1f1 padding:10px; border-radius: 10px">
-          <%= (meal_plan.recipe.reviews.map(&:stars).reduce(:+).to_f  / meal_plan.recipe.reviews.map(&:stars).size).round(1) %>
-          <%= meal_plan.number_of_persons_to_be_served %>
+          <%#= meal_plan.recipe.reviews.average_stars %>
+          <%# (meal_plan.recipe.reviews.map(&:stars).reduce(:+).to_f  / meal_plan.recipe.reviews.map(&:stars).size).round(1) %>
+          <%# end %>
+          <%#= meal_plan.number_of_persons_to_be_served %>
+          <div class="flex justify-start gap-4">
+            <span style="background-color:#333; padding:5px; color:white; border-radius: 10px">
+              <%= meal_plan.recipe.reviews.average_stars %>
+            </span>
+            <span class="flex gap-2">
+              <%= inline_svg_tag(
+                "svg/fork-and-knife.svg", 
+                size: '10% * 10%', 
+                class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
+              ) %>
+              <%= meal_plan.number_of_persons_to_be_served %></span>
+          </div>
         </div>
       </div>
     </div>

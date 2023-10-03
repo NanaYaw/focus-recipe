@@ -67,7 +67,6 @@
       <%= turbo_frame_tag "write-review"  %>
       <%# --------------------------------- %>
       <ul class="flex flex-col gap-4 reviews">
-        <%= turbo_stream_from "review-list" %>
         <% @reviews.each do |review| %>
           <% unless review.parent_id || !review.persisted? %>
             <li class="bg-gray-50 my-1 p-4" id="review-<%= review.id %>">
@@ -81,6 +80,7 @@
               <p>
                 <%= review.comment %>
               </p>
+              <%= turbo_stream_from "review-list" %>
               <%= render 'users/reviews/review', review: review.replies, recipe: @recipe if review.replies.any? %>
               <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
                 params: {parent_id: review.id},

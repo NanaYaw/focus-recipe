@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-    before_action :authenticate_user!, except: :index
+    before_action :authenticate_user!, except: [:index, :testmailer]
 
     def index
         @recipes = Recipe.includes(:reviews, :ingredients, :favorites, :meal_plans).limit(12)
@@ -24,7 +24,12 @@ class HomeController < ApplicationController
         #             hash[day] = nil 
         #         end
         #     end
-        # end
-        
+        # end 
+    end
+
+    def testmailer
+        @user = User.first
+        p @user
+        TestMailer.with(user: @user).welcome_email.deliver_now
     end
 end

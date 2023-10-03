@@ -1,4 +1,6 @@
 class Users::RecipesController < ApplicationController
+    # before_action :authenticate_user!, except: [:index, :show]
+
     before_action :set_recipe
     before_action :set_review
 

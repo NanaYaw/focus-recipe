@@ -1,5 +1,5 @@
-<div class="flashes">
-  <% flash.each do |type, message| %>
+<% flash.each do |type, message| %>
+  <div class="w-full flashes p-2 bg-accent/30 text-center">
     <%= content_tag(:div, message, class: "flash #{type}") %>
-  <% end %>
-</div>
+  </div>
+<% end %>

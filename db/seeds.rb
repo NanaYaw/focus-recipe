@@ -63,7 +63,7 @@ end
 #-----------------------------------------------------------------------------------------#
 
 
-30.times.each do |i|
+20.times.each do |i|
   Recipe.create(
       title: Faker::Food.dish,
       description: Faker::Food.description,

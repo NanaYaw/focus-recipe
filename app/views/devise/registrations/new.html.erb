@@ -1,0 +1,41 @@
+<h2>Sign up</h2>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= render "users/shared/error_messages", resource: resource %>
+  <div class="flex flex-col gap-4 field">
+    <%= f.fields_for :profile do |pf| %>
+      <div class="flex flex-col gap-4 field">
+        <div class="flex flex-col">
+          <%= pf.label :first_name %>
+          <%= pf.text_field :first_name %>
+        </div>
+        <div class="flex flex-col">
+          <%= pf.label :last_name %>
+          <%= pf.text_field :last_name %>
+        </div>
+        <div class="flex flex-col">
+          <%= pf.label :phone %>
+          <%= pf.text_field :phone %>
+        </div>
+      </div>
+    <% end %>
+    <div class="flex flex-col field">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+    <div class="flex flex-col field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %>
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+    <div class="flex flex-col field">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+    <div class="flex justify-end actions">
+      <%= f.submit "Sign up", class: "button button--primary" %>
+    </div>
+  </div>
+<% end %>
+<%= render "users/shared/links" %>

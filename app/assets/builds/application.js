@@ -10979,33 +10979,21 @@
   var boxes = gsap.utils.toArray(".slide-box");
   console.clear();
   var activeElement;
-  window.addEventListener("load", () => {
-    const loop = horizontalLoop(boxes, {
-      paused: false,
-      speed: 10,
-      repeat: true,
-      draggable: true,
-      // make it draggable
-      center: false,
-      // active element is the one in the center of the container rather than th left edge
-      onChange: (element, index) => {
-        activeElement && activeElement.classList.remove("-active");
-        element.classList.add("-active");
-        activeElement = element;
-      }
-    });
+  var loop = horizontalLoop(boxes, {
+    paused: false,
+    speed: 10,
+    repeat: true,
+    draggable: true,
+    // make it draggable
+    center: false,
+    // active element is the one in the center of the container rather than th left edge
+    onChange: (element, index) => {
+      activeElement && activeElement.classList.remove("-active");
+      element.classList.add("-active");
+      activeElement = element;
+    }
   });
   function horizontalLoop(items, config) {
-    items.forEach((link) => {
-      link.addEventListener(
-        "mouseenter",
-        () => gsap.to(tl, { timeScale: 0, overwrite: true })
-      );
-      link.addEventListener(
-        "mouseleave",
-        () => gsap.to(tl, { timeScale: 1, overwrite: true })
-      );
-    });
     items = gsap.utils.toArray(items);
     config = config || {};
     let onChange = config.onChange, lastIndex = 0, tl = gsap.timeline({

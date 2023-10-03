@@ -116,4 +116,14 @@ Rails.application.configure do
   #   enable_starttls_auto: true
   # }
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :user_name => 'api',
+    :password => '728275b0efff9f7e05d69ccd153b3b3a',
+    :address => 'live.smtp.mailtrap.io',
+    :host => 'live.smtp.mailtrap.io',
+    :port => '587',
+    :authentication => :cram_md5
+  }
+
 end

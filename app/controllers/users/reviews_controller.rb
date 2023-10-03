@@ -13,31 +13,33 @@ class Users::ReviewsController < ApplicationController
     def reply 
         
         @review = @recipe.reviews.new(parent_id: params[:parent_id])
+
+        # p ">>>>>>>>>>>>>>>>>>>>>>>>"
+        # p @review
+        # p ">>>>>>>>>>>>>>>>>>>>>>>>"
       
         if(@review.parent_id)
             Turbo::StreamsChannel.broadcast_prepend_to "review-list", 
             target: "review-#{@review.parent_id}", 
             partial: "users/reviews/reply",
             locals: {:parent_id => params[:parent], recipe: @recipe, review: @review}
-        end
-           
+        end 
     end
 
     def create
         @review = @recipe.reviews.new set_rating_permission
         @review.user = current_user
-
         
         if @review.save
-            p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            p @review
-            p params
-            p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+            # p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+            # p @review
+            # p params
+            # p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
             redirect_to recipe_reviews_path(@recipe), notice: "Review created successfully"
         else
-            p "+++++++++++++++++++++++++++++++++++++++++++++++++"
-            p @review
-            p "+++++++++++++++++++++++++++++++++++++++++++++++++"
+            # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
+            # p @review
+            # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
             render :new, status: :unprocessable_entity
         end
     end

@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :reviews
-
   devise_for :users, path: 'users', controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    passwords: 'users/passwords',
+    confirmations: 'users/confirmations'
   }
 
   devise_for :admins, path: 'admins', controllers: {
@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   end
 
 
+  # resources :reviews
   devise_scope :user do
     authenticated :user do
       namespace :users do
@@ -71,9 +72,8 @@ Rails.application.routes.draw do
         end
         
 
-        resources :recipes, only: [:index, :show, :single] do
+        resources :recipes, only: [:show, :index, :single] do
           resources :favorites, only: [:create, :destroy]
-          get "single/:id" => "recipes#single", as: :single, on: :collection
 
           resources :reviews do
             patch "new", on: :member        
@@ -86,11 +86,17 @@ Rails.application.routes.draw do
           end
         end
       end
-
     end
+
+    scope module: :users do
+      get "recipes/single/:id" => "recipes#single", as: :single_recipes
+    end
+
+
   end
 
   
   # Defines the root path route ("/")
+  get "test" => "home#testmailer"
   root "home#index"
 end

@@ -9,12 +9,14 @@
       </p>
       <%#= render "shared/stars", percent: review.stars_as_percent %>
       <p><%= review.comment %></p>
-      <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
+      <% unless current_user.nil? %>
+        <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
                 params: {parent_id: review.id},
                 method: :post,
                 data: { turbo_frame: "review-#{review.id}"}, 
                 class: "bg-primary px-2 py-1 rounded-sm text-xs"
             %>
+      <% end %>
       <%= turbo_frame_tag "review-#{review.id}" %>
       <%= render 'users/reviews/review', review: review.replies, recipe: @recipe if review.replies.any? %>
     </li>

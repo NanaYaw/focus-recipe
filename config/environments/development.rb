@@ -66,22 +66,43 @@ Rails.application.configure do
 
   config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.delivery_method = :smtp
-  # host = 'aquosua.live' #replace with your own url
+  
   config.action_mailer.default_url_options = {
     host: 'localhost:3000',
     protocol: 'http',
   }
+  
+  config.action_mailer.delivery_method = :smtp
+  # host = 'aquosua.live' #replace with your own url
+  
+  # config.action_mailer.smtp_settings = {
+  #   authentication: "plain",
+  #   address: "smtp.mailgun.org",
+  #   port: 587,
+  #   domain: "aquosua.live",
+  #   user_name: """",
+  #   password: """",
+  #   enable_starttls_auto: true
+  # }
 
   config.action_mailer.smtp_settings = {
-    # authentication: "plain",
-    # address: "smtp.mailgun.org",
-    # port: 587,
-    # domain: "aquosua.live",
-    # user_name: """",
-    # password: """",
-    # enable_starttls_auto: true
+    :user_name => 'api',
+    :password => '728275b0efff9f7e05d69ccd153b3b3a',
+    :address => 'live.smtp.mailtrap.io',
+    :host => 'live.smtp.mailtrap.io',
+    :port => '587',
+    :authentication => :cram_md5
   }
+
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => '""',
+  #   :password => '""',
+  #   :address => '""',
+  #   :host => '""',
+  #   :port => '2525',
+  #   :authentication => :cram_md5
+  # }
+
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

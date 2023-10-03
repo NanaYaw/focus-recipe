@@ -18,6 +18,7 @@ Todo:
   TODO: Refactor meal plans show pages for efficiency
   TODO: Design Home page
   TODO: Fix image variant sizes on user Recipes
+  [ ] Reprovision server with ubuntu 2.0 to handle wickedpdf gen
 
 - DOING -
   TODO: Content shifting
@@ -32,5 +33,5 @@ Todo:
   [ ] Admin Hotwire UI loading states
   [ ] N+1 query for pdfs
   [ ] Pdf generation name
-  [ ] Reprovision server with ubuntu 2.0 to handle wickedpdf gen
   [ ] UUIDS
+  [ ] Reviews frame gives "Content missing" error on create action
