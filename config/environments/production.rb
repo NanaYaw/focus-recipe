@@ -123,7 +123,9 @@ Rails.application.configure do
     :address => 'live.smtp.mailtrap.io',
     :host => 'live.smtp.mailtrap.io',
     :port => '587',
-    :authentication => :cram_md5
+    :authentication => "plain",
+    # :enable_starttls_auto => false,
+    # :openssl_verify_mode => 'none'
   }
 
 end
