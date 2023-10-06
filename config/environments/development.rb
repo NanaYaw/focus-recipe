@@ -64,7 +64,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   
   config.action_mailer.default_url_options = {
@@ -91,7 +91,9 @@ Rails.application.configure do
     :address => 'live.smtp.mailtrap.io',
     :host => 'live.smtp.mailtrap.io',
     :port => '587',
-    :authentication => :cram_md5
+    :authentication => :cram_md5,
+    :enable_starttls_auto => true,
+    # :openssl_verify_mode => 'none'
   }
 
   # config.action_mailer.smtp_settings = {

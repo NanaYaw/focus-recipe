@@ -79,18 +79,22 @@ end
 recipes = Recipe.all
 users = User.all
 
+flow = [4,5,6,7,8]
 
 if( recipes.count > 0 && users.count > 0 )
 
   recipes.each_with_index do |recipe, index|
+
+    flow.sample.times do
       quantity = [1,2,3,4,5,6,7,8].sample
       grocery = Grocery.all.sample
       is = IngredientState.all.sample
       mu = MeasurementUnit.all.sample
       recipe.ingredients.create!(quantity: quantity, grocery_id: grocery.id, ingredient_state_id: is.id, measurement_unit_id: mu.id)
-  end
+    end
 
-  recipes.each_with_index do |recipe, index|
+    #-------------------------------------------
+  
     file = "app/assets/images/recipes/#{index + 1}.jpg"
     filename = "#{index + 1}.jpg"
 

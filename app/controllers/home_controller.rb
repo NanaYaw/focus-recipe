@@ -29,7 +29,6 @@ class HomeController < ApplicationController
 
     def testmailer
         @user = User.first
-        p @user
         TestMailer.with(user: @user).welcome_email.deliver_now
     end
 end
