@@ -22,35 +22,31 @@ class Users::PlansController < ApplicationController
   end
   
   def meal_plans
+     param = {}
+    param[:plan_id] = params[:plan_id]
+    param[:meal_type] = params[:meal_type]
+    param[:day] = params[:day] 
+
+    @params = param
+    
+  end
+
+  def meal_plans_content
     @meal_plans = Recipe.all.includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
     param = {}
     param[:plan_id] = params[:plan_id]
     param[:meal_type] = params[:meal_type]
     param[:day] = params[:day]
+
+
     @params = param
-  end 
+
+
+    render(partial: "users/plans/meal_plans_content")
+  end
 
   # GET /plans/1 or /plans/1.json
   def show
-    # meal_types = MealType::MEAL_TYPE
-    # days = DaysOfTheWeek::DAYS_OF_THE_WEEK
-
-    # meal_plans = []
-
-    # meal_types.each do |meal_type|
-    #   days.each do |day|
-    #       meal_plans << { meal_type => { 
-    #           day => MealPlan.where(plan_id: @plan.id, meal_type: meal_type, day: day).select(:id, :plan_id, :day, :meal_type, :recipe_id).includes(:plan, :recipe)
-    #         }
-    #       }
-    #   end
-    # end
-
-    # @meal_plans = meal_plans.each_with_object({}) do |e, h|
-    #   h[e.keys.first] ||= []
-    #   h[e.keys.first] << e.values.first
-    # end
-
       @mealtypes = MealType::MEAL_TYPE
       @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
       @mealplan_data = MealPlan.where(plan_id: params[:id]).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
@@ -215,6 +211,9 @@ class Users::PlansController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
+      p "+++++++++++++++++++++++++++"
+      p params
+      p "+++++++++++++++++++++++++++"
       if(params[:id] == 'meal_update')
         @plan = Plan.find(params[:plan_id]) if params[:id] != 'meal_update'
       else

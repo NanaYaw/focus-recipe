@@ -32,14 +32,16 @@ export default class extends Controller {
 			responseKind: 'json',
 		});
 
-		console.log(response);
+		// console.log(response);
 
 		if (response.ok) {
 			response.text.then((result) => {
-				console.log('plans/meal_update triggered');
-				console.log(result);
+				const event = new CustomEvent('update-map');
+				// window.dispatchEvent(event);
+				// console.log('plans/meal_update triggered');
+				// console.log(result);
 				const trigger = new CustomEvent('triggerModalClose');
-				window.dispatchEvent(trigger);
+				window.dispatchEvent(trigger, event);
 			});
 		}
 	}

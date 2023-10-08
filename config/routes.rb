@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
         resources :plans do
           get 'meal-plans', on: :collection
+          get 'meal-plans-content', on: :collection
           get 'lazy-update', on: :collection
           patch :meal_update, on: :collection
           get 'grocery-list', on: :member
@@ -90,9 +91,8 @@ Rails.application.routes.draw do
 
     scope module: :users do
       get "recipes/single/:id" => "recipes#single", as: :single_recipes
+      get "recipes/single_post/:id" => "recipes#single_post", as: :single_post_recipes
     end
-
-
   end
 
   

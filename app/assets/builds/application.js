@@ -10908,13 +10908,11 @@
         body,
         responseKind: "json"
       });
-      console.log(response);
       if (response.ok) {
         response.text.then((result) => {
-          console.log("plans/meal_update triggered");
-          console.log(result);
+          const event2 = new CustomEvent("update-map");
           const trigger = new CustomEvent("triggerModalClose");
-          window.dispatchEvent(trigger);
+          window.dispatchEvent(trigger, event2);
         });
       }
     }
@@ -10963,6 +10961,32 @@
   };
   __publicField(turbo_modal_controller_default, "targets", ["modal"]);
 
+  // controllers/navigation_controller.js
+  var navigation_controller_default = class extends Controller {
+    display(event) {
+      this.loadingTarget.classList.remove("hidden");
+    }
+    displayLoading() {
+      this.loadingTarget.classList.remove("hidden");
+    }
+    removeLoading() {
+      this.loadingTarget.classList.add("hidden");
+    }
+    displayContent() {
+      this.loadingTarget.classList.add("hidden");
+      this.contentTarget.classList.remove("hidden");
+    }
+    updateLinks(item) {
+      this.linkTargets.forEach((link) => {
+        link.classList.remove("selected");
+        if (link.href === item) {
+          link.classList.add("selected");
+        }
+      });
+    }
+  };
+  __publicField(navigation_controller_default, "targets", ["loading", "link"]);
+
   // controllers/index.js
   application.register("content-loader", o);
   application.register("hello", hello_controller_default);
@@ -10970,6 +10994,7 @@
   application.register("recipe", recipe_controller_default);
   application.register("mealplan", meal_plan_controller_default);
   application.register("turbo-modal", turbo_modal_controller_default);
+  application.register("navigation", navigation_controller_default);
 
   // application.js
   var import_preline = __toESM(require_preline());

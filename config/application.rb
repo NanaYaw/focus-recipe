@@ -23,6 +23,10 @@ module AmaboadiwaaApp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.allow_insecure_token_lookup = true
+    
+    config.action_view.image_loading = "lazy"
+    config.active_storage.service = :local
+
 
 
     config.exceptions_app = ->(env) {

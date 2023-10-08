@@ -20,7 +20,7 @@
     <% @mealplans.each do |mealtype, mealplan| %>
       <li>
         <h3 class=" capitalize "><%= mealtype %></h3>
-        <div class="grid grid-cols-7 gap-1">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1">
           <% mealplan.each do |day, mealplan_recipe| %>
             <% if mealplan_recipe.present? %>
               <%= render "users/plans/meal_plan", meal_type: mealtype, day: day, recipe: mealplan_recipe.recipe, plan_id: @plan.id, meals: mealplan_recipe, id: mealplan_recipe.id  %>

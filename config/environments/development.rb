@@ -5,6 +5,7 @@ Rails.application.configure do
   # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   # config.action_controller.default_url_options = "localhost:3000"
   config.action_controller.default_url_options = { host: 'http://localhost', port: 3000 }
+  config.active_storage.service = :local
 
 
   # In the development environment your application's code is reloaded any time
@@ -72,7 +73,7 @@ Rails.application.configure do
     protocol: 'http',
   }
   
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :test
   # host = 'aquosua.live' #replace with your own url
   
   # config.action_mailer.smtp_settings = {
@@ -85,16 +86,16 @@ Rails.application.configure do
   #   enable_starttls_auto: true
   # }
 
-  config.action_mailer.smtp_settings = {
-    :user_name => 'api',
-    :password => '728275b0efff9f7e05d69ccd153b3b3a',
-    :address => 'live.smtp.mailtrap.io',
-    :host => 'live.smtp.mailtrap.io',
-    :port => '587',
-    :authentication => :cram_md5,
-    :enable_starttls_auto => true,
-    # :openssl_verify_mode => 'none'
-  }
+  # config.action_mailer.smtp_settings = {
+  #   :user_name => 'api',
+  #   :password => '728275b0efff9f7e05d69ccd153b3b3a',
+  #   :address => 'live.smtp.mailtrap.io',
+  #   :host => 'live.smtp.mailtrap.io',
+  #   :port => '587',
+  #   :authentication => :cram_md5,
+  #   :enable_starttls_auto => true,
+  #   # :openssl_verify_mode => 'none'
+  # }
 
   # config.action_mailer.smtp_settings = {
   #   :user_name => '""',

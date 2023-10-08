@@ -101,8 +101,8 @@ Rails.application.configure do
 
 
    config.action_mailer.default_url_options = {
-    host: "172.104.241.86",
-    protocol: "http"
+    host: """",
+    protocol: "https"
   }
 
   # config.action_mailer.smtp_settings = {
@@ -119,12 +119,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :user_name => 'api',
-    :password => '728275b0efff9f7e05d69ccd153b3b3a',
+    :password => '""',
     :address => 'live.smtp.mailtrap.io',
     :host => 'live.smtp.mailtrap.io',
     :port => '587',
-    :authentication => "plain",
-    # :enable_starttls_auto => false,
+    :authentication => 'plain',
+    # :enable_starttls_auto => true,
     # :openssl_verify_mode => 'none'
   }
 

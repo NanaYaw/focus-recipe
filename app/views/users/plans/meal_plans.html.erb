@@ -1,4 +1,4 @@
-<%= render Modal::FullModalComponent.new(title: "Recipes", overflow: true) do %>
+<%= render Modal::FullModalComponent.new(title: "Recipes", overflow: false) do %>
   <div class="flex flex-col sm:flex-row w-full xl:max-w-7xl xl:m-auto sm:gap-10 xl:gap-10">
     <div class="w-full sm:w-3/12">
       <h5 class="mb-2 text-md font-bolder">Grocery Category</h5>
@@ -6,57 +6,26 @@
         <% GroceryCategory.all.each do |gc| %>
           <li class="text-sm py-1 px-2 text-center text-gray-600 rounded-lg border border-gray-200 bg-gray-200"><%=  gc.name  %></li>
         <% end %>
-        <ul>
-        </div>
-        <div class="w-full sm:w-8/12 h-full flex flex-wrap gap-4 overflow-y-auto overflow-x-hidden">
-          <% if @meal_plans.count > 0 %>
-            <% @meal_plans.with_attached_image.each do |recipe| %>
-              <div  class="flex flex-col w-full sm:w-[47%] lg:w-[31.7%] transition duration-300 rounded-md cursor-pointer border bg-white dark:text-gray-300 border-gray-200 dark:border-white/[.05] hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-white/[.05] overflow-hidden"  id="meal_plan<%= dom_id recipe %>"
-              data-controller="mealplan" 
-              data-mealplan-plan-value="<%= @params[:plan_id] %>" 
-              data-mealplan-mealtype-value="<%= @params[:meal_type] %>" 
-              data-mealplan-meal-value="<%= recipe.id %>"
-              data-mealplan-day-value="<%= @params[:day] %>"
-                
-                data-action="click->mealplan#update"
-                >
-                <% if recipe&.image.attached? %>
-                  <%= image_tag url_for(recipe&.image), size: "100%" %>
-                <% else %>
-                  <%= image_tag '/images/sample.png', size: "100%" %>
-                <% end %>
-                <div class="p-2">
-                  <div class="flex justify-start gap-4">
-                    <span class="flex gap-2">
-                      <%# <span class="flex items-center w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1 -z-0">
-                    <i class="bi bi-star"></i>
-                  </span> %>
-                      <%= inline_svg_tag(
-                      "svg/star-half-stroke.svg", 
-                      size: '10% * 10%', 
-                      class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-0.5"
-                    ) %>
-                      <%= recipe.reviews.average_stars %>
-                    </span>
-                    <span class="flex gap-2">
-                      <%= inline_svg_tag(
-                      "svg/fork-and-knife.svg", 
-                      size: '10% * 10%', 
-                      class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
-                    ) %>
-                      <%= recipe.meal_plans.cooking %></span>
-                  </div>
-                  <h1 class=" text-xs lg:text-lg text-gray-600 dark:text-gray-300 mt-4 p-0">
-                    <%= recipe.title %>
-                  </h1>
+      </ul>
+    </div>
+    <div class="w-full sm:w-8/12 h-full max-h-[90vh]  overflow-y-auto overflow-x-hidden">
+      <%= turbo_frame_tag :meal_plans, src: meal_plans_content_plans_path(params: @params), loading: :lazy, target: :top do %>
+        <div class="flex flex-wrap gap-4">
+          <% 10.times do %>
+            <div class="flex flex-col gap-1 rounded-lg w-full sm:w-[47%] lg:w-[31.7%] overflow-hidden border border-gray-700">
+              <div class="animate-pulse w-full h-52 bg-gray-500"></div>
+              <div class="flex flex-col gap-2 p-2">
+                <div class="animate-pulse flex w-full gap-2">
+                  <div class="w-6 h-6 bg-gray-600 rounded-lg"></div>
+                  <div class="w-6 h-6 bg-gray-600 rounded-lg"></div>
                 </div>
+                <p class="animate-pulse w-full py-1 bg-gray-500"></p>
+                <p class="animate-pulse w-8/12 py-1 bg-gray-500"></p>
               </div>
-            <% end %>
-          <% else %>
-            <div class="w-full">
-              <h2 class="text-2xl text-gray-300 dark:text-white">No recipes uploaded yet</h2>
             </div>
           <% end %>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

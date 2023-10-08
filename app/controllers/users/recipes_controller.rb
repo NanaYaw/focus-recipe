@@ -39,6 +39,14 @@ class Users::RecipesController < ApplicationController
     end
 
 
+    def single_post
+      # render layout: false # Don't forget this optimization!
+      p @recipe
+      p "+++++++++++++++++++++++++++++++++++++++++++++++++"
+      render(partial: "users/recipes/single_recipe")
+    end
+
+
 private
     # Use callbacks to share common setup or constraints between actions.
     def set_recipe

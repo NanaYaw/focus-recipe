@@ -4,7 +4,7 @@
                       action: "triggerModalClose@window->turbo-modal#hideModal turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
                       id: "recipeModal",
                       class: "transition" do %>
-    <div class="hs-overlay w-full h-screen top-0 left-0 overflow-x-hidden overflow-y-hidden  duration fixed inset-0 z-40 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop">
+    <div class="hs-overlay w-full h-screen top-0 left-0 overflow-hidden  duration fixed inset-0 z-40 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop">
       <%# <div id="hs-bg-gray-on-hover-cards" class="hs-overlay w-full h-full fixed  left-0 z-[60] overflow-x-hidden"> %>
       <%# <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 ease-out transition-all lg:max-w-6xl lg:w-full m-3 lg:mx-auto"> %>
       <div class="w-full max-h-[100vh] pt-16 lg:mx-auto flex flex-col bg-white border shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
@@ -17,7 +17,7 @@
             <i class="bi bi-x-lg"></i>
           <% end %>
         </div>
-        <div class="p-4 w-full <%= overflow ? "overflow-y-auto max-h-[90vh]" : "h-full" %>">
+        <div class="p-4 w-full overflow-hidden relative <%= overflow ? "overflow-y-auto max-h-[90vh]" : "h-full sm:h-screen" %>">
           <%# <div class="sm:divide-y divide-gray-200 dark:divide-gray-700"> %>
           <%# <div class="py-3 sm:py-6"> %>
           <%# <h4 class="mb-2 text-xs font-semibold uppercase text-gray-600 dark:text-gray-400">

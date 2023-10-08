@@ -28,3 +28,7 @@ application.register('mealplan', MealPlanController);
 
 import TurboModalController from './turbo_modal_controller';
 application.register('turbo-modal', TurboModalController);
+//-------------
+
+import NavigationController from './navigation_controller';
+application.register('navigation', NavigationController);
