@@ -3,6 +3,11 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
 	static targets = ['modal'];
 
+	open(event) {
+		const closeSpinner = new CustomEvent('close-spinner');
+		window.dispatchEvent(closeSpinner);
+	}
+
 	// hide modal
 	// action: "turbo-modal#hideModal"
 	hideModal() {

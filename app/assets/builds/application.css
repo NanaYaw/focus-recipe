@@ -1145,6 +1145,10 @@ h5{
   height: 2.375rem;
 }
 
+.h-\[250px\]{
+  height: 250px;
+}
+
 .h-\[400px\]{
   height: 400px;
 }
@@ -1859,6 +1863,11 @@ h5{
 
 .stroke-yellow-400{
   stroke: #facc15;
+}
+
+.object-cover{
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .p-0{
@@ -2947,7 +2956,7 @@ h5{
   }
 }
 
-@keyframes pulse {
+@keyframes pulse_inner {
   0%,
 	60%,
 	100% {
@@ -3162,7 +3171,7 @@ h5{
   display: inline-block;
   box-sizing: border-box;
   position: relative;
-  animation: pulse 1s linear infinite;
+  animation: pulse_inner 1s linear infinite;
 }
 
 .loader:after {

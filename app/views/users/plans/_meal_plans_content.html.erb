@@ -8,13 +8,11 @@
               data-mealplan-mealtype-value="<%= @params[:meal_type] %>" 
               data-mealplan-meal-value="<%= recipe.id %>"
               data-mealplan-day-value="<%= @params[:day] %>"
-              data-action="click->mealplan#update click->navigation#displayLoading update-map@window->navigation#removeLoading"
+              data-action="click->mealplan#update click->navigation#displayLoading update-mealplan@window->navigation#removeLoading"
           >
-          <% if recipe&.image.attached? %>
-            <%= image_tag recipe&.image.representation(resize_to_limit: [200, 200]) %>
-          <% else %>
-            <%= image_tag '/images/sample.png', size: "100%" %>
-          <% end %>
+          <div class="flex  h-[250px] w-full bg-gray-400 overflow-hidden">
+            <%= image_tag image_render(recipe&.image, width="400", height="300"), class: "object-cover" %>
+          </div>
           <div class="p-2">
             <div class="flex justify-start gap-4">
               <span class="flex gap-2">

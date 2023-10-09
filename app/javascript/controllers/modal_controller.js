@@ -9,13 +9,15 @@ export default class extends Controller {
 	}
 
 	open(event) {
-		console.log(event);
 		const modal = cash(`#modal`);
 		// if (!this.modal.isOpened) {
 		// 	this.modal.show();
 		// }
+		console.log('Modal');
+		const closeSpinner = new CustomEvent('close-spinner');
+		window.dispatchEvent(closeSpinner);
+
 		modal.show();
-		console.log('Modal Opened');
 	}
 
 	close(event) {

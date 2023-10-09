@@ -200,7 +200,7 @@
 	display: inline-block;
 	box-sizing: border-box;
 	position: relative;
-	animation: pulse 1s linear infinite;
+	animation: pulse_inner 1s linear infinite;
 }
 .loader:after {
 	content: '';

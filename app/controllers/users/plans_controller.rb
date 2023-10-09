@@ -107,7 +107,7 @@ class Users::PlansController < ApplicationController
     respond_to do |format|
       if @plan.update(plan_params)
         format.html { redirect_to plan_url(@plan), notice: "Plan was successfully updated." }
-        format.json { render :show, status: :ok, location: @plan }
+        format.json { render :json, status: :ok, location: @plan }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @plan.errors, status: :unprocessable_entity }
@@ -184,17 +184,21 @@ class Users::PlansController < ApplicationController
       @mealplan = MealPlan.create!(plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day], recipe_id: params[:recipe_id])
     end
 
-    
-    if @mealplan.save!
-     
-      # @recipe = Recipe.find(params[:recipe_id])
+   
+    respond_to do |format|
+      if @mealplan.save!
+      
+        # @recipe = Recipe.find(params[:recipe_id])
 
-      Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}",
-      partial: "users/plans/meal_plan", 
-      locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
-    else
-      format.html { render :edit, status: :unprocessable_entity }
-      format.json { render json: @mealplan.errors, status: :unprocessable_entity } 
+        Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}",
+        partial: "users/plans/meal_plan", 
+        locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
+
+        format.json { render json: { status: :ok}}
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @mealplan.errors, status: :unprocessable_entity } 
+      end
     end
   end
 

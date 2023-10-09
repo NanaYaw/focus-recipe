@@ -10463,10 +10463,11 @@
       console.log("Modal Connected");
     }
     open(event) {
-      console.log(event);
       const modal = (0, import_cash_dom.default)(`#modal`);
+      console.log("Modal");
+      const closeSpinner = new CustomEvent("close-spinner");
+      window.dispatchEvent(closeSpinner);
       modal.show();
-      console.log("Modal Opened");
     }
     close(event) {
       const modal = (0, import_cash_dom.default)(`#modal`);
@@ -10910,7 +10911,7 @@
       });
       if (response.ok) {
         response.text.then((result) => {
-          const event2 = new CustomEvent("update-map");
+          const event2 = new CustomEvent("update-mealplan");
           const trigger = new CustomEvent("triggerModalClose");
           window.dispatchEvent(trigger, event2);
         });
@@ -10927,6 +10928,10 @@
 
   // controllers/turbo_modal_controller.js
   var turbo_modal_controller_default = class extends Controller {
+    open(event) {
+      const closeSpinner = new CustomEvent("close-spinner");
+      window.dispatchEvent(closeSpinner);
+    }
     // hide modal
     // action: "turbo-modal#hideModal"
     hideModal() {
