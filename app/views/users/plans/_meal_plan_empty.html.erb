@@ -2,10 +2,10 @@
   <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day ), 
               class: "p-0",  data: { turbo_frame: "modal" }, 
               "data-action": "click->navigation#displayLoading close-spinner@window->navigation#removeLoading" do %>
-    <div class="border border-accent/50 rounded-md p-4 md:p-6 h-52 flex flex-col justify-center items-center hover:shadow-md" data-hs-overlay="#hs-task-created-alert">
+    <div class="border border-accent/50 rounded-md p-4 md:p-6 h-52 flex flex-col justify-center items-center hover:shadow-md overflow-hidden" data-hs-overlay="#hs-task-created-alert">
       <%= svg_tag "plus", style: "color:#DDDDDD" %>
     </div>
-    <div class="loading-indicator hidden absolute top-0 left-0 right-0 bottom-0 h-full w-full z-10 backdrop-filter backdrop-blur-md bg-white/80" data-navigation-target="loading">
+    <div class="border border-accent/50 rounded-md loading-indicator hidden absolute top-0 left-0 right-0 bottom-0 h-full w-full z-10 backdrop-filter backdrop-blur-md bg-white/80" data-navigation-target="loading">
       <div class="flex items-center justify-center h-full w-full">
         <span class="loader"></span>
       </div>
