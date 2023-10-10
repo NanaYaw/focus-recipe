@@ -857,22 +857,6 @@ h5{
   top: 100%;
 }
 
-.bottom-1{
-  bottom: 0.25rem;
-}
-
-.left-1{
-  left: 0.25rem;
-}
-
-.right-1{
-  right: 0.25rem;
-}
-
-.top-1{
-  top: 0.25rem;
-}
-
 .isolate{
   isolation: isolate;
 }
@@ -1257,12 +1241,12 @@ h5{
   width: 1.5rem;
 }
 
-.w-7{
-  width: 1.75rem;
+.w-6\/12{
+  width: 50%;
 }
 
-.w-7\/12{
-  width: 58.333333%;
+.w-7{
+  width: 1.75rem;
 }
 
 .w-8{
@@ -1271,6 +1255,10 @@ h5{
 
 .w-8\/12{
   width: 66.666667%;
+}
+
+.w-9\/12{
+  width: 75%;
 }
 
 .w-\[2\.375rem\]{
@@ -1804,6 +1792,11 @@ h5{
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
 }
 
+.bg-slate-200{
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
+}
+
 .bg-slate-400{
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
@@ -2315,6 +2308,10 @@ h5{
 .text-yellow-400{
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity));
+}
+
+.underline{
+  text-decoration-line: underline;
 }
 
 .no-underline{
@@ -3895,10 +3892,6 @@ h5{
     max-width: 32rem;
   }
 
-  .sm\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .sm\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -4140,10 +4133,6 @@ h5{
     max-width: 72rem;
   }
 
-  .lg\:grid-cols-3{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .lg\:grid-cols-5{
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
@@ -4182,10 +4171,6 @@ h5{
 
   .xl\:max-w-7xl{
     max-width: 80rem;
-  }
-
-  .xl\:grid-cols-6{
-    grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
   .xl\:gap-10{

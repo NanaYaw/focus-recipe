@@ -112,7 +112,7 @@ class Users::MealPlansController < ApplicationController
     @meal_plan.destroy
 
     respond_to do |format|
-      Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}", 
+      Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{@meal_plan[:plan_id]}_#{params[:meal_type]}_#{params[:day]}", 
       partial: "users/plans/meal_plan_empty",
       locals: {meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day], plan_id: meal_plan_params[:plan_id]}
 

@@ -22,13 +22,12 @@ class Users::PlansController < ApplicationController
   end
   
   def meal_plans
-     param = {}
+    param = {}
     param[:plan_id] = params[:plan_id]
     param[:meal_type] = params[:meal_type]
     param[:day] = params[:day] 
 
     @params = param
-    
   end
 
   def meal_plans_content
@@ -38,9 +37,7 @@ class Users::PlansController < ApplicationController
     param[:meal_type] = params[:meal_type]
     param[:day] = params[:day]
 
-
     @params = param
-
 
     render(partial: "users/plans/meal_plans_content")
   end
@@ -49,26 +46,8 @@ class Users::PlansController < ApplicationController
   def show
       @mealtypes = MealType::MEAL_TYPE
       @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
-      @mealplan_data = MealPlan.where(plan_id: params[:id]).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
-
-      @mealplans = {}
-      @mealtypes.each do |mealtype|
-          if @mealplan_data[mealtype].present?
-              @mealplans[mealtype] = @mealplan_data[mealtype].each_with_object({}) do |mealplan, hash|
-                  @days.each do |day|
-                      hash[day] ||= nil
-                      
-                      if mealplan.day == day
-                          hash[mealplan.day] = mealplan
-                      end
-                  end
-              end
-          else
-              @mealplans[mealtype] = @days.each_with_object({}) do |day, hash|
-                  hash[day] = nil 
-              end
-          end
-      end
+  
+      @mealplans = meal_plaan_grid( plan_id: params[:id], mealtypes: @mealtypes, days: @days )
   end
 
   # GET /plans/new
@@ -115,62 +94,6 @@ class Users::PlansController < ApplicationController
     end
   end
 
-  def grocery_list
-    @recipes = MealPlan.where(plan_id: params[:id]).includes( recipe: [:image_attachment,:reviews, :favorites, ingredients: [:grocery, :measurement_unit, :ingredient_state]]).uniq
-    @groceries = GroceryShoppingList.new(@recipes.pluck(:recipe_id)).grocery_list
-
-
-    meal_types = MealType::MEAL_TYPE
-    days = DaysOfTheWeek::DAYS_OF_THE_WEEK
-
-    meal_plans = []
-
-    meal_types.each do |meal_type|
-      days.each do |day|
-        meal_plans << { 
-          meal_type => {
-            day => MealPlan.where(plan_id: params[:id], meal_type: meal_type, day: day).select(:id, :recipe_id, :day, :meal_type, :recipe_id).includes(recipe: {image_attachment: :blob})
-          }
-        }
-        # @recipes.each do |recipe|
-        #   p "++++++++++++++++++++++++++++++++++"
-        #   p recipe[day: "sunday"]
-        #   p "++++++++++++++++++++++++++++++++++"
-        #   if recipe[:day] == day && recipe[:meal_type] == meal_type
-        #     meal_plans << { 
-        #       meal_type => {
-        #         day => recipe
-        #       }
-        #     }
-        #   end
-        # end
-      end
-    end
-
-    @meal_plans = meal_plans.each_with_object({}) do |e, h|
-      h[e.keys.first] ||= []
-      h[e.keys.first] << e.values.first
-    end
-
-    # p "++++++++++++++++++++++++++++++++++++++++"
-    # p @groceries
-    # p "++++++++++++++++++++++++++++++++++++++++"
-    # p @recipes
-    # p "++++++++++++++++++++++++++++++++++++++++"
-    # disposition: :inline,
-    
-    respond_to do |format|
-      format.html
-
-      format.pdf do
-        render pdf: 'ama-boadiwaa',
-        template: "users/plans/print_pdf",
-        disposition: 'inline',
-        formats: [:html],
-        layout: 'pdf'
-      end
-    end
-  end
 
   def meal_update
     @mealplan = MealPlan.where({plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day]}).includes(recipe: [:reviews, {image_attachment: :blob}])
@@ -190,7 +113,7 @@ class Users::PlansController < ApplicationController
       
         # @recipe = Recipe.find(params[:recipe_id])
 
-        Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{params[:meal_type]}_#{params[:day]}",
+        Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{@mealplan[:plan_id]}_#{params[:meal_type]}_#{params[:day]}",
         partial: "users/plans/meal_plan", 
         locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
 
@@ -212,12 +135,40 @@ class Users::PlansController < ApplicationController
     end
   end
 
+
+  #----------------  GROCERY LIST  ------------------
+
+  def grocery_list
+    @mealplan = MealPlan.where(plan_id: params[:id]).includes(:plan)
+
+    @recipes = @mealplan.includes( recipe: [:image_attachment,:reviews, :favorites, ingredients: [:grocery, :measurement_unit, :ingredient_state]]).uniq
+
+    @groceries = GroceryShoppingList.new(@recipes.pluck(:recipe_id)).grocery_list
+
+    meal_types = MealType::MEAL_TYPE
+    days = DaysOfTheWeek::DAYS_OF_THE_WEEK
+   
+    @meal_plans = meal_plaan_grid( plan_id: params[:id], mealtypes: meal_types, days: days )
+    
+    respond_to do |format|
+      format.html
+
+      format.pdf do
+        render  pdf: @mealplan[0].plan.plan_name.gsub(" ", "-"),
+                title: @mealplan[0].plan.plan_name,
+                template: "users/plans/print_pdf",
+                disposition: 'inline',
+                formats: [:html],
+                layout: 'pdf',
+                dpi: 400
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_plan
-      p "+++++++++++++++++++++++++++"
-      p params
-      p "+++++++++++++++++++++++++++"
+
       if(params[:id] == 'meal_update')
         @plan = Plan.find(params[:plan_id]) if params[:id] != 'meal_update'
       else
@@ -233,5 +184,32 @@ class Users::PlansController < ApplicationController
     def ensure_frame_response
       return unless Rails.env.development?
       redirect_to root_path unless turbo_frame_request?
+    end
+
+    def meal_plaan_grid(plan_id:, mealtypes:, days:)
+      
+
+      mealplan_data = MealPlan.where(plan_id: plan_id).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
+
+      mealplans = {}
+      mealtypes.each do |mealtype|
+          if mealplan_data[mealtype].present?
+              mealplans[mealtype] = mealplan_data[mealtype].each_with_object({}) do |mealplan, hash|
+                  days.each do |day|
+                      hash[day] ||= nil
+                      
+                      if mealplan.day == day
+                          hash[mealplan.day] = mealplan
+                      end
+                  end
+              end
+          else
+              mealplans[mealtype] = days.each_with_object({}) do |day, hash|
+                  hash[day] = nil 
+              end
+          end
+      end
+
+      mealplans
     end
 end

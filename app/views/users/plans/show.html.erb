@@ -3,7 +3,7 @@
     <h1 class="text-lg font-bold sm:text-3xl"><%= @plan.plan_name %></h1>
     <div class="flex gap-2 text-xl">
       <%# -------------------------------- %>
-      <%= link_to "Grocery list", grocery_list_plan_path(format: :pdf), class: "py-1 px-2 bg-accent rounded-md text-gray-500 hover:bg-accent/70 hover:text-gray-400" %>
+      <%= link_to "Grocery list",grocery_list_plan_path(@plan, format: :pdf), target: "_blank", class: "py-1 px-2 bg-accent rounded-md text-gray-500 hover:bg-accent/70 hover:text-gray-400" %>
       <%# -------------------------------- %>
       <%= button_to  edit_plan_path(@plan), method: :get, data: { turbo_frame: "modal" }, class: "py-1 px-2 bg-secondary rounded-md text-gray-200 hover:bg-secondary/90" do %>
         <i class="bi bi-pencil"></i>

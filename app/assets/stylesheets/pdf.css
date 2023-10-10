@@ -1,4 +1,9 @@
-body {
+/* body {
+	background: #000;
+} */
+
+/* body {
+
 	// background: #f1f1f1;
 }
 // .masonry-3-col {
@@ -22,7 +27,7 @@ body {
 // 	// -webkit-flex-wrap: wrap;
 // 	// -ms-flex-wrap: wrap;
 // 	// flex-wrap: wrap;
-// 	-webkit-box-pack: center; /* wkhtmltopdf uses this one */
+// 	-webkit-box-pack: center; 
 // 	justify-content: center;
 // }
 
@@ -36,13 +41,13 @@ body {
 
 // .row > div:last-child {
 // 	margin-right: 0;
-// }
+// } */
 .portrait-page {
 	width: 100%;
 	float: left;
-	min-height: 1832px;
-	// background-color: #f1f1f1;
+	min-height: 1700px;
 	margin: 5px 0;
+	/* background-color: #f1f1f1; */
 }
 
 .row {
@@ -127,7 +132,7 @@ ul.days {
 }
 ul.days > li {
 	float: left;
-	width: 11.8%;
+	width: 11.5%;
 	min-height: 20px;
 	padding: 10px 10px;
 	background-color: #000;
@@ -136,4 +141,7 @@ ul.days > li {
 	margin-right: 14px;
 	font-size: 24px;
 	font-weight: bolder;
+}
+ul.days > li:nth-last-child(1) {
+	margin-right: 0 !important;
 }

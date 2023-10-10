@@ -35,6 +35,6 @@ WickedPdf.config = {
   # orientation: "Landscape",
   page_size: "A4",
   lowquality: true,
-  zoom: 1,
+  zoom: 1.2,
   dpi: 75
 }

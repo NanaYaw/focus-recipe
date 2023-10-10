@@ -1,7 +1,11 @@
   <!-- Card -->
-<div id="meal_plan_<%= meal_type %>_<%= day %>"
- class="group flex flex-col w-full min-h-52 border border-gray-300 hover:shadow-md rounded-md overflow-hidden dark:bg-slate-50 dark:border-gray-200 dark:shadow-slate-200/[.7]">
-  <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day ), method: :post, class: "p-0 relative",  data: { turbo_frame: "modal" } do %>
+<div  id="meal_plan_<%= plan_id %>_<%= meal_type %>_<%= day %>"
+      data-controller="navigation"
+  class="group flex flex-col w-full min-h-52 border border-gray-300 hover:shadow-md rounded-md overflow-hidden dark:bg-slate-50 dark:border-gray-200 dark:shadow-slate-200/[.7] relative">
+  <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day ), 
+                method: :post, class: "p-0 relative",  
+                data: { turbo_frame: "modal" },
+                "data-action": "click->navigation#displayLoading close-spinner@window->navigation#removeLoading"  do %>
     <div class="h-32 overflow-hidden flex flex-col justify-center items-center bg-blue-600">
       <%#= image_tag recipe&.image.variant(resize_to_fill: [168, 150]) if recipe&.image.attached? %>
       <%= image_tag image_render(recipe&.image, width="168", height="150") %>
@@ -12,7 +16,9 @@
       <i class="bi bi-eye"></i>
     <% end %>
     <%# -------------------------------- %>
-    <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day, edit: true ), class: "p-0",  
+    <%= link_to  meal_plans_plans_path(meal_type: meal_type, plan_id: plan_id, day: day, edit: true ), 
+                "data-action": "click->navigation#displayLoading close-spinner@window->navigation#removeLoading",
+                class: "p-0",  
       data: { turbo_frame: "modal" } do %>
       <div class="text-gray-400 hover:text-black p-1" data-hs-overlay="#hs-task-created-alert">
         <i class="bi bi-pencil"></i>
@@ -28,4 +34,5 @@
   <div class="flex flex-col p-2 text-xs text-gray-600">
     <span><%= recipe.title %></span>
   </div>
+  <%= render "shared/spinner_bubble" %>
 </div>
