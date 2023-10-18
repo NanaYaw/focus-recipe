@@ -1,0 +1,33 @@
+<div class="page-container min-h-[70vh] max-h-full">
+  <div class=" max-w-3xl mx-auto">
+    <h1 class="mb-6">Profile </h1>
+    <div class="flex flex-col items-start gap-6 sm:flex-row justify-start relative pt-11" data-controller="profile-form">
+      <div class="flex flex-col w-full sm:w-3/12 relative">
+        <% if current_user.profile.user_profile_image.attached? %>
+          <%= image_tag current_user.profile.user_profile_image, 
+          data: {"profile-form-target": "thumbnail"}, 
+          size: "150", class: "mask is-squircle bg-gray-200 object-cover" %>
+        <% else %>
+          <%= image_tag 'user-1.png',   
+                      data: {"profile-form-target": "thumbnail"}, 
+                      size: "150", 
+                      class: "mask is-squircle bg-gray-200 p-1" %>
+        <% end %>
+      </div>
+      <div class="flex flex-col gap-4 w-full sm:w-9/12">
+        <div class="flex flex-col gap-1">
+          <label>Full name</label>
+          <div class="flex gap-3 text-3xl">
+            <%= @profile.first_name %>
+            <%= @profile.last_name %>
+          </div>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label>Phone</label>
+          <div class="flex gap-3 text-3xl">
+            <%= @profile.phone  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

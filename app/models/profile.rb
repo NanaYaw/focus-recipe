@@ -1,6 +1,4 @@
 class Profile < ApplicationRecord
-    after_create :create_profile
-
     belongs_to :user
 
     validates :first_name, presence: true
@@ -22,7 +20,5 @@ class Profile < ApplicationRecord
         unless acceptable_types.include?(user_profile_image.content_type)
             errors.add(:user_profile_image, "must be a JPEG or PNG")
         end
-    end
-
-  
+    end 
 end

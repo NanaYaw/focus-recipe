@@ -1,27 +1,27 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 ActiveRecord::Base.connection_pool.with_connection do |conn|
-  conn.execute("TRUNCATE  plans, profiles,  ingredients, groceries, grocery_categories, ingredient_states, measurement_units, meal_plans, recipes, reviews, favorites  RESTART IDENTITY")
+  conn.execute("TRUNCATE users,  plans, profiles,  ingredients, groceries, grocery_categories, ingredient_states, measurement_units, meal_plans, recipes, reviews, favorites  RESTART IDENTITY")
 end
 
-# User.create(
-#     email: ""aa@EXAMPLE.COM"",
-#     password: """",
-#     # password_confirmation: """",
-#     # profile_attributes: {
-#     #     first_name: "Joyce",
-#     #     last_name: "Chau"
-#     # }
-# );
+User.create(
+    email: ""aa@EXAMPLE.COM"",
+    password: """",
+    # password_confirmation: """",
+    # profile_attributes: {
+    #     first_name: "Joyce",
+    #     last_name: "Chau"
+    # }
+);
 
 
-# 20.times do |num|
-#   User.create(
-#     email: Faker::Internet.email,
-#     password: "rgfioghjrg",
-#     # password_confirmation: "rgfioghjrg",
-#   );
-# end
+20.times do |num|
+  User.create(
+    email: Faker::Internet.email,
+    password: "rgfioghjrg",
+    # password_confirmation: "rgfioghjrg",
+  );
+end
 
 
 # Grocery Categories -
@@ -63,7 +63,7 @@ end
 #-----------------------------------------------------------------------------------------#
 
 
-25.times.each do |i|
+20.times.each do |i|
   Recipe.create(
       title: Faker::Food.dish,
       description: Faker::Food.description,

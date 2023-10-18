@@ -11001,13 +11001,13 @@
     }
     attachThumbnail(e) {
       e.preventDefault();
-      console.log(e);
       const file = e.target.files[0];
       if (!imageTypes.includes(file.type)) {
         alert("Please Attached must be an image");
       }
       this.thumbnailInputTarget.files = e.target.files;
       this.thumbnailTarget.src = URL.createObjectURL(file);
+      console.log(this.thumbnailTarget);
     }
   };
   __publicField(profile_form_controller_default, "targets", ["thumbnail", "thumbnailInput"]);

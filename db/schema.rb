@@ -98,6 +98,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_21_235926) do
     t.index ["grocery_id"], name: "index_ingredients_on_grocery_id"
     t.index ["ingredient_state_id"], name: "index_ingredients_on_ingredient_state_id"
     t.index ["measurement_unit_id"], name: "index_ingredients_on_measurement_unit_id"
+    t.index ["quantity", "grocery_id", "ingredient_state_id", "measurement_unit_id", "recipe_id"], name: "ingredients_index", unique: true
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
 

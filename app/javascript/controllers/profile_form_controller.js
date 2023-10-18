@@ -13,7 +13,6 @@ export default class extends Controller {
 
 	attachThumbnail(e) {
 		e.preventDefault();
-		console.log(e);
 
 		const file = e.target.files[0];
 
@@ -24,5 +23,6 @@ export default class extends Controller {
 		this.thumbnailInputTarget.files = e.target.files;
 
 		this.thumbnailTarget.src = URL.createObjectURL(file);
+		console.log(this.thumbnailTarget);
 	}
 }

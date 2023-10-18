@@ -16,11 +16,15 @@
           data: {"profile-form-target": "thumbnail"}, 
           size: "150", class: "mask is-squircle bg-gray-200 object-cover" %>
       <% else %>
-        <%= image_tag 'user-1.png', size: "150", class: "mask is-squircle bg-gray-200 p-1" %>
+        <%= image_tag 'user-1.png',   
+                      data: {"profile-form-target": "thumbnail"}, 
+                      size: "150", 
+                      class: "mask is-squircle bg-gray-200 p-1" %>
       <% end %>
       <%= form.file_field :user_profile_image, 
-          data: {"profile-form-target": "thumbnailInput", action: "change->profile-form#attachThumbnail"},
-          class: 'form-control hidden', direct_upload: true   %>
+          data: {"profile-form-target": "thumbnailInput", 
+          action: "change->profile-form#attachThumbnail"},
+          class: 'form-control hidden'  %>
       <%= button_tag(type: :button, data: {action: "click->profile-form#changeThumbnail"}, class: "w-fit -mt-5 mx-none sm:mx-auto p-1 px-2 bg-gray-400 rounded-full z-10") do %>
         <i class="bi bi-pencil"></i>
       <% end %>

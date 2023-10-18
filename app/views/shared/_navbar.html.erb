@@ -25,7 +25,7 @@
             <div class="hs-dropdown [--strategy:static] sm:[--strategy:fixed] [--adaptive:none] sm:[--trigger:hover] sm:py-1">
               <button type="button" class="flex items-center w-full  font-medium">
                 <% if current_user.profile.user_profile_image.attached? %>
-                  <%= image_tag current_user.profile.user_profile_image, size: "40", class: "mask is-squircle" %>
+                  <%= image_tag current_user.profile.user_profile_image, size: "40", class: "mask is-squircle bg-gray-200" %>
                 <% else %>
                   <%= image_tag 'user-1.png', size: "40", class: "mask is-squircle bg-gray-200 p-1" %>
                 <% end %>

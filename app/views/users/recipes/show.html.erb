@@ -56,7 +56,7 @@
     </div>
   </div>
   <div class="sm:flex shadow-md my-8 p-4">
-    <div>
+    <div class="w-full">
       <h3 class="text-2xl text-gray-500">Reviews</h3>
       <div class="flex gap-4">
         <%= button_to "Write Review", recipe_review_path(@recipe), 
@@ -85,12 +85,20 @@
               </p>
               <%= turbo_stream_from "review-list" %>
               <%= render 'users/reviews/review', review: review.replies, recipe: @recipe if review.replies.any? %>
-              <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
+              <% if review.user_id == current_user.id %>
+                <span class="text-xs italic"><b>Author:</b> <%= review.user.profile.first_name %></span>
+                <%#= button_to 'Edit', edit_recipe_review_path(@recipe), 
+                params: {parent_id: review.id},
+                method: :get,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-secondary px-2 py-1 rounded-sm text-xs" %>
+              <% else %>
+                <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
                 params: {parent_id: review.id},
                 method: :post,
                 data: { turbo_frame: "review-#{review.id}"}, 
-                class: "bg-primary px-2 py-1 rounded-sm text-xs"
-            %>
+                class: "bg-primary px-2 py-1 rounded-sm text-xs" %>
+              <% end %>
               <%= turbo_frame_tag "review-#{review.id}" %>
             </li>
           <% end %>

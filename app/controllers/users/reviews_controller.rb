@@ -3,11 +3,13 @@ class Users::ReviewsController < ApplicationController
     before_action :set_rating_permission, only: %i[:update_rating]
 
     def index
-        @reviews = @recipe.reviews
+        @reviews = @recipe.reviews.includes(:user)
     end
 
     def new 
+        
         @review = @recipe.reviews.new
+
     end
 
     def reply 
@@ -31,11 +33,8 @@ class Users::ReviewsController < ApplicationController
         @review.user = current_user
         
         if @review.save
-            # p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            # p @review
-            # p params
-            # p ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-            redirect_to recipe_reviews_path(@recipe), notice: "Review created successfully"
+           
+            redirect_to recipe_review_path(@recipe, 39), notice: "Review created successfully"
         else
             # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
             # p @review
