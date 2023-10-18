@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   devise_for :admins, path: 'admins', controllers: {
     sessions: 'admins/sessions',
-    registrations: 'admins/registrations'
+    # registrations: 'admins/registrations'
   }
 
   devise_scope :admin do
@@ -71,7 +71,6 @@ Rails.application.routes.draw do
           
           get "recipes/:id/meal_plan/:meal_plan_id"  => "recipes#show", as: "recipe", on: :collection
         end
-        
 
         resources :recipes, only: [:show, :index, :single] do
           resources :favorites, only: [:create, :destroy]
@@ -92,6 +91,8 @@ Rails.application.routes.draw do
     scope module: :users do
       get "recipes/single/:id" => "recipes#single", as: :single_recipes
       get "recipes/single_post/:id" => "recipes#single_post", as: :single_post_recipes
+        
+      resources :profiles, only: [:update, :edit, :show]
     end
   end
 

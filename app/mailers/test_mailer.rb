@@ -5,6 +5,6 @@ class TestMailer < ActionMailer::Base
     @user = params[:user]
     
     @url  = 'http://example.com/login'
-    mail(to: '"aa@EXAMPLE.COM"', subject: 'Welcome to My Awesome Site')
+    # mail(to: '"aa@EXAMPLE.COM"', subject: 'Welcome to My Awesome Site')
   end
 end

@@ -20,6 +20,9 @@ class Users::PlansController < ApplicationController
 
     render :partial => 'users/plans/lazy_update', :locals => {plans: @plans}
   end
+
+  def photo
+  end
   
   def meal_plans
     param = {}

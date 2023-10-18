@@ -4,21 +4,21 @@ console.clear();
 
 let activeElement;
 
-// window.addEventListener('load', () => {
-const loop = horizontalLoop(boxes, {
-	paused: false,
-	speed: 10,
-	repeat: true,
-	draggable: true, // make it draggable
-	center: false, // active element is the one in the center of the container rather than th left edge
-	onChange: (element, index) => {
-		// when the active element changes, this function gets called.
-		activeElement && activeElement.classList.remove('-active');
-		element.classList.add('-active');
-		activeElement = element;
-	},
+window.addEventListener('load', () => {
+	const loop = horizontalLoop(boxes, {
+		paused: false,
+		speed: 10,
+		repeat: true,
+		draggable: true, // make it draggable
+		center: false, // active element is the one in the center of the container rather than th left edge
+		// onChange: (element, index) => {
+		// 	// when the active element changes, this function gets called.
+		// 	activeElement && activeElement.classList.remove('-active');
+		// 	element.classList.add('-active');
+		// 	activeElement = element;
+		// },
+	});
 });
-// });
 
 function horizontalLoop(items, config) {
 	items.forEach((link) => {

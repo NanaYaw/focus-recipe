@@ -3,10 +3,10 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   include Accessible
   skip_before_action :check_resource, except: [:new, :create]
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create, :edit]
 
 
-  layout "user_auth"
+  layout :select_layout
   
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
@@ -29,7 +29,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   # def edit
-  #   super
+    # super
   # end
 
   # PUT /resource
@@ -51,7 +51,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
+
+  
   protected
+  def select_layout
+    case action_name
+    when "edit"
+      "user_auth"
+      # "application"
+    else
+      "user_auth"
+    end
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_sign_up_params
@@ -87,7 +98,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       :password_confirmation,
       :remember_me,
       :role,
-      profile_attributes: %i[first_name last_name phone description]
+      profile_attributes: %i[first_name last_name phone]
     ]
   end
 end

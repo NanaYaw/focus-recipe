@@ -32,3 +32,7 @@ application.register('turbo-modal', TurboModalController);
 
 import NavigationController from './navigation_controller';
 application.register('navigation', NavigationController);
+
+//-------------
+import ProfileFormController from './profile_form_controller';
+application.register('profile-form', ProfileFormController);

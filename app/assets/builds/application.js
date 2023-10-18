@@ -10992,6 +10992,26 @@
   };
   __publicField(navigation_controller_default, "targets", ["loading", "link"]);
 
+  // controllers/profile_form_controller.js
+  var imageTypes = ["image/gif", "image/jpeg", "image/png"];
+  var profile_form_controller_default = class extends Controller {
+    changeThumbnail(e) {
+      e.preventDefault();
+      this.thumbnailInputTarget.click();
+    }
+    attachThumbnail(e) {
+      e.preventDefault();
+      console.log(e);
+      const file = e.target.files[0];
+      if (!imageTypes.includes(file.type)) {
+        alert("Please Attached must be an image");
+      }
+      this.thumbnailInputTarget.files = e.target.files;
+      this.thumbnailTarget.src = URL.createObjectURL(file);
+    }
+  };
+  __publicField(profile_form_controller_default, "targets", ["thumbnail", "thumbnailInput"]);
+
   // controllers/index.js
   application.register("content-loader", o);
   application.register("hello", hello_controller_default);
@@ -11000,6 +11020,7 @@
   application.register("mealplan", meal_plan_controller_default);
   application.register("turbo-modal", turbo_modal_controller_default);
   application.register("navigation", navigation_controller_default);
+  application.register("profile-form", profile_form_controller_default);
 
   // application.js
   var import_preline = __toESM(require_preline());
@@ -11008,20 +11029,22 @@
   var wrapper = document.querySelector(".scroll_box");
   var boxes = gsap.utils.toArray(".slide-box");
   console.clear();
-  var activeElement;
-  var loop = horizontalLoop(boxes, {
-    paused: false,
-    speed: 10,
-    repeat: true,
-    draggable: true,
-    // make it draggable
-    center: false,
-    // active element is the one in the center of the container rather than th left edge
-    onChange: (element, index) => {
-      activeElement && activeElement.classList.remove("-active");
-      element.classList.add("-active");
-      activeElement = element;
-    }
+  window.addEventListener("load", () => {
+    const loop = horizontalLoop(boxes, {
+      paused: false,
+      speed: 10,
+      repeat: true,
+      draggable: true,
+      // make it draggable
+      center: false
+      // active element is the one in the center of the container rather than th left edge
+      // onChange: (element, index) => {
+      // 	// when the active element changes, this function gets called.
+      // 	activeElement && activeElement.classList.remove('-active');
+      // 	element.classList.add('-active');
+      // 	activeElement = element;
+      // },
+    });
   });
   function horizontalLoop(items, config) {
     items.forEach((link) => {

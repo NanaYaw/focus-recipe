@@ -23,15 +23,17 @@ Todo:
   TODO: User account email activation
   [ ] Blurred modal UIs
   [ ] Admin Hotwire UI loading states
+  [ ] N+1 query for pdfs
+  [ ] Pdf generation name
+  [ ] Add profile image
+  [ ] Profile edit and settings
+  TODO: User Accounts profile(Names, profile image, password change)
 
 - DOING -
   [ ] Reviews frame gives "Content missing" error on create action
   [ ] User Role Management (Comments Reply)
-  [ ] N+1 query for pdfs
-  [ ] Pdf generation name
-  TODO: User Accounts profile(Names, profile image, password change)
   [ ] EL transitions
-  [ ] Add profile image
-  [ ] Profile edit and settings
   [ ] Print
   [ ] UUIDS { friendly_id}
+  [ ] Admin Devise registration cleanup and "invitable"
+  [ ] style profile pages

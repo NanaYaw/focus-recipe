@@ -5,7 +5,10 @@
     </h1>
     <div class="my-4">
       <% if @recipe.image.attached? %>
-        <%= image_tag @recipe&.image.variant(resize_to_fill: [], style:"" ) %>
+        <%= turbo_frame_tag id="image-1", src=@recipe&.image.url, loading: :lazy do %>
+          <h1 class="">LOADING...</h1>
+          <%#= image_tag @recipe&.image.variant(resize_to_fill: [], style:"" ) %>
+        <% end %>
       <% else %>
         <span class="text-red-700"> No image attached yet!!!</span>
       <% end %>

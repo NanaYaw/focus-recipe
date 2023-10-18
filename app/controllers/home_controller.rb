@@ -2,7 +2,7 @@ class HomeController < ApplicationController
     before_action :authenticate_user!, except: [:index, :testmailer]
 
     def index
-        @recipes = Recipe.includes(:reviews, :ingredients, :favorites, :meal_plans).limit(12)
+        @recipes = Recipe.includes(:reviews, :ingredients, :favorites, :meal_plans,  image_attachment: :blob).limit(12)
         # @mealtypes = MealType::MEAL_TYPE
         # @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
         # @mealplan_data = MealPlan.where(plan_id: 1).select(:meal_type, :recipe_id, :day).includes(recipe: [:reviews]).group_by(&:meal_type).with_indifferent_access
@@ -27,8 +27,8 @@ class HomeController < ApplicationController
         # end 
     end
 
-    def testmailer
-        @user = User.first
-        TestMailer.with(user: @user).welcome_email.deliver_now
-    end
+    # def testmailer
+    #     @user = User.first
+    #     TestMailer.with(user: @user).welcome_email.deliver_now
+    # end
 end

@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
+    include Pagy::Backend
+    
     include ActiveStorage::SetCurrent
     # before_action :authenticate_user!
     
-    include Pagy::Backend
 
     helper_method :breadcrumbs
 

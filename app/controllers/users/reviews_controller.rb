@@ -77,8 +77,7 @@ class Users::ReviewsController < ApplicationController
 
 private
 
-    def set_recipe
-        
+    def set_recipe 
         @recipe = Recipe.find_by!(id: params[:recipe_id].to_i)
     end
 

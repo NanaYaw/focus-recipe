@@ -1,0 +1,46 @@
+<%= form_with(model: profile, url: profile_path(:profile), html: { method: :put }) do |form| %>
+  <% if profile.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this grocery_category from being saved:</h2>
+      <ul>
+        <% profile.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="flex flex-col items-start gap-6 sm:flex-row justify-start relative pt-11" data-controller="profile-form">
+    <div class="flex flex-col w-full sm:w-3/12 relative">
+      <% if current_user.profile.user_profile_image.attached? %>
+        <%= image_tag current_user.profile.user_profile_image, 
+          data: {"profile-form-target": "thumbnail"}, 
+          size: "150", class: "mask is-squircle bg-gray-200 object-cover" %>
+      <% else %>
+        <%= image_tag 'user-1.png', size: "150", class: "mask is-squircle bg-gray-200 p-1" %>
+      <% end %>
+      <%= form.file_field :user_profile_image, 
+          data: {"profile-form-target": "thumbnailInput", action: "change->profile-form#attachThumbnail"},
+          class: 'form-control hidden', direct_upload: true   %>
+      <%= button_tag(type: :button, data: {action: "click->profile-form#changeThumbnail"}, class: "w-fit -mt-5 mx-none sm:mx-auto p-1 px-2 bg-gray-400 rounded-full z-10") do %>
+        <i class="bi bi-pencil"></i>
+      <% end %>
+    </div>
+    <div class="flex flex-col gap-3 w-full sm:w-9/12">
+      <div class="flex flex-col">
+        <%= form.label :first_name, style: "display: block" %>
+        <%= form.text_field :first_name, class: "text-gray-800" %>
+      </div>
+      <div class="flex flex-col">
+        <%= form.label :last_name, style: "display: block" %>
+        <%= form.text_field :last_name, class: "text-gray-800"  %>
+      </div>
+      <div class="flex flex-col">
+        <%= form.label :phone, style: "display: block" %>
+        <%= form.text_field :phone, class: "text-gray-800"  %>
+      </div>
+      <div class="flex justify-start absolute top-0 right-0">
+        <%= form.submit class: "button button--primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
