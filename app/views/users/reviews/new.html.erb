@@ -11,6 +11,7 @@
       </div>
       <div class="flex justify-end mt-5">
         <%= f.hidden_field :recipe_id %>
+        <%= f.hidden_field :meal_plan_id, :value => params[:meal_plan_id] %>
         <%= f.submit "Post Review", class: "button button--primary" %>
       </div>
     <% end %>

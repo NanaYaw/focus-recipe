@@ -7,22 +7,16 @@ class Users::ReviewsController < ApplicationController
     end
 
     def new 
-        
-        @review = @recipe.reviews.new
 
+        @review = @recipe.reviews.new
     end
 
     def reply 
-        
         @review = @recipe.reviews.new(parent_id: params[:parent_id])
-
-        # p ">>>>>>>>>>>>>>>>>>>>>>>>"
-        # p @review
-        # p ">>>>>>>>>>>>>>>>>>>>>>>>"
       
         if(@review.parent_id)
             Turbo::StreamsChannel.broadcast_prepend_to "review-list", 
-            target: "review-#{@review.parent_id}", 
+            target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}", 
             partial: "users/reviews/reply",
             locals: {:parent_id => params[:parent], recipe: @recipe, review: @review}
         end 
@@ -31,10 +25,104 @@ class Users::ReviewsController < ApplicationController
     def create
         @review = @recipe.reviews.new set_rating_permission
         @review.user = current_user
-        
+       
+
+        p "++++++++++++++++++++++++++++++++++++++++++++++"
+        p @review.parent
+        p "======================"
+        p "parent - #{@review.parent_id}"
+        p "======================"
+        p params
+        p "++++++++++++++++++++++++++++++++++++++++++++++"
+
         if @review.save
-           
-            redirect_to recipe_review_path(@recipe, 39), notice: "Review created successfully"
+
+            params_parent_id = params[:review][:parent_id]
+
+            if @review.parent_id.blank? && params_parent_id.blank?
+                target = @recipe.id 
+                Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
+                target: "reviews-#{target}", 
+                partial: "users/reviews/review_single",
+                locals: {
+                    recipe: @recipe, 
+                    review: @review,
+                    parent_id: params[:parent],
+                    current_user: current_user,
+                    target: target
+                }
+
+                Turbo::StreamsChannel.broadcast_remove_to "review-list", 
+                target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}"
+
+                render turbo_stream: turbo_visit(recipe_plans_path(@recipe, meal_plan_id: params[:review][:meal_plan_id].to_i))
+
+            elsif !@review.parent_id.blank? && !params_parent_id.blank? 
+                target = "#{@recipe.id}-#{@review.parent_id}" 
+                Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
+                target: "reviews-#{target}", 
+                partial: "users/reviews/review_single",
+                locals: {
+                    :parent_id => params[:parent], 
+                    recipe: @recipe, 
+                    review: @review, 
+                    current_user: current_user,
+                    target: target
+                }
+
+                Turbo::StreamsChannel.broadcast_remove_to "review-list", 
+                target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}"
+            elsif @review.parent_id.blank? && !params_parent_id.blank? 
+                target = "#{@review.id}" 
+                Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
+                target: "reviews-#{target}", 
+                partial: "users/reviews/review_single",
+                locals: {
+                    :parent_id => params[:parent], 
+                    recipe: @recipe, 
+                    review: @review, 
+                    current_user: current_user,
+                    target: target
+                }
+
+                Turbo::StreamsChannel.broadcast_remove_to "review-list", 
+                target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}" 
+            else
+            end
+
+            
+            # if !@review.parent_id.blank?
+            #     target = "#{@recipe.id}-#{@review.parent_id}" 
+            #     Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
+            #     target: "reviews-#{target}", 
+            #     partial: "users/reviews/review_single",
+            #     locals: {
+            #         :parent_id => params[:parent], 
+            #         recipe: @recipe, 
+            #         review: @review, 
+            #         current_user: current_user,
+            #         target: target
+            #     }
+
+            #     Turbo::StreamsChannel.broadcast_remove_to "review-list", 
+            #     target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}"
+            # else
+            #     target = @recipe.id 
+            #     Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
+            #     target: "reviews-#{target}", 
+            #     partial: "users/reviews/review_single",
+            #     locals: {
+            #         recipe: @recipe, 
+            #         review: @review,
+            #         parent_id: params[:parent],
+            #         current_user: current_user,
+            #         target: target
+            #     }
+            # end
+
+            # redirect_to recipe_plans_path(@recipe, meal_plan_id: params[:meal_plan_id].to_i), turbo_frame: "_top", notice: "Review created successfully"
+            # render turbo_stream: turbo_visit(recipe_plans_path(@recipe, meal_plan_id: params[:meal_plan_id].to_i))
+
         else
             # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
             # p @review
@@ -75,6 +163,16 @@ class Users::ReviewsController < ApplicationController
 
 
 private
+
+def turbo_visit(url, frame: nil, action: nil)
+  options = {frame: frame, action: action}.compact
+  turbo_stream.append_all("head") do
+    helpers.javascript_tag(<<~SCRIPT.strip, nonce: true, data: {turbo_cache: false})
+      window.Turbo.visit("#{helpers.escape_javascript(url)}", #{options.to_json})
+      document.currentScript.remove()
+    SCRIPT
+  end
+end
 
     def set_recipe 
         @recipe = Recipe.find_by!(id: params[:recipe_id].to_i)

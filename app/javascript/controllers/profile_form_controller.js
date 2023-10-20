@@ -23,6 +23,6 @@ export default class extends Controller {
 		this.thumbnailInputTarget.files = e.target.files;
 
 		this.thumbnailTarget.src = URL.createObjectURL(file);
-		console.log(this.thumbnailTarget);
+		// console.log(this.thumbnailTarget);
 	}
 }

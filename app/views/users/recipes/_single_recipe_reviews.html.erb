@@ -1,0 +1,31 @@
+<!-- ----------------------------------------- -->
+<!-- ------------- START REVIEWS ------------- -->
+<div class="sm:flex  my-8 p-4">
+  <div class="w-full">
+    <h3 class="text-2xl text-gray-500">Reviews</h3>
+    <div class="flex gap-4">
+      <%= button_to "Write Review", recipe_review_path(@recipe), 
+          params: {recipe_id: @recipe.id, recipe_id: params[:id], meal_plan_id: params[:meal_plan_id]}, 
+          method: :post,
+          data: { turbo_frame: "write-review" }, 
+          class: "button button--secondary" 
+        %>
+      <%= link_to pluralize(@recipe.reviews.size, "Review"), recipe_reviews_path(@recipe) %>
+    </div>
+    <%= turbo_frame_tag "write-review"  %>
+    <%# --------------------------------- %>
+    <%= turbo_stream_from :reviews %>
+    <% if @recipe.reviews.present? %>
+      <ul id="reviews-<%= @recipe.id %>" class="flex flex-col gap-4 reviews pr-4">
+        <% @recipe.reviews.each do |review| %>
+          <% if review.parent_id.nil?  %>
+            <%= render "users/reviews/review_main", review: review, recipe: @recipe, current_user: current_user %>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+    <%# --------------------------------- %>
+  </div>
+</div>
+<!-- ------------- END REVIEWS ------------- -->
+<!-- --------------------------------------- -->

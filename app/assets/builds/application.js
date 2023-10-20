@@ -11007,7 +11007,6 @@
       }
       this.thumbnailInputTarget.files = e.target.files;
       this.thumbnailTarget.src = URL.createObjectURL(file);
-      console.log(this.thumbnailTarget);
     }
   };
   __publicField(profile_form_controller_default, "targets", ["thumbnail", "thumbnailInput"]);

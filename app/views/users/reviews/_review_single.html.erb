@@ -1,0 +1,46 @@
+<%#= turbo_stream_from "reviews-#{target}" %>
+<%#= turbo_stream_from "reviews-ccc" %>
+<ul class="replies flex flex-col w-full pl-4 gap-4">
+  <li id="<%= "reviews-#{target}" %>"  class="bg-accent-50 border border-l-4 border-gray-200 p-4 mb-3 shadow-sm">
+    <p><%#= review.user.profile.last_name if review.user.profile.last_name.present? %></p>
+    <p>
+      <span class="date">
+        <%= time_ago_in_words(review.created_at) %> ago
+      </span>
+    </p>
+    <%#= render "shared/stars", percent: review.stars_as_percent %>
+    <p><%= review.comment %></p>
+    <% unless current_user.nil? %>
+      <%#= button_to 'Reply', reply_recipe_reviews_path(recipe), 
+                params: {parent_id: review.id},
+                method: :post,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs"
+            %>
+    <% end %>
+    <%#= turbo_frame_tag "review-#{review.id}" %>
+    <%= render 'users/reviews/reply_list', review: review.replies,  recipe: recipe if review.replies.any? %>
+    <%= turbo_frame_tag "review-reply-cc-#{review.id}" %>
+    <% if current_user&.id.present? %>
+      <% if review.user_id == current_user.id %>
+        <span class="text-xs italic"><b>Author:</b> <%= review.user.profile.first_name %></span>
+        <%#= button_to 'Edit', edit_recipe_review_path(@recipe), 
+                params: {parent_id: review.id},
+                method: :get,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-secondary px-2 py-1 rounded-sm text-xs" %>
+        <%= button_to 'Reply', reply_recipe_reviews_path(recipe), 
+                params: {parent_id: review.id, inner: "cc", recipe_id: params[:id], meal_plan_id: params[:meal_plan_id]},
+                method: :post,
+                data: { turbo_frame: "review-reply-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs" %>
+      <% else %>
+        <%= button_to 'Reply', reply_recipe_reviews_path(recipe), 
+                params: {parent_id: review.id, inner: "cc", recipe_id: params[:id], meal_plan_id: params[:meal_plan_id]},
+                method: :post,
+                data: { turbo_frame: "review-reply-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs" %>
+      <% end %>
+    <% end %>
+  </li>
+</ul>

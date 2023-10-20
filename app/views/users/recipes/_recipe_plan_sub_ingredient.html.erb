@@ -1,6 +1,6 @@
 <ul id="recipe_<%= recipe.id %>" class="flex flex-col">
   <% count = 0 %>
-  <% recipe_ingredient.each do |ingredient| %>
+  <% recipe_ingredient.each do |index, ingredient| %>
     <% unless ingredient.nil? %>
       <li id="ingredient--#<%= ingredient[:id] %>" class="flex justify-between bg-gray-50 hover:bg-gray-200 gap-2 mb-1">
         <div class="flex gap-2">
@@ -8,9 +8,9 @@
             <%= count += 1  %>
           </span>
           <span>
-            <%= render "users/recipes/ingredient_quantity", quantity: ingredient.quantity, id: ingredient.id %>
-            - <%= ingredient.grocery.name %> - <%= ingredient.ingredient_state.name %>
-            <%= ingredient.measurement_unit.name %>
+            <%= render "users/recipes/ingredient_quantity", quantity: ingredient[:quantity], id: ingredient[:id] %>
+            - <%= ingredient[:grocery] %> - <%= ingredient[:ingredient_state] %>
+            <%= ingredient[:measurement_unit] %>
           </span>
         </div>
         <% if admin_signed_in? %>

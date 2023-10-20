@@ -1,40 +1,5 @@
 <% review.each do | review_s | %>
   <ul>
-    <li  class="bg-accent-50 border-l-4 border-accent p-4">
-      <p><%#= review.user.profile.last_name if review.user.profile.last_name.present? %></p>
-      <p>
-        <span class="date">
-          <%= time_ago_in_words(review_s.created_at) %> ago
-        </span>
-      </p>
-      <%#= render "shared/stars", percent: review.stars_as_percent %>
-      <p><%= review_s.comment %></p>
-      <% unless current_user.nil? %>
-        <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
-                params: {parent_id: review_s.id},
-                method: :post,
-                data: { turbo_frame: "review-#{review_s.id}"}, 
-                class: "bg-primary px-2 py-1 rounded-sm text-xs"
-            %>
-      <% end %>
-      <%= turbo_frame_tag "review-#{review_s.id}" %>
-      <%= render 'users/reviews/review', review: review_s.replies, recipe: @recipe if review_s.replies.any? %>
-      <% if current_user&.id.present? %>
-        <% if review_s.user_id == current_user.id %>
-          <span class="text-xs italic"><b>Author:</b> <%= review_s.user.profile.first_name %></span>
-          <%#= button_to 'Edit', edit_recipe_review_path(@recipe), 
-                params: {parent_id: review.id},
-                method: :get,
-                data: { turbo_frame: "review-#{review.id}"}, 
-                class: "bg-secondary px-2 py-1 rounded-sm text-xs" %>
-        <% else %>
-          <%= button_to 'Reply', reply_recipe_reviews_path(@recipe), 
-                params: {parent_id: review_s.id},
-                method: :post,
-                data: { turbo_frame: "review-#{review_s.id}"}, 
-                class: "bg-primary px-2 py-1 rounded-sm text-xs" %>
-        <% end %>
-      <% end %>
-    </li>
+    <%= render "review_single", review: review_s %>
   </ul>
 <% end %>

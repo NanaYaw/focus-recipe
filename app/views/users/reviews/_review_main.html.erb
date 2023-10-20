@@ -1,0 +1,30 @@
+<li class="review-main w-full bg-gray-50 my-1 p-4 shadow-md" id="review-<%= review.id %>">
+  <%= render "shared/stars", recipe: recipe, review: review  %>
+  <p>
+    <%= review.user.name if review.user.name.present? %>
+    <span class="text-xs text-gray-500 italic">
+      <%= time_ago_in_words(review.created_at) %> ago
+    </span>
+  </p>
+  <p>
+    <%= review.comment %>
+  </p>
+  <%= turbo_stream_from "review-list" %>
+  <%= render 'users/reviews/reply_list', review: review.replies, recipe: recipe if review.replies.any? %>
+  <%= turbo_frame_tag "review-reply-#{review.id}" %>
+  <% if review.user_id == current_user.id %>
+    <span class="text-xs italic"><b>Author:</b> <%= review.user.profile.first_name %></span>
+    <%= button_to 'Edit', edit_recipe_review_path(recipe), 
+                params: {parent_id: review.id, recipe_id: params[:id], meal_plan_id: params[:meal_plan_id]},
+                method: :get,
+                data: { turbo_frame: "review-#{review.id}"}, 
+                class: "bg-secondary px-2 py-1 rounded-sm text-xs" %>
+  <% else %>
+    <%= button_to 'Reply', reply_recipe_reviews_path(recipe), 
+                params: {parent_id: review.id, recipe_id: params[:id], meal_plan_id: params[:meal_plan_id]},
+                method: :post,
+                data: { turbo_frame: "review-reply-#{review.id}"}, 
+                class: "bg-primary px-2 py-1 rounded-sm text-xs" %>
+  <% end %>
+  <%= turbo_frame_tag "review-#{review.id}" %>
+</li>

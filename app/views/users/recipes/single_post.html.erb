@@ -2,9 +2,9 @@
   <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
     <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
   </h1>
-  <div class="my-4">
+  <div class="w-full my-4">
     <% if @recipe.image.attached? %>
-      <%= image_tag @recipe&.image.variant(resize_to_fill: [], style:"" ) %>
+      <%= image_tag @recipe&.image.variant(resize_to_fill: [1000, 300]), class: "w-full object-cover" %>
     <% else %>
       <span class="text-red-700"> No image attached yet!!!</span>
     <% end %>
@@ -29,6 +29,7 @@
       </div>
     </div>
     <!-- -------------------------------------------- -->
+    <%= debug @recipe.ingredients %>
     <% unless @recipe.ingredients.empty? %>
       <div  data-value-id="<%= @recipe.id %>"  class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" id="recipe-update-33">
         <!----- Ingredients  ------>
@@ -56,8 +57,9 @@
       <%= turbo_frame_tag "write-review"  %>
       <%# --------------------------------- %>
       <ul class="flex flex-col gap-4 reviews">
+        <%= debug @recipe.reviews %>
         <%= turbo_stream_from "review-list" %>
-        <% @reviews.each do |review| %>
+        <% @recipe.reviews.each do |review| %>
           <% unless review.parent_id || !review.persisted? %>
             <li class="bg-gray-50 my-1 p-4" id="review-<%= review.id %>">
               <%= render "shared/stars", recipe: @recipe, review: review  %>

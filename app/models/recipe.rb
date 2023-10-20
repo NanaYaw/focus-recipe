@@ -4,7 +4,7 @@ class Recipe < ApplicationRecord
     has_many :meal_plans, dependent: :nullify
     has_many :ingredients, dependent: :destroy
     has_many :plans, through: :meal_plans, dependent: :destroy
-    has_many :reviews, dependent: :destroy
+    has_many :reviews,   -> { order(created_at: :desc) }, dependent: :destroy
     has_many :favorites, dependent: :destroy
 
     has_one_attached :image 
