@@ -30,7 +30,7 @@
         <%= form_with(model: recipe) do |form| %>
           <div class="flex flex-col">
             <%= form.label :image, class: 'form-label' %>
-            <%= form.file_field :image, class: 'form-control', direct_upload: true %>
+            <%= form.file_field :image, class: 'form-control' %>
           </div>
           <div class="flex justify-end">
             <%= form.submit :Update, :class => "button button--primary" %>

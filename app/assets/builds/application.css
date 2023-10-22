@@ -825,6 +825,10 @@ h5{
   left: 0px;
 }
 
+.left-2{
+  left: 0.5rem;
+}
+
 .right-0{
   right: 0px;
 }
@@ -845,6 +849,10 @@ h5{
   top: 0px;
 }
 
+.top-1{
+  top: 0.25rem;
+}
+
 .top-16{
   top: 4rem;
 }
@@ -855,14 +863,6 @@ h5{
 
 .top-full{
   top: 100%;
-}
-
-.left-2{
-  left: 0.5rem;
-}
-
-.top-1{
-  top: 0.25rem;
 }
 
 .isolate{
@@ -1175,10 +1175,6 @@ h5{
 
 .h-screen{
   height: 100vh;
-}
-
-.h-60{
-  height: 15rem;
 }
 
 .max-h-\[100vh\]{
@@ -3909,14 +3905,6 @@ h5{
 
   .sm\:h-screen{
     height: 100vh;
-  }
-
-  .sm\:h-80{
-    height: 20rem;
-  }
-
-  .sm\:h-96{
-    height: 24rem;
   }
 
   .sm\:min-h-screen{
