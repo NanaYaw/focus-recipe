@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Admins::RegistrationsController < Devise::RegistrationsController
+  layout "application_admin"
+
   include Accessible
   skip_before_action :check_resource, except: [:new, :create]
   # before_action :configure_sign_up_params, only: [:create]

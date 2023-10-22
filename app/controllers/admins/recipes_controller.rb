@@ -1,4 +1,4 @@
-class Admins::RecipesController < ApplicationController
+class Admins::RecipesController < DashboardsController 
   before_action :set_recipe, only: %i[ show edit edit_title update_title create_directions update destroy ]
   # before_action :ensure_frame_response, only: [:new, :create, :title, :create_ingredient, :edit_direction, :update_direction, :delete_direction]
 

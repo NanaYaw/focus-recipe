@@ -29,6 +29,7 @@ group :development do
   gem "web-console"
   # gem "rack-mini-profiler"
   # gem "spring"
+  gem "mailcatcher", "~> 0.2.4"
 end
 
 group :test do
@@ -60,3 +61,6 @@ gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem "htmlbeautifier", "~> 1.4"
 
 gem "awesome_print", "~> 1.9"
+
+gem "devise_invitable", "~> 2.0"
+

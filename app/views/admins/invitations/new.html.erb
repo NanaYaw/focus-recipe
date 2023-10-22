@@ -1,0 +1,17 @@
+<div class="page-container flex justify-center">
+  <div class="flex flex-col gap-2 w-full sm:w-6/12">
+    <h2 class="mt-4"><%= t "devise.invitations.new.header" %></h2>
+    <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post, class: "flex flex-col gap-3" }) do |f| %>
+      <%#= render "admins/shared/error_messages", resource: resource %>
+      <% resource.class.invite_key_fields.each do |field| -%>
+        <div class="w-full flex flex-col  field">
+          <%= f.label field %>
+          <%= f.text_field field %>
+        </div>
+      <% end -%>
+      <div class="actions">
+        <%= f.submit t("devise.invitations.new.submit_button"), class: "button button--secondary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

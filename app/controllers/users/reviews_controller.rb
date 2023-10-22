@@ -27,13 +27,13 @@ class Users::ReviewsController < ApplicationController
         @review.user = current_user
        
 
-        p "++++++++++++++++++++++++++++++++++++++++++++++"
-        p @review.parent
-        p "======================"
-        p "parent - #{@review.parent_id}"
-        p "======================"
-        p params
-        p "++++++++++++++++++++++++++++++++++++++++++++++"
+        # p "++++++++++++++++++++++++++++++++++++++++++++++"
+        # p @review.parent
+        # p "======================"
+        # p "parent - #{@review.parent_id}"
+        # p "======================"
+        # p params
+        # p "++++++++++++++++++++++++++++++++++++++++++++++"
 
         if @review.save
 

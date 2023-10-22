@@ -1,4 +1,4 @@
-class Admins::IngredientsController < ApplicationController
+class Admins::IngredientsController < DashboardsController 
   before_action :set_ingredient, only: %i[ edit show update destroy ]
   # before_action :set_recipe, excerpt: %i[ updated ]
 

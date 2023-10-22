@@ -1,0 +1,99 @@
+<div class="page-container">
+  <!------------------->
+  <div id="grocery">
+    <!-- Table Section -->
+    <div class="max-w-[85rem] py-4 mx-auto">
+      <h1 class="py-2 px-4 border-l-4 border-accent/70 text-primary text-3xl mb-4">Users</h1>
+      <!-- Card -->
+      <div class="flex flex-col">
+        <div class="-m-1.5 overflow-x-auto">
+          <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+              <!-- Header -->
+              <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    Users
+                  </h2>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Invite new Admin users
+                  </p>
+                </div>
+                <div>
+                  <div class="inline-flex gap-x-2">
+                    <%= link_to "Invite an admin user", new_admin_invitation_path, class: "button button--primary" %>
+                  </div>
+                </div>
+              </div>
+              <!-- End Header -->
+              <!-- Table -->
+              <% if @users.count > 0%>
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                  <thead class="bg-gray-50 dark:bg-slate-800">
+                    <tr>
+                      <th scope="col" class="pl-6 py-3 text-left">
+                        <label for="hs-at-with-checkboxes-main" class="flex">
+                          <input type="checkbox" class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-main">
+                          <span class="sr-only">Checkbox</span>
+                        </label>
+                      </th>
+                      <th scope="col" class="pl-6 lg:pl-3 xl:pl-0 pr-6 py-3 text-left">
+                        <div class="flex items-center gap-x-2">
+                          <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                            Name
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center gap-x-2">
+                          <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                            Status
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-left">
+                        <div class="flex items-center gap-x-2">
+                          <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                            Created
+                          </span>
+                        </div>
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-right"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                    <% @users.each do |users| %>
+                      <%= render "admins/users/user", user: users %>
+                    <% end %>
+                  </tbody>
+                </table>
+              <% else %>
+                <div>
+                  <h2 class="text-2xl col text-gray-300 dark:text-white p-4">No Groceries uploaded</h2>
+                </div>
+              <% end %>
+              <!-- End Table -->
+              <!-- Footer -->
+              <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+                <div>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <span class="font-semibold text-gray-800 dark:text-gray-200"><%= pluralize(@users.count, 'result')  %></span>
+                  </p>
+                </div>
+                <div>
+                  <div class="inline-flex gap-x-2">
+                    <%== pagy_nav(@pagy) if @pagy.pages > 1 %>
+                  </div>
+                </div>
+              </div>
+              <!-- End Footer -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Card -->
+    </div>
+    <!-- End Table Section -->
+  </div>
+  <!------------------->
+</div>

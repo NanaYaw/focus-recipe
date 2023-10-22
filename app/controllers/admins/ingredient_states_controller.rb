@@ -1,4 +1,4 @@
-class Admins::IngredientStatesController < ApplicationController
+class Admins::IngredientStatesController < DashboardsController 
   before_action :set_ingredient_state, only: %i[ show edit update destroy ]
 
   # GET /ingredient_states or /ingredient_states.json

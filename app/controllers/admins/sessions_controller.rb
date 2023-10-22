@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class Admins::SessionsController < Devise::SessionsController
+  layout "application_admin"
+  
   include Accessible
   skip_before_action :check_resource, only: :destroy
+
+
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in

@@ -1,4 +1,4 @@
-class Admins::GroceriesController < ApplicationController
+class Admins::GroceriesController < DashboardsController
     before_action :set_grocery, only: %i[ show edit update destroy ]
 
     def index

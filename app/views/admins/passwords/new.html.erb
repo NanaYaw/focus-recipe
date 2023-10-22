@@ -1,0 +1,18 @@
+<div class="w-full mx-auto md:w-6/12 flex flex-col gap-4 p-4">
+  <h2 class="mb-4">Forgot your password?</h2>
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+    <div class="flex flex-col gap-4">
+      <%= render "users/shared/error_messages", resource: resource %>
+      <div class="flex flex-col field">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Send me reset password instructions", class: "button button--primary" %>
+      </div>
+    </div>
+  <% end %>
+  <div class="flex flex-col sm:flex-row gap-4 mt-5">
+    <%= render "users/shared/links" %>
+  </div>
+</div>

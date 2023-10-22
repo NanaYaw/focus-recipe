@@ -1,4 +1,4 @@
-class Admins::MeasurementUnitsController < ApplicationController
+class Admins::MeasurementUnitsController < DashboardsController 
   before_action :set_measurement_unit, only: %i[ show edit update destroy ]
 
   # GET /measurement_units or /measurement_units.json

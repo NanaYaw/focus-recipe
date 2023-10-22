@@ -8,17 +8,21 @@ Rails.application.routes.draw do
 
   devise_for :admins, path: 'admins', controllers: {
     sessions: 'admins/sessions',
+    passwords: 'admins/passwords',
+    invitations: 'admins/invitations',
     # registrations: 'admins/registrations'
   }
 
   devise_scope :admin do
     authenticated :admin do
       
-      namespace :admins do
-        get 'dashboard' => "dashboard#index", as: :authenticated_root
-      end
-    
+      # namespace :admins do
+      # end
+      
       scope module: :admins do
+        get 'dashboard' => "dashboard#index", as: :authenticated_root
+        get 'users' => "users#index"
+
         resources :ingredient_states
         resources :measurement_units
         resources :groceries
