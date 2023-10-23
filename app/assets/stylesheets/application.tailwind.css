@@ -67,6 +67,9 @@
 .show-page > label {
 	@apply pl-3 py-1.5 border-l-2 border-accent;
 }
+.mob-days {
+	@apply text-right absolute top-1 right-0 pl-1 pr-3 -mr-2  py-0.5 bg-black/70 text-white text-[10px] rounded-l-md shadow-sm block lg:hidden;
+}
 
 .signup_gradient_J0K:before {
 	top: 0;

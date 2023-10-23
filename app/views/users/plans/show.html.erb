@@ -16,6 +16,19 @@
   </div>
   <%= turbo_stream_from "mealplans_list" %>
   <!-- #BEGIN Meal Plan -->
+  <!-- ------------------- -->
+  <div class=" bg-slate-200 mt-4 p-1 hidden lg:block">
+    <ul class="grid grid-cols-7 m-0 text-xs font-bold">
+      <li>Day 1</li>
+      <li>Day 2</li>
+      <li>Day 3</li>
+      <li>Day 4</li>
+      <li>Day 5</li>
+      <li>Day 6</li>
+      <li>Day 7</li>
+    </ul>
+  </div>
+  <!-- ------------------- -->
   <ul class="flex flex-col gap-8 mb-2 ">
     <% @mealplans.each do |mealtype, mealplan| %>
       <li>
