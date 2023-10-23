@@ -64,6 +64,10 @@
 	}
 }
 
+.show-page > label {
+	@apply pl-3 py-1.5 border-l-2 border-accent;
+}
+
 .signup_gradient_J0K:before {
 	top: 0;
 	left: 0;

@@ -1,4 +1,5 @@
 class Admins::IngredientStatesController < DashboardsController 
+  before_action :ensure_frame_response, only: [:new, :edit ]
   before_action :set_ingredient_state, only: %i[ show edit update destroy ]
 
   # GET /ingredient_states or /ingredient_states.json
@@ -66,5 +67,10 @@ class Admins::IngredientStatesController < DashboardsController
     # Only allow a list of trusted parameters through.
     def ingredient_state_params
       params.require(:ingredient_state).permit(:name, :description, :status)
+    end
+
+    def ensure_frame_response
+        return unless Rails.env.development?
+        redirect_to ingredient_states_path unless turbo_frame_request?
     end
 end

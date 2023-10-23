@@ -1,4 +1,5 @@
 class Admins::GroceriesController < DashboardsController
+    before_action :ensure_frame_response, only: [:new, :edit ]
     before_action :set_grocery, only: %i[ show edit update destroy ]
 
     def index
@@ -61,5 +62,10 @@ class Admins::GroceriesController < DashboardsController
         # Only allow a list of trusted parameters through.
         def grocery_params
             params.require(:grocery).permit(:name, :description, :grocery_category_id)
+        end
+
+        def ensure_frame_response
+            return unless Rails.env.development?
+            redirect_to groceries_path unless turbo_frame_request?
         end
 end

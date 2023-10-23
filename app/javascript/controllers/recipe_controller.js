@@ -76,7 +76,7 @@ export default class extends Controller {
 				body: formData,
 				responseKind: 'json',
 			});
-
+			console.log(response);
 			if (response.ok) {
 				modal.hide();
 			} else {

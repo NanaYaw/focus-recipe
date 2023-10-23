@@ -1,7 +1,22 @@
-<p style="color: green"><%= notice %></p>
-<%= render @grocery %>
-<div>
-  <%= link_to "Edit this grocery", edit_grocery_category_path(@grocery) %> |
-  <%= link_to "Back to groceries", groceries_path %>
-  <%= button_to "Destroy this grocery", @grocery, method: :delete %>
+<div class="page-container">
+  <div class="show-page flex flex-col gap-4 min-w-min">
+    <div class="flex flex-col">
+      <label>Grocery name:</label>
+      <h4><%= @grocery.name %></h4>
+    </div>
+    <div class="flex flex-col">
+      <label>Grocery Category name:</label>
+      <h5><%= @grocery.grocery_category.name %>
+      </h5>
+    </div>
+    <div class="flex flex-col">
+      <label>Description</label>
+      <%= @grocery.description %>
+    </div>
+    <div class="flex gap-4">
+      <%= link_to "Edit this grocery", edit_grocery_path(@grocery), method: :get, data: {turbo_frame: "modal"} %> |
+      <%= link_to "Back to groceries", groceries_path %> |
+      <%= button_to "Destroy this grocery", @grocery, method: :delete %>
+    </div>
+  </div>
 </div>

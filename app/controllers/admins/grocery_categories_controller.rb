@@ -1,5 +1,6 @@
 class Admins::GroceryCategoriesController < DashboardsController
-    before_action :set_grocery_category, only: %i[ show edit update destroy ]
+  before_action :ensure_frame_response, only: [:new, :edit ]
+  before_action :set_grocery_category, only: %i[ show edit update destroy ]
 
   def index
     @pagy, @grocery_categories = pagy(GroceryCategory.all)
@@ -61,5 +62,10 @@ class Admins::GroceryCategoriesController < DashboardsController
     # Only allow a list of trusted parameters through.
     def grocery_category_params
       params.require(:grocery_category).permit(:name, :description)
+    end
+
+    def ensure_frame_response
+        return unless Rails.env.development?
+        redirect_to grocery_categories_path unless turbo_frame_request?
     end
 end

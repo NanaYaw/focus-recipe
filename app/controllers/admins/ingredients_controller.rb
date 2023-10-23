@@ -34,7 +34,7 @@ class Admins::IngredientsController < DashboardsController
         
 
         format.html { }
-        format.json { render :show, status: :ok, location: @ingredient }
+        format.json { render :json, status: :ok, location: @ingredient }
       else
         format.turbo_stream
         format.html { render :edit, status: :unprocessable_entity }

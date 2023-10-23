@@ -1306,6 +1306,11 @@ h5{
   min-width: 100%;
 }
 
+.min-w-min{
+  min-width: -moz-min-content;
+  min-width: min-content;
+}
+
 .max-w-2xl{
   max-width: 42rem;
 }
@@ -1611,6 +1616,10 @@ h5{
 
 .border-b{
   border-bottom-width: 1px;
+}
+
+.border-l-2{
+  border-left-width: 2px;
 }
 
 .border-l-4{
@@ -2019,6 +2028,10 @@ h5{
 
 .pb-4{
   padding-bottom: 1rem;
+}
+
+.pl-3{
+  padding-left: 0.75rem;
 }
 
 .pl-4{
@@ -3072,6 +3085,15 @@ h5{
 		}
 	}
 } */
+
+.show-page > label{
+  border-left-width: 2px;
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--color-accent) / var(--tw-border-opacity));
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.75rem;
+}
 
 .signup_gradient_J0K:before {
   top: 0;
