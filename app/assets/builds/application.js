@@ -10459,9 +10459,6 @@
   // controllers/modal_controller.js
   var import_cash_dom = __toESM(require_cash());
   var modal_controller_default = class extends Controller {
-    connect() {
-      console.log("Modal Connected");
-    }
     open(event) {
       const modal = (0, import_cash_dom.default)(`#modal`);
       console.log("Modal");
@@ -10470,6 +10467,8 @@
       modal.show();
     }
     close(event) {
+      const closeSpinner = new CustomEvent("close-spinner");
+      window.dispatchEvent(closeSpinner);
       const modal = (0, import_cash_dom.default)(`#modal`);
       if (event.detail.success) {
         modal.hide();
@@ -10892,9 +10891,6 @@
 
   // controllers/meal_plan_controller.js
   var meal_plan_controller_default = class extends Controller {
-    connect() {
-      console.log("hello connected");
-    }
     async update(event) {
       const planValue = this.planValue;
       const mealValue = this.mealValue;
@@ -10929,7 +10925,8 @@
 
   // controllers/turbo_modal_controller.js
   var turbo_modal_controller_default = class extends Controller {
-    open(event) {
+    open() {
+      console.log("turbo modal targeting frame load");
       const closeSpinner = new CustomEvent("close-spinner");
       window.dispatchEvent(closeSpinner);
     }
@@ -10937,6 +10934,8 @@
     // action: "turbo-modal#hideModal"
     hideModal() {
       console.log("modal closed");
+      const closeSpinner = new CustomEvent("close-spinner");
+      window.dispatchEvent(closeSpinner);
       this.element.parentElement.removeAttribute("src");
       this.modalTarget.remove();
     }
@@ -11220,6 +11219,10 @@
 
   // application.js
   start2();
+  document.documentElement.addEventListener("turbo:frame-load", (event) => {
+    const closeSpinner = new CustomEvent("close-spinner");
+    window.dispatchEvent(closeSpinner);
+  });
 })();
 /*! Bundled license information:
 

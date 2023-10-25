@@ -8,8 +8,8 @@
                 "data-action": "click->navigation#displayLoading close-spinner@window->navigation#removeLoading"  do %>
     <div class="h-32 overflow-hidden flex flex-col justify-center items-center bg-blue-600 relative object-cover">
       <%#= image_tag recipe&.image.variant(resize_to_fill: [168, 150]) if recipe&.image.attached? %>
-      <%= image_tag image_render(recipe&.image, width="168", height="150"), class: "w-full object-cover" %>
-      <span class="mob-days"><%= day[0..2].capitalize %></span>
+      <%= image_tag  recipe&.image.variant(resize_to_fill: [200, 200], format: :jpg, saver: { strip: true, quality: 50 }), class: "w-full object-cover" %>
+      <span class="mob-days"><%= day.capitalize %></span>
     </div>
   <% end %>
   <div class="flex items-center justify-end gap-1 w-full h-7 bg-gray-100">

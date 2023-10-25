@@ -1,4 +1,4 @@
 <div class="flex  gap-4 p-4 border border-gray-500">
-  <%= image_tag url_for(recipe.image), size: "200" if recipe.image.attached? %>
+  <%= image_tag recipe&.image.variant(resize_to_fill: [200, 200], format: :jpg, saver: { strip: true, quality: 50 } )  if recipe.image.attached? %>
   <%= recipe.title %>
 </div>

@@ -10,10 +10,6 @@ export default class extends Controller {
 		day: String,
 	};
 
-	connect() {
-		console.log('hello connected');
-	}
-
 	async update(event) {
 		const planValue = this.planValue;
 		const mealValue = this.mealValue;

@@ -1,7 +1,7 @@
 <%= turbo_frame_tag "modal" do %>
   <%= tag.div data: { controller: "turbo-modal",
                       turbo_modal_target: "modal",
-                      action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
+                      action: "turbo:frame-render->turbo-modal#open turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
                       id: "recipeModal",
                       class: "transition" do %>
     <div class="hs-overlay w-full h-screen top-0 left-0 overflow-x-hidden overflow-y-hidden  duration fixed inset-0 z-40 bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop">

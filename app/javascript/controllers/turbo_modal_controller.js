@@ -3,7 +3,8 @@ import { Controller } from '@hotwired/stimulus';
 export default class extends Controller {
 	static targets = ['modal'];
 
-	open(event) {
+	open() {
+		console.log('turbo modal targeting frame load');
 		const closeSpinner = new CustomEvent('close-spinner');
 		window.dispatchEvent(closeSpinner);
 	}
@@ -12,6 +13,9 @@ export default class extends Controller {
 	// action: "turbo-modal#hideModal"
 	hideModal() {
 		console.log('modal closed');
+		const closeSpinner = new CustomEvent('close-spinner');
+		window.dispatchEvent(closeSpinner);
+
 		this.element.parentElement.removeAttribute('src');
 		// Remove src reference from parent frame element
 		// Without this, turbo won't re-open the modal on subsequent click

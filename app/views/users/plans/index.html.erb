@@ -1,11 +1,19 @@
 <div class="w-full h-full bg-gray-100">
   <div class="page-container">
     <%= render "users/plans/shared/top_cta" %>
-    <div class="flex justify-between my-6">
+    <div data-controller="navigation" class="flex justify-between my-6">
       <h1 class="px-3 py-2 text-3xl border-l-4 border-accent">Plans</h1>
-      <%= link_to  new_plan_path, method: :get, data: {turbo_frame: 'modal'}, class: "flex items-center gap-2 text-xl button button--secondary" do %>
+      <%= link_to   new_plan_path, 
+                      method: :get,  
+                      data: {turbo_frame: 'modal'}, 
+                      
+                      "data-action": " click->navigation#displayLoading close-spinner@window->navigation#removeLoading",
+                      "data-hs-overlay": "#hs-task-created-alert",
+
+                      class: "flex items-center gap-2 text-xl button button--secondary relative" do %>
         <i class="bi bi-plus text-2xl"></i>
         <span>Create plan</span>
+        <%= render "shared/spinner_bubble" %>
       <% end %>
     </div>
     <% turbo_stream_from "plan" %>

@@ -20,7 +20,7 @@
       <div id="me" class="slide-box px-4 w-full h-[400px] overflow-hidden">
         <div class="w-[280px] h-[400px] rounded-3xl bg-gray-300 block relative cursor-move overflow-hidden">
           <div class="img-hover-zoom h-full w-full absolute top-0 bottom-0 z-0 left-0 right-0 overflow-hidden" style="touch-action: pan-y;">
-            <%= image_tag recipe.image.variant(resize_to_fill: [280, 400]).processed, class: "z-0" if recipe.image.attached? %>
+            <%= image_tag recipe.image.variant(resize_to_fill: [280, 400], format: :jpg, saver: { strip: true, quality: 50 }), class: "z-0" if recipe.image.attached? %>
             <span class="top-0 left-0 right-0 bottom-0 w-full absolute z-0 block" style="background-image: linear-gradient(to bottom, rgba(245, 246, 252, 0.10), rgba(0, 0, 0, 0.73))"></span>
           </div>
           <div class="w-full flex flex-col gap-3 absolute bottom-0 z-20 p-4 text-white">

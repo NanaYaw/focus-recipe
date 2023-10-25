@@ -14,6 +14,8 @@ class Users::RecipesController < ApplicationController
         @recipe_ingredients = {}
 
         meal_plan = MealPlan.where(id: params[:meal_plan_id]).includes(:plan, [recipe: [:ingredients, image_attachment: :blob]])
+
+        @favorite = Favorite.find_by(current_user)
         
         meal_plan.each do |t|
           # ingredients = t.recipe.ingredients.select{|s| s.recipe_id == t.recipe.id}

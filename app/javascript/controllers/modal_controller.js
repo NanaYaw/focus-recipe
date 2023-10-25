@@ -3,10 +3,6 @@ import cash from 'cash-dom';
 
 export default class extends Controller {
 	static targets = ['modal'];
-	connect() {
-		console.log('Modal Connected');
-		// this.modal = new bootstrap.Modal(this.element);
-	}
 
 	open(event) {
 		const modal = cash(`#modal`);
@@ -14,6 +10,7 @@ export default class extends Controller {
 		// 	this.modal.show();
 		// }
 		console.log('Modal');
+
 		const closeSpinner = new CustomEvent('close-spinner');
 		window.dispatchEvent(closeSpinner);
 
@@ -21,6 +18,9 @@ export default class extends Controller {
 	}
 
 	close(event) {
+		const closeSpinner = new CustomEvent('close-spinner');
+		window.dispatchEvent(closeSpinner);
+
 		// console.log(event);
 		const modal = cash(`#modal`);
 		if (event.detail.success) {

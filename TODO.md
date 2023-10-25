@@ -37,3 +37,6 @@ Todo:
   [ ] UUIDS { friendly_id}
   [ ] Admin Devise registration cleanup and "invitable"
   [ ] style profile pages
+  [] favorites fetch by user
+  [] backend roles
+  [] reviews roles

@@ -5,7 +5,7 @@
     </h1>
     <div class="w-full my-4">
       <% if @recipe.image.attached? %>
-        <%= image_tag @recipe&.image.variant(resize_to_fill: [1000, 400] ), class: "w-full object-cover" %>
+        <%= image_tag @recipe&.image.variant(resize_to_fill: [1000, 400], format: :jpg, saver: { strip: true, quality: 50 } ), class: "w-full object-cover" %>
       <% else %>
         <span class="text-red-700"> No image attached yet!!!</span>
       <% end %>
@@ -36,7 +36,7 @@
         <div class="flex items-center">
           <%= turbo_stream_from "favorite" %>
           <%#= turbo_frame_tag "favorite_button" %>
-          <% if @recipe.favorites[0].present? %>
+          <% if @favorite.present? %>
             <%= render "favorite_fill", recipe: @recipe %>
           <% else %>
             <%= render "favorite_empty", recipe: @recipe %>
