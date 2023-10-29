@@ -97,6 +97,10 @@ class Admins::RecipesController < DashboardsController
   end
 
   def create_ingredient
+    p "-------------------------------------------"
+    p params
+    p "-------------------------------------------"
+
     @recipe = Recipe.find(params[:id])
     @recipe_ingredient = @recipe.ingredients.new(quantity: recipe_ingredient_params[:quantity], grocery_id: recipe_ingredient_params[:grocery_id], measurement_unit_id: recipe_ingredient_params[:measurement_unit_id], ingredient_state_id: recipe_ingredient_params[:ingredient_state_id])
     

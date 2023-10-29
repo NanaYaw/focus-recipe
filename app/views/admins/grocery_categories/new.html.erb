@@ -1,3 +1,5 @@
-<%= render Modal::SmallModalComponent.new(title: "New Grocery Category") do %>
-  <%= render "form", grocery_category: @grocery_category %>
+<%= render Modal::ModalComponent.new(title: "New Grocery Category") do |modal| %>
+  <% modal.with_small do %>
+    <%= render "form", grocery_category: @grocery_category %>
+  <% end %>
 <% end %>

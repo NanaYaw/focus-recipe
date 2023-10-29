@@ -1,4 +1,4 @@
-<%= form_with(model: grocery_category, html: { class: "flex flex-col gap-4" }) do |form| %>
+<%= form_with(model: grocery_category, html: { class: "flex flex-col gap-4 dark:group-label:text-white group-[type='text']:text-gray-800 " }) do |form| %>
   <% if grocery_category.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(grocery_category.errors.count, "error") %> prohibited this grocery_category from being saved:</h2>

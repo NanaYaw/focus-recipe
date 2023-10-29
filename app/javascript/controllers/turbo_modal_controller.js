@@ -44,6 +44,7 @@ export default class extends Controller {
 	// action: "click@window->turbo-modal#closeBackground"
 	closeBackground(e) {
 		if (e && this.modalTarget.contains(e.target)) {
+			console.log(this.modalTarget.contains(e.target));
 			return;
 		}
 		this.hideModal();

@@ -1,0 +1,15 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class=" hs-overlay w-full h-full top-0 left-0 overflow-x-hidden overflow-y-auto transition duration fixed bg-gray-900 bg-opacity-50 dark:bg-opacity-80 hs-overlay-backdrop backdrop-blur-sm bg-white/30 pt-16 z-10">
+  </div>
+  <%= tag.div data: { controller: "turbo-modal modal",
+                      turbo_modal_target: "modal",
+                      action: " turbo:before-render->modal#open triggerModalClose@window->turbo-modal#hideModal turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard click@window->turbo-modal#closeBackground" },
+                      id: "recipeModal",
+                      class: "" do %>
+    <div class="absolute top-0 left-0 right-0 bottom-0 w-full h-full flex justify-center items-center z-50">
+      <%= small if small? %>
+      <%= big if big? %>
+      <%= full if full? %>
+    </div>
+  <% end %>
+<% end %>

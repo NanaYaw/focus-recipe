@@ -1,3 +1,5 @@
-<%= render Modal::SmallModalComponent.new(title: "Edit") do %>
-  <%= render "form",  ingredient: @ingredient %>
+<%= render Modal::ModalComponent.new(title: "Edit Ingredient") do |modal| %>
+  <% modal.with_big do %>
+    <%= render "form", recipe_id: @recipe_id, ingredient: @ingredient %>
+  <% end %>
 <% end %>

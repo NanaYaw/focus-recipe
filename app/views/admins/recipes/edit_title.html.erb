@@ -1,3 +1,5 @@
-<%= render Modal::SmallModalComponent.new(title: "Edit Title") do %>
-  <%= render "admins/recipes/shared/recipe_title_form", recipe: @recipe, url: update_title_recipe_path(@recipe), recipe_id: @recipe.id, title: @recipe.title %>
+<%= render Modal::ModalComponent.new(title: "Edit Title") do |modal| %>
+  <% modal.with_big do %>
+    <%= render "admins/recipes/shared/recipe_title_form", recipe: @recipe, url: update_title_recipe_path(@recipe), recipe_id: @recipe.id, title: @recipe.title %>
+  <% end %>
 <% end %>

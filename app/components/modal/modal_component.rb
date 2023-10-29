@@ -4,10 +4,18 @@ module Modal
 
         attr_reader :name, :title, :hidden
 
-        def initialize(title:, hidden: true)
+        # renders_one :confirmation, lambda { |**args|
+        #     Modal::ConfirmationComponent.new(name: @name, **args)
+        # }
+
+        renders_one :small, lambda { |**args| Modal::SmallModalComponent.new(title: title, **args) }
+        renders_one :big, lambda { |**args| Modal::BigModalComponent.new(title: title, **args) }
+        renders_one :full, lambda { |**args| Modal::FullModalComponent.new(title: title, **args) }
+
+        def initialize(title:,  hidden: true)
             super
             @name = name,
-            @hidden = hidden
+            @hidden = hidden,
             @title = title
         end
     end

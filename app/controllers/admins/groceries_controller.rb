@@ -6,6 +6,16 @@ class Admins::GroceriesController < DashboardsController
         @pagy, @groceries = pagy(Grocery.all)
     end
 
+    def search
+        @groceries = Grocery.where("name LIKE ?", "%#{params[:q]}%").pluck(:id, :name)
+
+
+        respond_to do |format|
+            format.json
+            format.html
+        end
+    end
+
     def show
     end
 
@@ -17,6 +27,9 @@ class Admins::GroceriesController < DashboardsController
     end
 
     def create
+
+        
+
         @grocery = Grocery.new(grocery_params)
 
         respond_to do |format|
@@ -56,7 +69,7 @@ class Admins::GroceriesController < DashboardsController
     private
         # Use callbacks to share common setup or constraints between actions.
         def set_grocery
-        @grocery = Grocery.find(params[:id])
+            @grocery = Grocery.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.

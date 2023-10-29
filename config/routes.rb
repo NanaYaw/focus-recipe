@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
         resources :ingredient_states
         resources :measurement_units
-        resources :groceries
+        resources :groceries do
+          get 'search' => "groceries#search", on: :collection
+        end
         resources :grocery_categories
         resources :ingredients
     

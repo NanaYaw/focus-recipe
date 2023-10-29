@@ -36,3 +36,9 @@ application.register('navigation', NavigationController);
 //-------------
 import ProfileFormController from './profile_form_controller';
 application.register('profile-form', ProfileFormController);
+
+//-------------
+
+import Multiselect from './multiselect_controller';
+// import { Multiselect } from '@wizardhealth/stimulus-multiselect';
+application.register('multiselect', Multiselect);
