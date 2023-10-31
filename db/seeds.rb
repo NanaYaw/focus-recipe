@@ -69,8 +69,10 @@ end
       description: Faker::Food.description,
       directions: ["In a medium saucepan, melt butter over medium heat. Cook and stir almonds in butter until lightly toasted. Remove from heat, and let cool.",
                   "In a medium bowl, whisk together the sesame seeds, poppy seeds, sugar, onion, paprika, white wine vinegar, cider vinegar, and vegetable oil. Toss with spinach just before serving.",
-                  "In a large bowl, combine the spinach with the toasted almonds and cranberries."]
-      )
+                  "In a large bowl, combine the spinach with the toasted almonds and cranberries."],
+      recipe_category_id: 1, 
+      status: "published"
+    )
 end
 
 
@@ -90,7 +92,7 @@ if( recipes.count > 0 && users.count > 0 )
       grocery = Grocery.all.sample
       is = IngredientState.all.sample
       mu = MeasurementUnit.all.sample
-      recipe.ingredients.create!(quantity: quantity, grocery_id: grocery.id, ingredient_state_id: is.id, measurement_unit_id: mu.id, recipe_category_id: 1, status: "published")
+      recipe.ingredients.create!(quantity: quantity, grocery_id: grocery.id, ingredient_state_id: is.id, measurement_unit_id: mu.id,)
     end
 
     #-------------------------------------------
