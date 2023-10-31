@@ -1,0 +1,5 @@
+<%#=  flash.now[:notice] = "Ingredient updated successfully" %>
+<%= turbo_stream.prepend  "recipe-ingredients--list-#{@recipe.id}" do %>
+  <%= render  partial: "admins/recipes/ingredient/recipe_sub_ingredient_list",  locals: {id: @recipe.id, index: 0, ingredient: @ingredient, recipe: @recipe} %>
+<% end %>
+<%= render_flash_stream %>

@@ -1,0 +1,3 @@
+<%#=  flash.now[:notice] = "Ingredient updated successfully" %>
+<%= turbo_stream.remove  "ingredient--ingredient_#{@ingredient.id}" %>
+<%= render_flash_stream %>

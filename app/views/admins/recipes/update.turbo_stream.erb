@@ -1,0 +1,3 @@
+<%#=  flash.now[:notice] = "Ingredient updated successfully" %>
+<%#= turbo_stream.replace  "ingredient--ingredient_#{@ingredient.id}", "admins/recipes/ingredient/recipe_sub_ingredient_list",  {id: @recipe.id, index: 0, ingredient: @ingredient, recipe: @recipe} %>
+<%= render_flash_stream %>
