@@ -90,7 +90,7 @@ if( recipes.count > 0 && users.count > 0 )
       grocery = Grocery.all.sample
       is = IngredientState.all.sample
       mu = MeasurementUnit.all.sample
-      recipe.ingredients.create!(quantity: quantity, grocery_id: grocery.id, ingredient_state_id: is.id, measurement_unit_id: mu.id)
+      recipe.ingredients.create!(quantity: quantity, grocery_id: grocery.id, ingredient_state_id: is.id, measurement_unit_id: mu.id, recipe_category_id: 1, status: "published")
     end
 
     #-------------------------------------------

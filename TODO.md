@@ -30,6 +30,8 @@ Todo:
   TODO: User Accounts profile(Names, profile image, password change)
   [ ] Admin Devise registration cleanup and "invitable"
   [] recipes categories
+  [] publish feature for backends
+  [] models status backend
 
 - DOING -
   [ ] Reviews frame gives "Content missing" error on create action
@@ -42,5 +44,3 @@ Todo:
   [] backend roles
   [] reviews roles
   [] refactor multiselect to include edit
-  [] publish feature for backends
-  [] models status backend
