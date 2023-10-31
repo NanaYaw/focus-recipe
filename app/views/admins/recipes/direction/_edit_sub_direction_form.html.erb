@@ -1,6 +1,6 @@
 <div data-controller="recipe" class="w-full flex justify-between p-2 bg-slate-400">
   <form id="recipe-direction-edit" class="w-full flex justify-between gap-4">
-    <input class="w-full"  name="direction" value="<%= ingredient[0] %>">
+    <input class="w-full"  tyep="text" name="direction" value="<%= ingredient[0] %>">
     <input hidden name="id"  value="<%= id %>" />
     <input hidden name="recipe_id"  value="<%= recipe_id %>" />
     <button  data-action="click->recipe#update_direction" class="p-2 bg-black text-white">Submit</button>

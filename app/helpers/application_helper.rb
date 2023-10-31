@@ -1,13 +1,16 @@
 module ApplicationHelper
     include Pagy::Frontend
 
+    def render_flash_stream
+        turbo_stream.update "flash", partial: "application/flash"
+    end
     
     def comment
     end
 
     def image_render(image, w = "100%", h = "100%", options = {})
         if image.representable?
-            image.representation(resize_to_fill: [w, h]).processed.url
+            image.variant(resize_to_fill: [w, h], format: :jpg, saver: { strip: true, quality: 50 }).processed.url
         else
             'sample.png'
         end 

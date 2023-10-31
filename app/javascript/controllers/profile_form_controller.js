@@ -4,6 +4,9 @@ const imageTypes = ['image/gif', 'image/jpeg', 'image/png'];
 
 export default class extends Controller {
 	static targets = ['thumbnail', 'thumbnailInput'];
+	static values = {
+		imageWidth: String,
+	};
 
 	changeThumbnail(e) {
 		e.preventDefault();
@@ -23,6 +26,11 @@ export default class extends Controller {
 		this.thumbnailInputTarget.files = e.target.files;
 
 		this.thumbnailTarget.src = URL.createObjectURL(file);
-		// console.log(this.thumbnailTarget);
+
+		if (this.imageWidthValues == '') {
+			console.log('imageWidth not set');
+		} else {
+			this.thumbnailTarget.classList += ' w-96 h-96 object-cover object-top';
+		}
 	}
 }

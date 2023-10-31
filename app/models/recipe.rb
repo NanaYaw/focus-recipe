@@ -1,11 +1,14 @@
 class Recipe < ApplicationRecord
     
+    enum status: {published: 'published', draft: 'draft', trash: 'trash'}, _prefix: :status
+    
     # TODO: check whether plans and meal_pans will be deleted if associated recipes iiis destroyed
     has_many :meal_plans, dependent: :nullify
     has_many :ingredients, dependent: :destroy
     has_many :plans, through: :meal_plans, dependent: :destroy
     has_many :reviews,   -> { order(created_at: :desc) }, dependent: :destroy
     has_many :favorites, dependent: :destroy
+    belongs_to :recipe_category
 
     has_one_attached :image 
     

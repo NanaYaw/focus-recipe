@@ -28,6 +28,8 @@ Todo:
   [ ] Add profile image
   [ ] Profile edit and settings
   TODO: User Accounts profile(Names, profile image, password change)
+  [ ] Admin Devise registration cleanup and "invitable"
+  [] recipes categories
 
 - DOING -
   [ ] Reviews frame gives "Content missing" error on create action
@@ -35,8 +37,10 @@ Todo:
   [ ] EL transitions
   [ ] Print
   [ ] UUIDS { friendly_id}
-  [ ] Admin Devise registration cleanup and "invitable"
   [ ] style profile pages
   [] favorites fetch by user
   [] backend roles
   [] reviews roles
+  [] refactor multiselect to include edit
+  [] publish feature for backends
+  [] models status backend

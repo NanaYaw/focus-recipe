@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_21_230731) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_29_140937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -152,6 +152,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_230731) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
+  create_table "recipe_categories", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.string "title"
     t.text "instructions"
@@ -160,6 +167,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_230731) do
     t.integer "average_rating"
     t.text "directions", default: [], array: true
     t.text "description"
+    t.integer "recipe_category_id", default: 1
+    t.string "status", default: "draft", null: false
   end
 
   create_table "reviews", force: :cascade do |t|

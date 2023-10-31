@@ -5,7 +5,7 @@ class Admins::RecipesController < DashboardsController
 
   # GET /recipes or /recipes.json
   def index
-    @pagy, @recipes = pagy(Recipe.all.order(created_at: :DESC))
+    @pagy, @recipes = pagy(Recipe.includes(:recipe_category).order(created_at: :DESC))
   end
 
   # GET /recipes/1 or /recipes/1.json
@@ -91,43 +91,64 @@ class Admins::RecipesController < DashboardsController
   end
 
   def new_ingredient
-
+    
     @ingredient = Ingredient.new
     @recipe_id = params[:id]
   end
 
-  def create_ingredient
-    @recipe = Recipe.find(params[:id])
-    @recipe_ingredient = @recipe.ingredients.new(quantity: recipe_ingredient_params[:quantity], grocery_id: recipe_ingredient_params[:grocery_id], measurement_unit_id: recipe_ingredient_params[:measurement_unit_id], ingredient_state_id: recipe_ingredient_params[:ingredient_state_id])
-    
-    respond_to do |format|
-      if @recipe_ingredient.save
-          Turbo::StreamsChannel.broadcast_prepend_to :recipe_form_update, 
-            target: "recipe_#{@recipe.id}", 
-            partial: "admins/recipes/ingredient/recipe_sub_ingredient_list", 
-            locals: {
-              recipe_id: @recipe.id, 
-              index: 0, 
-              ingredient: @recipe_ingredient, 
-              recipe: @recipe
-            }
+  # def create_ingredient
+    #   @recipe = Recipe.find(params[:id])
+    #   @recipe_ingredient = @recipe.ingredients.new(quantity: recipe_ingredient_params[:quantity], grocery_id: recipe_ingredient_params[:grocery_id], measurement_unit_id: recipe_ingredient_params[:measurement_unit_id], ingredient_state_id: recipe_ingredient_params[:ingredient_state_id])
+      
+    #   respond_to do |format|
+    #     if @recipe_ingredient.save
+    #       # Turbo::StreamsChannel.broadcast_prepend_to :recipe_form_update, 
+    #         #   target: "recipe_#{@recipe.id}", 
+    #         #   partial: "admins/recipes/ingredient/recipe_sub_ingredient_list", 
+    #         #   locals: {
+    #           #     recipe_id: @recipe.id, 
+    #         #     index: 0, 
+    #         #     ingredient: @recipe_ingredient, 
+    #         #     recipe: @recipe
+    #         #   }
 
-        format.html {  }
-        format.json { render json: {status: :ok } }    
-      else  
-        Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, 
-            target: "recipe_ingredient_form", 
-            partial: "admins/recipes/ingredient/recipe_sub_ingredient_form", 
-            locals: {
-              ingredient: @recipe_ingredient, 
-              recipe_id: @recipe.id
-            }
             
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @recipe_ingredient.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+    #         flash.now[:notice] = "Recipe was successfully updated." 
+    #         flash.now[:alert] = "Recipe was successfully updated." 
+    #         # render turbo_stream: [
+    #         #       turbo_stream.prepend(
+    #         #         "recipe_#{@recipe.id}",
+    #         #         partial: "admins/recipes/ingredient/recipe_sub_ingredient_list",
+    #         #         locals: {
+    #         #           recipe_id: @recipe.id, 
+    #         #           index: 0, 
+    #         #           ingredient: @recipe_ingredient, 
+    #         #           recipe: @recipe
+    #         #         },
+    #         #       ),
+    #         #       turbo_stream.replace("flash", partial: "application/flash"),
+    #         #     ]
+
+    #       format.turbo_stream
+    #       format.html {  }
+    #       format.js
+    #       format.json { render json: {status: :ok } }    
+    #     else  
+    #       flash.now[:notice] = @recipe_ingredient.errors
+    #       Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, 
+    #           target: "recipe_ingredient_form", 
+    #           partial: "admins/recipes/ingredient/recipe_sub_ingredient_form", 
+    #           locals: {
+    #             ingredient: @recipe_ingredient, 
+    #             recipe_id: @recipe.id
+    #           }
+
+
+    #       # format.html { render :edit, status: :unprocessable_entity }
+    #       # format.json { render json: @recipe_ingredient.errors, status: :unprocessable_entity }
+    #     end
+    #   end
+  # end
 
   def edit_ingredient
   end
@@ -137,7 +158,7 @@ class Admins::RecipesController < DashboardsController
    
     respond_to do |format|
       if @recipe.update(recipe_params)
-        format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
+        format.html { redirect_to edit_recipe_url(@recipe), notice: "Recipe was successfully updated." }
         format.json { render :show, status: :ok, location: @recipe }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -151,6 +172,7 @@ class Admins::RecipesController < DashboardsController
     @recipe.destroy
 
     respond_to do |format|
+      format.turbo_stream
       format.html { redirect_to recipes_url, notice: "Recipe was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -168,6 +190,9 @@ class Admins::RecipesController < DashboardsController
             partial: "admins/recipes/recipe_sub_ingredient_list", 
             locals: {id: @recipe.id, index: 0, ingredient: @recipe_ingredient, recipe: @recipe}
 
+      flash.now[:notice] = "Recipe direction created successfully"
+
+      format.turbo_stream
       format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully updated." }
       format.json { render :show, status: :ok, location: @recipe }
     else 
@@ -194,6 +219,9 @@ class Admins::RecipesController < DashboardsController
       #       target: "recipe_#{@recipe.id}", 
       #       partial: "recipes/recipe_sub_ingredient_list", 
       #       locals: {id: @recipe.id, index: 0, ingredient: @recipe_ingredient, recipe: @recipe}
+      flash.now[:notice] = "Recipe direction updated successfully"
+
+      format.turbo_stream
 
       format.html {  }
       format.json {  }
@@ -211,6 +239,7 @@ class Admins::RecipesController < DashboardsController
     if  ingredient.save!
       Turbo::StreamsChannel.broadcast_remove_to :recipe_form_update, target: "edit_ddirection_#{params[:id]}"
 
+      flash.now[:alert] = "Recipe direction deleted successfully"
       format.html {  }
       format.json {  }
     else 
@@ -228,7 +257,7 @@ class Admins::RecipesController < DashboardsController
 
     # Only allow a list of trusted parameters through.
     def recipe_params
-      params.require(:recipe).permit(:title, :image)
+      params.require(:recipe).permit(:title, :image, :recipe_category_id, :status)
     end
 
     def recipe_ingredient_params

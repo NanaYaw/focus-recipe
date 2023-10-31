@@ -9,7 +9,7 @@
       <% end %>
     </div>
   <% end %>
-  <div id="recipe-ingredients--list">
+  <div id="recipe-ingredients--list-<%= recipe.id %>">
     <ul id="recipe_<%= recipe.id %>" class="flex flex-col">
       <% recipe_ingredient.each_with_index do |ingredient, index| %>
         <%= render "admins/recipes/ingredient/recipe_sub_ingredient_list", ingredient: ingredient, index: index + 1 %>

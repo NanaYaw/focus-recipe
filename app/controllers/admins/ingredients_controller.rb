@@ -1,5 +1,5 @@
 class Admins::IngredientsController < DashboardsController 
-  before_action :set_ingredient, only: %i[ edit show update destroy ]
+  before_action :set_ingredient, only: %i[ edit show update destroy create ]
   # before_action :set_recipe, excerpt: %i[ updated ]
 
   def index
@@ -8,6 +8,18 @@ class Admins::IngredientsController < DashboardsController
 
   def new
     @ingredient = Ingredient.new
+  end
+
+  def create
+    @ingredient = @recipe.ingredients.new(ingredient_params)
+
+    respond_to do |format|
+      if @ingredient.save
+        flash.now[:notice] = "Ingredient created successfully"
+
+        format.turbo_stream
+      end
+    end
   end
 
   def edit
@@ -27,30 +39,33 @@ class Admins::IngredientsController < DashboardsController
         # p "ingredient--#{@ingredient}"
         
         # Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: @plan
-          Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, 
-            target: "ingredient--ingredient_#{@ingredient.id}", 
-            partial: "recipes/ingredient/recipe_sub_ingredient_list", 
-            locals: {id: @recipe.id, index: 0, ingredient: @ingredient, recipe: @recipe}
-        
+          # Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, 
+          #   target: "ingredient--ingredient_#{@ingredient.id}", 
+          #   partial: "admins/recipes/ingredient/recipe_sub_ingredient_list", 
+          #   locals: {id: @recipe.id, index: 0, ingredient: @ingredient, recipe: @recipe}
 
+        flash.now[:notice] = "Ingredient updated successfully"
+
+        format.turbo_stream
         format.html { }
         format.json { render :json, status: :ok, location: @ingredient }
       else
-        format.turbo_stream
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @ingredient.errors, status: :unprocessable_entity }
+        # format.turbo_stream
+        # format.html { render :edit, status: :unprocessable_entity }
+        # format.json { render json: @ingredient.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
+
     @ingredient.destroy
 
     respond_to do |format|
+      
+      flash.now[:alert] = "Ingredient deleted successfully"
 
-      Turbo::StreamsChannel.broadcast_remove_to :recipe_form_update, 
-            target: "ingredient--ingredient_#{@ingredient.id}"
-
+      format.turbo_stream
       format.html { }
       format.json { head :no_content }
     end
@@ -63,7 +78,17 @@ class Admins::IngredientsController < DashboardsController
 private
   # Use callbacks to share common setup or constraints between actions.
   def set_ingredient
-    @ingredient = Ingredient.find(params[:id])
+    p "----------------------------------------------"
+    p params
+    p @ingredient
+    p "----------------------------------------------"
+    if params[:id].present?
+      @ingredient = Ingredient.find(params[:id].to_i)
+    end
+
+    if params[:recipe_id].present?
+      @recipe = Recipe.find(params[:recipe_id].to_i)
+    end
   end
 
 

@@ -15,7 +15,7 @@
   </div>
 </div>
 <div class="w-full overflow-hidden">
-  <div class="scroll_box inline-flex overflow-x-scroll my-10 px-0 overflow-hidden">
+  <div data-controller="gsap-draggable-carousel" class="scroll_box inline-flex overflow-x-scroll my-10 px-0 overflow-hidden">
     <% @recipes.each do | recipe | %>
       <div id="me" class="slide-box px-4 w-full h-[400px] overflow-hidden">
         <div class="w-[280px] h-[400px] rounded-3xl bg-gray-300 block relative cursor-move overflow-hidden">

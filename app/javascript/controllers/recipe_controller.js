@@ -74,19 +74,19 @@ export default class extends Controller {
 		if (form.checkValidity()) {
 			const response = await patch('/recipes/create_ingredient', {
 				body: formData,
-				responseKind: 'json',
+				responseKind: 'turbo-stream',
 			});
-			console.log(response);
-			if (response.ok) {
-				modal.hide();
-			} else {
-				response.json.then(function (errors) {
-					// console.log(errors);
-					// me.dispatch('error', {
-					// 	detail: { resourceName: resourceName, errors: errors },
-					// });
-				});
-			}
+			// console.log(response);
+			// if (response.ok) {
+			// 	modal.hide();
+			// } else {
+			// 	response.json.then(function (errors) {
+			// 		// console.log(errors);
+			// 		// me.dispatch('error', {
+			// 		// 	detail: { resourceName: resourceName, errors: errors },
+			// 		// });
+			// 	});
+			// }
 		}
 	}
 

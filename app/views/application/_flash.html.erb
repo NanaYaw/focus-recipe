@@ -1,5 +1,8 @@
-<% flash.each do |type, message| %>
-  <div class="w-full flashes p-2 bg-accent/30 text-center">
-    <%= content_tag(:div, message, class: "flash #{type}") %>
-  </div>
-<% end %>
+<div id="flash" >
+  <% flash.each do |type, message| %>
+    <%#= content_tag(:div, message, id: "flash", class: "w-full p-2 text-center flash #{type}", data: { controller: "flash" }) %>
+    <div  class="w-full p-2 text-center z-50 <%= type %>" data-controller="flash">
+      <%= message %>
+    </div>
+  <% end %>
+</div>

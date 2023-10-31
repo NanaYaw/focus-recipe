@@ -34,7 +34,7 @@ class Users::PlansController < ApplicationController
   end
 
   def meal_plans_content
-    @meal_plans = Recipe.all.includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
+    @meal_plans = Recipe.where(status: "published").includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
     param = {}
     param[:plan_id] = params[:plan_id]
     param[:meal_type] = params[:meal_type]

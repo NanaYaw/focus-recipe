@@ -1,6 +1,6 @@
 <%# <turbo-frame id="recipe_ingredient_form"> %>
 <%#= turbo_frame_tag "recipe_ingredient_form" do %>
-  <div id="recipe_ingredient_form"  data-controller="recipe" data-recipe-id-value="<%= recipe_id %>" class="flex flex-col gap-4 max-w-2xl">
+  <div id="recipe_ingredient_form"   class="flex flex-col gap-4 max-w-2xl">
     <% if ingredient.errors.any? %>
       <div style="color: red">
         <h2><span class="py-1 px-2 bg-slate-400 rounded-full"><%= pluralize(ingredient.errors.count, "error") %></span> prohibited this Ingredient from being saved:</h2>
@@ -11,7 +11,7 @@
         </ul>
       </div>
     <% end %>
-    <form id="_recipe_ingredient_form" class="flex flex-col gap-4">
+    <%= form_with url: '/ingredients', method: :post, html: {id: "_recipe_ingredient_form", class: "flex flex-col gap-4"} do  %>
       <div class="flex flex-col">
         <label class="text-gray-500">Quantity</label>
         <input name="quantity" type="number" step=".1" value="<%= ingredient[:quantity] %>" placeholder="0.5" />
@@ -41,10 +41,11 @@
         </select>
       </div>
       <div class="flex justify-end mt-4">
+        <input hidden value="<%= recipe_id %>" name="recipe_id">
         <%# <input type="hidden" name="authenticity_token" value="= form_authenticity_token"> %>
-        <button class="button--primary rounded-md text-white p-2"   value="submit" data-action="click->recipe#create_ingredient">Add Ingredient</button>
+        <%= submit_tag 'save', class: "button button--primary" %>
       </div>
-    </form>
+    <% end %>
   </div>
   <%# end %>
   <%# </turbo-frame> %>
