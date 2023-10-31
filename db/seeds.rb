@@ -62,6 +62,14 @@ end
 
 #-----------------------------------------------------------------------------------------#
 
+10.times.each do |i|
+  RecipeCategory.create!(
+      name: Faker::Food.ethnic_category,
+  )
+end
+
+
+recipes_categories = [1,2,3,4,5,6,7,8,9,10]
 
 20.times.each do |i|
   Recipe.create(
@@ -70,9 +78,9 @@ end
       directions: ["In a medium saucepan, melt butter over medium heat. Cook and stir almonds in butter until lightly toasted. Remove from heat, and let cool.",
                   "In a medium bowl, whisk together the sesame seeds, poppy seeds, sugar, onion, paprika, white wine vinegar, cider vinegar, and vegetable oil. Toss with spinach just before serving.",
                   "In a large bowl, combine the spinach with the toasted almonds and cranberries."],
-      recipe_category_id: 1, 
+      recipe_category_id: recipes_categories.sample, 
       status: "published"
-    )
+      )
 end
 
 
