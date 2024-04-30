@@ -2,31 +2,34 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import { application } from "./application"
+import { application } from './application';
 
-import FlashController from "./flash_controller"
-application.register("flash", FlashController)
+import FlashController from './flash_controller';
+application.register('flash', FlashController);
 
-import GsapDraggableCarouselController from "./gsap_draggable_carousel_controller"
-application.register("gsap-draggable-carousel", GsapDraggableCarouselController)
+import GsapDraggableCarouselController from './gsap_draggable_carousel_controller';
+application.register(
+	'gsap-draggable-carousel',
+	GsapDraggableCarouselController
+);
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import HelloController from './hello_controller';
+application.register('hello', HelloController);
 
-import MealPlanController from "./meal_plan_controller"
-application.register("meal-plan", MealPlanController)
+import MealPlanController from './meal_plan_controller';
+application.register('mealplan', MealPlanController);
 
-import ModalController from "./modal_controller"
-application.register("modal", ModalController)
+import ModalController from './modal_controller';
+application.register('modal', ModalController);
 
-import NavigationController from "./navigation_controller"
-application.register("navigation", NavigationController)
+import NavigationController from './navigation_controller';
+application.register('navigation', NavigationController);
 
-import ProfileFormController from "./profile_form_controller"
-application.register("profile-form", ProfileFormController)
+import ProfileFormController from './profile_form_controller';
+application.register('profile-form', ProfileFormController);
 
-import RecipeController from "./recipe_controller"
-application.register("recipe", RecipeController)
+import RecipeController from './recipe_controller';
+application.register('recipe', RecipeController);
 
-import TurboModalController from "./turbo_modal_controller"
-application.register("turbo-modal", TurboModalController)
+import TurboModalController from './turbo_modal_controller';
+application.register('turbo-modal', TurboModalController);
