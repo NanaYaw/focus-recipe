@@ -15092,6 +15092,7 @@
         body,
         responseKind: "json"
       });
+      console.log(response);
       if (response.ok) {
         response.text.then((result) => {
           const event2 = new CustomEvent("update-mealplan");
@@ -15380,9 +15381,12 @@
 
   // controllers/index.js
   application.register("flash", flash_controller_default);
-  application.register("gsap-draggable-carousel", gsap_draggable_carousel_controller_default);
+  application.register(
+    "gsap-draggable-carousel",
+    gsap_draggable_carousel_controller_default
+  );
   application.register("hello", hello_controller_default);
-  application.register("meal-plan", meal_plan_controller_default);
+  application.register("mealplan", meal_plan_controller_default);
   application.register("modal", modal_controller_default);
   application.register("navigation", navigation_controller_default);
   application.register("profile-form", profile_form_controller_default);

@@ -40,7 +40,7 @@
       <%= button_to  edit_grocery_path(grocery), method: :get,  data: {turbo_frame: 'modal'}, class: "inline-flex items-center gap-x-1.5 px-2 py-1 text-white rounded-full button--secondary" do  %>
         <i class="bi bi-pencil"></i>
       <% end %>
-      <%= button_to grocery_path(grocery.id), method: :delete, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
+      <%= button_to grocery_path(grocery), method: :delete, data: {confirm: 'Are you sure?' }, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
         <i class="bi bi-trash"></i>
       <% end %>
     </div>

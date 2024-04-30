@@ -100,14 +100,14 @@ Rails.application.configure do
   #   # :openssl_verify_mode => 'none'
   # }
 
-  # config.action_mailer.smtp_settings = {
-  #   :user_name => '""',
-  #   :password => '""',
-  #   :address => '""',
-  #   :host => '""',
-  #   :port => '2525',
-  #   :authentication => :cram_md5
-  # }
+  config.action_mailer.smtp_settings = {
+    :user_name => '""',
+    :password => '""',
+    :address => '""',
+    :host => '""',
+    :port => '2525',
+    :authentication => :cram_md5
+  }
 
 
   # Raises error for missing translations.

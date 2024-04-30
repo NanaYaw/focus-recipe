@@ -1,13 +1,13 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.3"
 
-set :application, "'testoftests'"
-set :repo_url, "git@github.com:NanaYaw/'testoftests'.git"
+set :application, "focusrecipe"
+set :repo_url, "git@github.com:NanaYaw/focusrecipe.git"
 
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
-append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", ".bundle", "public/system", "public/uploads"
 
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
@@ -15,19 +15,18 @@ set :keep_releases, 5
 # Default branch is :master
 ask :branch, "main"
 
+namespace :deploy do
+  desc "Run seed"
+  task :seed do
+    on roles(:all) do
+      within current_path do
+        execute :bundle, :exec, "rails", "db:seed", "RAILS_ENV=production"
+      end
+    end
+  end
 
-# namespace :deploy do
-#   desc "Run seed"
-#   task :seed do
-#     on roles(:all) do
-#       within current_path do
-#         execute :bundle, :exec, 'rails', 'db:seed', 'RAILS_ENV=production'
-#       end
-#     end
-#   end
- 
-#   after :migrating, :seed
-# end
+  after :migrating, :seed
+end
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"

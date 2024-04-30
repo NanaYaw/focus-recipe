@@ -43,10 +43,10 @@ local:
 #   bucket: <%= ENV['BUCKET_NAME'] %>
 cloud:
   service: S3
-  endpoint: 'll.example.com'
-  access_key_id: 'klgjrekg83475jhhfjsdfff4u8888884r8'
-  secret_access_key: 'oregeirgj8037t43888447392djsfkfi2
+  endpoint: "" 
+  access_key_id: ""
+  secret_access_key: ""
   # access_key_id: <%= ENV['ACCESS_KEY_ID'] %>
   # secret_access_key: <%= ENV['SECRET_ACCESS_KEY'] %>
   region: auto
-  bucket: 'testoftests'
+  bucket: focusrecipe

@@ -2,7 +2,7 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  config.action_controller.default_url_options = { host: '""', protocol: 'https' }
+  config.action_controller.default_url_options = {host: "focusrecipe.live", protocol: "https"}
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -14,7 +14,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = false
+  config.consider_all_requests_local = false
   config.action_controller.perform_caching = true
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
@@ -25,8 +25,7 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   # config.serve_static_files = true
   # config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present?
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
-
+  config.public_file_server.enabled = ENV["RAILS_SERVE_STATIC_FILES"].present? || ENV["RENDER"].present?
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -43,7 +42,7 @@ Rails.application.configure do
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :cloud
-  
+
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
@@ -57,14 +56,14 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "'testoftests'_app_production"
+  # config.active_job.queue_name_prefix = "focusrecipe_app_production"
 
   config.action_mailer.perform_caching = false
 
@@ -87,46 +86,32 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new "app-name")
 
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-
   config.active_storage.variant_processor = :mini_magick
 
   config.require_master_key = true
 
-
-   config.action_mailer.default_url_options = {
-    host: """",
+  config.action_mailer.default_url_options = {
+    host: "exxample.live",
     protocol: "https"
   }
 
-  # config.action_mailer.smtp_settings = {
-  #   address: "smtp.gmail.com",
-  #   port: 587,
-  #   domain: "gmail.com",
-  #   user_name: """",
-  #   password: """",
-  #   openssl_verify_mode: 'none',
-  #   authentication: "plain",
-  #   enable_starttls_auto: true
-  # }
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :user_name => 'api',
-    :password => '""',
-    :address => 'live.smtp.mailtrap.io',
-    :host => 'live.smtp.mailtrap.io',
-    :port => '587',
-    :authentication => 'plain',
+    user_name: "api",
+    password: "",
+    address: "live.smtp.example.io",
+    host: "live.smtp.example.io",
+    port: "587",
+    authentication: "plain"
     # :enable_starttls_auto => true,
     # :openssl_verify_mode => 'none'
   }
-
 end
