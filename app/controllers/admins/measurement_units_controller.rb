@@ -1,10 +1,9 @@
-class Admins::MeasurementUnitsController < DashboardsController 
-  before_action :set_measurement_unit, only: %i[ show edit update destroy ]
+class Admins::MeasurementUnitsController < DashboardsController
+  before_action :set_measurement_unit, only: %i[show edit update destroy]
 
   # GET /measurement_units or /measurement_units.json
   def index
     @pagy, @measurement_units = pagy(MeasurementUnit.limit(5))
-
   end
 
   # GET /measurement_units/1 or /measurement_units/1.json
@@ -33,7 +32,6 @@ class Admins::MeasurementUnitsController < DashboardsController
         format.json { render json: @measurement_unit.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   # PATCH/PUT /measurement_units/1 or /measurement_units/1.json
@@ -47,7 +45,6 @@ class Admins::MeasurementUnitsController < DashboardsController
         format.json { render json: @measurement_unit.errors, status: :unprocessable_entity }
       end
     end
-
   end
 
   # DELETE /measurement_units/1 or /measurement_units/1.json
@@ -61,13 +58,14 @@ class Admins::MeasurementUnitsController < DashboardsController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_measurement_unit
-      @measurement_unit = MeasurementUnit.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def measurement_unit_params
-      params.require(:measurement_unit).permit(:name, :description, :status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_measurement_unit
+    @measurement_unit = MeasurementUnit.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def measurement_unit_params
+    params.require(:measurement_unit).permit(:name, :description, :status)
+  end
 end
