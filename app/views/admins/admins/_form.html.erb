@@ -1,0 +1,18 @@
+<%= form_with(model: admin, html: { class: "flex flex-col gap-4"}) do |form| %>
+  <% if admin.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(admin.errors.count, "error") %> prohibited this grocery_category from being saved:</h2>
+      <ul>
+        <% admin.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="flex flex-col">
+    <%= form.collection_check_boxes :role_ids, Role.where(resource_type: nil), :id, :name %>
+  </div>
+  <div class="flex justify-end">
+    <%= form.submit class: "button button--primary" %>
+  </div>
+<% end %>
