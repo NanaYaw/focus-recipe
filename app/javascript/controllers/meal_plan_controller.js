@@ -28,6 +28,8 @@ export default class extends Controller {
 			responseKind: 'json',
 		});
 
+		console.log(response);
+
 		if (response.ok) {
 			response.text.then((result) => {
 				const event = new CustomEvent('update-mealplan');
