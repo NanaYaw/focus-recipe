@@ -1,22 +1,23 @@
-# README
+# Focus Recipe
+## <h2 style="color:green">-<h2>
+It utilizes Ruby on Rails Framework, Postgresql and Hotwire
+<br />
+#####Ruby on Rails
+Ruby on Rails is the back-end framework used to query the database.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#####Database
+Focus Recipe uses a PostgreSQL database to store its relational data.
+<br />
+<hr />
+<br />
+This Recipe apps does not only gives you list of recipes to choose from but helps you plan all your meals for the day, week and month.
 
-Things you may want to cover:
+### Features
+1. Recipes
+2. Meal Calender
+3. Grocery List
+4. Recipe Reviews
 
-- Ruby version
+Weekly Menu: Knowing what to eat is super helpful when meal planning, which is why we include a menu in calendar mode for all our meal plans. 
 
-- System dependencies
-
-- Configuration
-
-- Database creation
-
-- Database initialization
-
-- How to run the test suite
-
-- Services (job queues, cache servers, search engines, etc.)
-
-- Deployment instructions
+Grocery List: Having a list of exactly what you need to buy to make all the recipes is essential to successful meal planning. This Applications gives you all your grocery list and units for your plan meals in pdf format that you can save on your phone for shopping.
