@@ -1,11 +1,11 @@
 # Focus Recipe
-## <h2 style="color:green">-<h2>
 It utilizes Ruby on Rails Framework, Postgresql and Hotwire
 <br />
-#####Ruby on Rails
+
+##### Ruby on Rails
 Ruby on Rails is the back-end framework used to query the database.
 
-#####Database
+##### Database
 Focus Recipe uses a PostgreSQL database to store its relational data.
 <br />
 <hr />
