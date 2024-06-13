@@ -1,25 +1,20 @@
 class Users::MealPlansController < ApplicationController
   before_action :set_meal_plan, only: %i[show edit update destroy update_serving delete_serving]
 
-  # GET /meal_plans or /meal_plans.json
   def index
     @meal_plans = MealPlan.all
   end
 
-  # GET /meal_plans/1 or /meal_plans/1.json
   def show
   end
 
-  # GET /meal_plans/new
   def new
     @meal_plan = MealPlan.new
   end
 
-  # GET /meal_plans/1/edit
   def edit
   end
 
-  # POST /meal_plans or /meal_plans.json
   def create
     @meal_plan = MealPlan.new(meal_plan_params)
 
@@ -34,14 +29,10 @@ class Users::MealPlansController < ApplicationController
     end
   end
 
-  # PATCH/PUT /meal_plans/1 or /meal_plans/1.json
   def update
     respond_to do |format|
-      # p @meal_plan
       @meal_plan.meals[meal_plan_params[:day]] = meal_plan_params[:meal]
       if @meal_plan.save!
-
-        # Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: @plan
 
         format.html { redirect_to meal_plan_url(@meal_plan), notice: "Meal plan was successfully updated." }
         format.json { render :show, status: :ok, location: @meal_plan }
@@ -95,7 +86,6 @@ class Users::MealPlansController < ApplicationController
     end
   end
 
-  # DELETE /meal_plans/1 or /meal_plans/1.json
   def destroy
     @meal_plan.destroy
 
@@ -111,14 +101,11 @@ class Users::MealPlansController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_meal_plan
     @cc = {plan_id: meal_plan_params[:plan_id], meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day]}
-    # @meal_plan = MealPlan.find_by({plan_id: meal_plan_params[:plan_id],  meal_type: meal_plan_params[:meal_type], day: meal_plan_params[:day]})
     @meal_plan = MealPlan.find_by(id: params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def meal_plan_params
     params.permit(:plan_id, :meal, :meal_type, :day)
   end
