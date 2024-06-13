@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     invitations: "admins/invitations"
   }
 
+  namespace :api do
+    resources :mealplans, only: [:update], controller: "meal_palns"
+  end
+
   devise_scope :admin do
     authenticated :admin do
 
@@ -60,18 +64,25 @@ Rails.application.routes.draw do
           delete "number-of-persons-to-be-served" => "meal_plans#delete_serving", :as => :delete_serving, :on => :member
         end
 
+        
+
         resources :plans do
           get "meal-plans", on: :collection
           get "meal-plans-content", on: :collection
           get "lazy-update", on: :collection
           patch :meal_update, on: :collection
-          get "grocery-list", on: :member
 
+          
           get "recipes/:id/meal_plan/:meal_plan_id" => "recipes#show", :as => "recipe", :on => :collection
         end
-
+          
+        resources :groceries, only: [:index, :show], controller: "grocery_list"
+        
+        # get "grocery-list", on: :member, controller: "grocery_list"
+        
         resources :recipes, only: [:show, :index, :single] do
           resources :favorites, only: [:create, :destroy]
+          
 
           resources :reviews do
             patch "new", on: :member
