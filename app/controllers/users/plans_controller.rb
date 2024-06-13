@@ -45,7 +45,6 @@ class Users::PlansController < ApplicationController
     render(partial: "users/plans/meal_plans_content")
   end
 
-  # GET /plans/1 or /plans/1.json
   def show
     @mealtypes = MealType::MEAL_TYPE
     @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
@@ -53,38 +52,28 @@ class Users::PlansController < ApplicationController
     @mealplans = meal_plaan_grid(plan_id: params[:id], mealtypes: @mealtypes, days: @days)
   end
 
-  # GET /plans/new
   def new
     @plan = Plan.new
   end
 
-  # GET /plans/1/edit
   def edit
   end
 
-  # POST /plans or /plans.json
   def create
     @plan = Plan.new(plan_name: plan_params[:plan_name], user_id: current_user.id)
 
     respond_to do |format|
       if @plan.save
-        # format.html { redirect_to plan_url, notice: "Plan was successfully created." }
         format.turbo_stream {
           render turbo_stream: turbo_stream.action(:redirect, "/plans")
         }
 
-      # redirect_to @plan, :target => "_top"
-      # format.html { redirect_to plan_url(@plan), notice: "Plan was successfully created." }
-      # format.json { render :show, status: :created, location: @plan }
-
       else
         render :new, status: :unprocessable_entity
-        # format.json { render json: @plan.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /plans/1 or /plans/1.json
   def update
     respond_to do |format|
       if @plan.update(plan_params)
@@ -112,7 +101,6 @@ class Users::PlansController < ApplicationController
     respond_to do |format|
       if @mealplan.save!
 
-        # @recipe = Recipe.find(params[:recipe_id])
 
         Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{@mealplan[:plan_id]}_#{params[:meal_type]}_#{params[:day]}",
           partial: "users/plans/meal_plan",
@@ -126,7 +114,6 @@ class Users::PlansController < ApplicationController
     end
   end
 
-  # DELETE /plans/1 or /plans/1.json
   def destroy
     @plan.destroy
 
@@ -167,7 +154,6 @@ class Users::PlansController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_plan
     if params[:id] == "meal_update"
       @plan = Plan.find(params[:plan_id]) if params[:id] != "meal_update"
@@ -176,7 +162,6 @@ class Users::PlansController < ApplicationController
     end
   end
 
-  # Only allow a list of trusted parameters through.
   def plan_params
     params.require(:plan).permit(:plan_name)
   end

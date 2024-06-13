@@ -3,9 +3,7 @@ class Users::FavoritesController < ApplicationController
 
     def create
         @recipe.favorites.create!(user: current_user)
-        # redirect_to  @recipe
 
-        # p @recipe
         Turbo::StreamsChannel.broadcast_replace_to :favorite, target: "favorite_button", 
         partial: "users/recipes/favorite_fill", 
         locals: {recipe: @recipe, fav_fill: true}

@@ -10,13 +10,10 @@ Rails.application.routes.draw do
     sessions: "admins/sessions",
     passwords: "admins/passwords",
     invitations: "admins/invitations"
-    # registrations: 'admins/registrations'
   }
 
   devise_scope :admin do
     authenticated :admin do
-      # namespace :admins do
-      # end
 
       scope module: :admins do
         get "dashboard" => "dashboard#index", :as => :authenticated_root
@@ -29,7 +26,6 @@ Rails.application.routes.draw do
         resources :ingredients
 
         resources :recipes do
-          # START recipe title
           get :new_title, on: :collection
           post :create_title, on: :collection
           get :edit_title, on: :member # recipe/edit_title

@@ -66,13 +66,6 @@ class Users::MealPlansController < ApplicationController
       @meal_plan.recipe.ingredients.map do |t|
         quantity = IngredientQuantityCalculator.new(qty = t.quantity, serving = @meal_plan.number_of_persons_to_be_served.to_i).call
 
-        # {
-        #   id: t.id,
-        #   quantity: quantity,
-        #   recipe_id: t.recipe_id, mesurement_unit: t.measurement_unit.name,
-        #   ingredient_state: t.ingredient_state.name
-        # }
-
         Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{t.id}",
           partial: "users/recipes/ingredient_quantity",
           locals: {quantity: quantity, id: t.id}

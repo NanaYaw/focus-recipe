@@ -27,13 +27,6 @@ class Users::ReviewsController < ApplicationController
         @review.user = current_user
        
 
-        # p "++++++++++++++++++++++++++++++++++++++++++++++"
-        # p @review.parent
-        # p "======================"
-        # p "parent - #{@review.parent_id}"
-        # p "======================"
-        # p params
-        # p "++++++++++++++++++++++++++++++++++++++++++++++"
 
         if @review.save
 
@@ -91,42 +84,8 @@ class Users::ReviewsController < ApplicationController
             end
 
             
-            # if !@review.parent_id.blank?
-            #     target = "#{@recipe.id}-#{@review.parent_id}" 
-            #     Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
-            #     target: "reviews-#{target}", 
-            #     partial: "users/reviews/review_single",
-            #     locals: {
-            #         :parent_id => params[:parent], 
-            #         recipe: @recipe, 
-            #         review: @review, 
-            #         current_user: current_user,
-            #         target: target
-            #     }
-
-            #     Turbo::StreamsChannel.broadcast_remove_to "review-list", 
-            #     target: "review-reply#{params[:inner].present? ? "-cc" : ""}-#{@review.parent_id}"
-            # else
-            #     target = @recipe.id 
-            #     Turbo::StreamsChannel.broadcast_prepend_to :reviews, 
-            #     target: "reviews-#{target}", 
-            #     partial: "users/reviews/review_single",
-            #     locals: {
-            #         recipe: @recipe, 
-            #         review: @review,
-            #         parent_id: params[:parent],
-            #         current_user: current_user,
-            #         target: target
-            #     }
-            # end
-
-            # redirect_to recipe_plans_path(@recipe, meal_plan_id: params[:meal_plan_id].to_i), turbo_frame: "_top", notice: "Review created successfully"
-            # render turbo_stream: turbo_visit(recipe_plans_path(@recipe, meal_plan_id: params[:meal_plan_id].to_i))
-
         else
-            # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
-            # p @review
-            # p "+++++++++++++++++++++++++++++++++++++++++++++++++"
+          
             render :new, status: :unprocessable_entity
         end
     end
@@ -178,9 +137,6 @@ end
         @recipe = Recipe.find_by!(id: params[:recipe_id].to_i)
     end
 
-    # def set_rating
-    #     @recipe = Recipe.find_by!(id: params[:id], recipe_id: params[:recipe_id])
-    # end
 
     def set_rating_permission
         params.require(:review).permit(:rating, :comment,  :recipe_id, :parent_id, :id)

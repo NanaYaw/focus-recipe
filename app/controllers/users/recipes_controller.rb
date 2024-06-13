@@ -9,8 +9,6 @@ class Users::RecipesController < ApplicationController
     end
     
     def show
-        # recipe_ingredients = Ingredient.includes(:grocery, :measurement_unit, :ingredient_state, recipe: [:plans, :favorites, :meal_plans] ).where(recipe_id: params[:id]).order("id ASC")
-
         @recipe_ingredients = {}
 
         meal_plan = MealPlan.where(id: params[:meal_plan_id]).includes(:plan, [recipe: [:ingredients, image_attachment: :blob]])
@@ -18,8 +16,6 @@ class Users::RecipesController < ApplicationController
         @favorite = Favorite.find_by(current_user)
         
         meal_plan.each do |t|
-          # ingredients = t.recipe.ingredients.select{|s| s.recipe_id == t.recipe.id}
-
           t.recipe.ingredients.each do |ingredient|
            
             quantity = IngredientQuantityCalculator.new(qty = ingredient.quantity, serving = t.number_of_persons_to_be_served).call

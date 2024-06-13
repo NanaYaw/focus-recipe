@@ -11,9 +11,7 @@ class Users::ProfilesController < ApplicationController
   end
 
   def update
-    # p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-    # p current_user.profile.update(set_permission)
-    # p "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+  
     respond_to do |format|
       if current_user.profile.update(set_permission)
         format.html { redirect_to profile_url(current_user), notice: "Recipe was successfully updated." }
@@ -40,11 +38,6 @@ class Users::ProfilesController < ApplicationController
   end
 
   private
-
-  # def set_profile
-  #     profile = User.find(params[:id])
-  #     @profile = profile.profile
-  # end
 
   def set_permission
     params.require(:profile).permit(:first_name, :last_name, :phone, :user_profile_image)
