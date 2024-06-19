@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   }
 
   namespace :api do
-    resources :mealplans, only: [:update], controller: "meal_palns"
+    resources :lazyloads, only: [:index], controller: "lazy_loads"
+    resources :mealplans, only: [:update, :show, :index], controller: "meal_palns"
   end
 
   devise_scope :admin do
