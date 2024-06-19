@@ -9,7 +9,7 @@
       </ul>
     </div>
     <div class="w-full sm:w-8/12 h-full max-h-[90vh]  overflow-y-auto overflow-x-hidden">
-      <%= turbo_frame_tag :meal_plans, src: meal_plans_content_plans_path(params: @params), loading: :lazy, target: :top do %>
+      <%= turbo_frame_tag :api_lazyloads, src: meal_plans_content_plans_path(params: @params), loading: :lazy, target: :top do %>
         <div class="flex flex-wrap gap-4">
           <% 10.times do %>
             <div class="flex flex-col gap-1 rounded-lg w-full sm:w-[47%] lg:w-[31.7%] overflow-hidden border border-gray-700">
