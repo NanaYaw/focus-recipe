@@ -24,15 +24,16 @@ class Users::PlansController < ApplicationController
   def photo
   end
 
-  def meal_plans
-    param = {}
-    param[:plan_id] = params[:plan_id]
-    param[:meal_type] = params[:meal_type]
-    param[:day] = params[:day]
+  # def meal_plans
+  #   param = {}
+  #   param[:plan_id] = params[:plan_id]
+  #   param[:meal_type] = params[:meal_type]
+  #   param[:day] = params[:day]
 
-    @params = param
-  end
+  #   @params = param
+  # end
 
+  # rrefactor this method into its proper controller
   def meal_plans_content
     @meal_plans = Recipe.where(status: "published").includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
     param = {}
@@ -86,6 +87,8 @@ class Users::PlansController < ApplicationController
     end
   end
 
+
+  # this should probaly go to meal_plans or its API
   def meal_update
     @mealplan = MealPlan.where({plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day]}).includes(recipe: [:reviews, {image_attachment: :blob}])
     @mealplan = @mealplan[0]
@@ -123,7 +126,7 @@ class Users::PlansController < ApplicationController
     end
   end
 
-
+ 
 
   private
 
@@ -144,5 +147,28 @@ class Users::PlansController < ApplicationController
     redirect_to root_path unless turbo_frame_request?
   end
 
+  def meal_plaan_grid(plan_id:, mealtypes:, days:)
+    mealplan_data = MealPlan.where(plan_id: plan_id).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
 
+    mealplans = {}
+    mealtypes.each do |mealtype|
+      mealplans[mealtype] = if mealplan_data[mealtype].present?
+        mealplan_data[mealtype].each_with_object({}) do |mealplan, hash|
+          days.each do |day|
+            hash[day] ||= nil
+
+            if mealplan.day == day
+              hash[mealplan.day] = mealplan
+            end
+          end
+        end
+      else
+        days.each_with_object({}) do |day, hash|
+          hash[day] = nil
+        end
+      end
+    end
+
+    mealplans
+  end
 end
