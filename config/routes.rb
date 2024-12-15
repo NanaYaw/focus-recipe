@@ -65,8 +65,6 @@ Rails.application.routes.draw do
           delete "number-of-persons-to-be-served" => "meal_plans#delete_serving", :as => :delete_serving, :on => :member
         end
 
-        
-
         resources :plans do
           get "meal-plans", on: :collection
           get "meal-plans-content", on: :collection

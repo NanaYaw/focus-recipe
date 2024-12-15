@@ -1,4 +1,4 @@
-  <%= turbo_frame_tag :meal_plans, target: :top do %>
+  <%= turbo_frame_tag :api_lazyloads, target: :top do %>
   <% if @meal_plans.count > 0 %>
     <div class="flex flex-wrap gap-4"  data-controller=" navigation">
       <% @meal_plans.with_attached_image.each do |recipe| %>
