@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # Devise routes for users and admins
   devise_for :users, path: "users", controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations",
@@ -12,99 +13,109 @@ Rails.application.routes.draw do
     invitations: "admins/invitations"
   }
 
+  # API Routes
   namespace :api do
     resources :lazyloads, only: [:index], controller: "lazy_loads"
-    resources :mealplans, only: [:update, :show, :index], controller: "meal_palns"
+    resources :mealplans, only: [:update, :show, :index], controller: "meal_plans"
   end
 
+  # Admin Routes
   devise_scope :admin do
     authenticated :admin do
-
       scope module: :admins do
-        get "dashboard" => "dashboard#index", :as => :authenticated_root
+        # Dashboard and admin management
+        get "dashboard", to: "dashboard#index", as: :authenticated_root
         resources :admins, except: [:create, :new]
 
+        # Resources management
         resources :ingredient_states
         resources :measurement_units
         resources :groceries
         resources :grocery_categories
         resources :ingredients
 
+        # Recipes management
         resources :recipes do
-          get :new_title, on: :collection
-          post :create_title, on: :collection
-          get :edit_title, on: :member # recipe/edit_title
-          patch :update_title, on: :member # recipe/1/update_title
+          collection do
+            get :new_title
+            post :create_title
+            get :edit_title
+          end
 
-          # START recipe ingredient
-          patch :create_ingredient, on: :collection
-          get :new_ingredient, on: :member
-          patch :edit_ingredient, on: :member
-          get :delete_ingredient, on: :member
-
-          # START recipe durections
-          patch :create_directions, on: :collection
-          get :edit_direction, on: :collection
-          patch :update_direction, on: :collection
-          patch :delete_direction, on: :collection
-        end
-      end
-    end
-  end
-
-  # resources :reviews
-  devise_scope :user do
-    authenticated :user do
-      namespace :users do
-        get "plans" => "plans#index", :as => :authenticated_root
-      end
-
-      scope module: :users do
-        resources :meal_plans do
-          patch "number-of-persons-to-be-served" => "meal_plans#update_serving", :as => :create_serving, :on => :member
-          delete "number-of-persons-to-be-served" => "meal_plans#delete_serving", :as => :delete_serving, :on => :member
-        end
-
-        resources :plans do
-          get "meal-plans", on: :collection
-          get "meal-plans-content", on: :collection
-          get "lazy-update", on: :collection
-          patch :meal_update, on: :collection
-
-          
-          get "recipes/:id/meal_plan/:meal_plan_id" => "recipes#show", :as => "recipe", :on => :collection
-        end
-          
-        resources :groceries, only: [:index, :show], controller: "grocery_list"
-        
-        # get "grocery-list", on: :member, controller: "grocery_list"
-        
-        resources :recipes, only: [:show, :index, :single] do
-          resources :favorites, only: [:create, :destroy]
-          
-
-          resources :reviews do
-            patch "new", on: :member
-            post "new", on: :member
-
-            post "reply", on: :collection
-            patch "reply", on: :collection
-
-            patch "update_rating", on: :collection
+          member do
+            patch :update_title
+            patch :create_ingredient
+            get :new_ingredient
+            patch :edit_ingredient
+            get :delete_ingredient
+            patch :create_directions
+            get :edit_direction
+            patch :update_direction
+            patch :delete_direction
           end
         end
       end
     end
+  end
 
+  # User Routes
+  devise_scope :user do
+    authenticated :user do
+      # User-specific routes
+      namespace :users do
+        get "plans", to: "plans#index", as: :authenticated_root
+      end
+
+      scope module: :users do
+        resources :meal_plans do
+          member do
+            patch "number-of-persons-to-be-served", to: "meal_plans#update_serving", as: :create_serving
+            delete "number-of-persons-to-be-served", to: "meal_plans#delete_serving", as: :delete_serving
+          end
+        end
+
+        resources :plans do
+          collection do
+            get "meal-plans"
+            get "meal-plans-content"
+            get "lazy-update"
+            patch :meal_update
+          end
+          
+          get "recipes/:id/meal_plan/:meal_plan_id", to: "recipes#show", as: "recipe", on: :collection
+        end
+
+        resources :groceries, only: [:index, :show], controller: "grocery_list"
+        resources :recipes, only: [:show, :index, :single] do
+          resources :favorites, only: [:create, :destroy]
+          resources :reviews, only: [:create, :update] do
+            member do
+              patch "new"
+              post "new"
+            end
+
+            collection do
+              post "reply"
+              patch "reply"
+              patch "update_rating"
+            end
+          end
+        end
+        end
+      
+    end
+
+    # Additional user routes
     scope module: :users do
-      get "recipes/single/:id" => "recipes#single", :as => :single_recipes
-      get "recipes/single_post/:id" => "recipes#single_post", :as => :single_post_recipes
-
+      get "recipes/single/:id", to: "recipes#single", as: :single_recipes
+      get "recipes/single_post/:id", to: "recipes#single_post", as: :single_post_recipes
       resources :profiles, only: [:update, :edit, :show]
     end
   end
 
-  # Defines the root path route ("/")
-  get "test" => "home#testmailer"
+  # Additional Routes
+  get "test", to: "home#testmailer"
+
+  # Root path
   root "home#index"
 end
