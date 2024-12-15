@@ -16,7 +16,7 @@ class Users::MealPlansController < ApplicationController
   end
 
   def create
-    @meal_plan = MealPlan.new(meal_plan_params)
+    @meal_plan = MealPlan|new(meal_plan_params)
 
     respond_to do |format|
       if @meal_plan.save
@@ -30,59 +30,12 @@ class Users::MealPlansController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      @meal_plan.meals[meal_plan_params[:day]] = meal_plan_params[:meal]
-      if @meal_plan.save!
-
-        format.html { redirect_to meal_plan_url(@meal_plan), notice: "Meal plan was successfully updated." }
-        format.json { render :show, status: :ok, location: @meal_plan }
-      else
-        format.turbo_stream
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @meal_plan.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update_serving
-    @meal_plan = MealPlan.joins(plan: [recipes: :ingredients]).find_by({plan_id: meal_plan_params[:plan_id], meal_type: meal_plan_params[:meal_type], day: params[:day]})
-
-    @meal_plan.number_of_persons_to_be_served = @meal_plan.number_of_persons_to_be_served + 1
-
-    if @meal_plan.save!
-      Turbo::StreamsChannel.broadcast_replace_to :servings, target: "servings",
-        partial: "users/recipes/serving",
-        locals: {serving: @meal_plan.number_of_persons_to_be_served}
-
-      @meal_plan.recipe.ingredients.map do |t|
-        quantity = IngredientQuantityCalculator.new(qty = t.quantity, serving = @meal_plan.number_of_persons_to_be_served.to_i).call
-
-        Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{t.id}",
-          partial: "users/recipes/ingredient_quantity",
-          locals: {quantity: quantity, id: t.id}
-      end
-    end
-  end
-
-  def delete_serving
-    @meal_plan = MealPlan.find_by({plan_id: meal_plan_params[:plan_id], meal_type: meal_plan_params[:meal_type], day: params[:day]})
-
-    if @meal_plan.number_of_persons_to_be_served > 1
-      @meal_plan.number_of_persons_to_be_served = @meal_plan.number_of_persons_to_be_served - 1
-
-      if @meal_plan.save!
-        Turbo::StreamsChannel.broadcast_replace_to :servings, target: "servings",
-          partial: "users/recipes/serving",
-          locals: {serving: @meal_plan.number_of_persons_to_be_served}
-
-        @meal_plan.recipe.ingredients.map do |t|
-          quantity = IngredientQuantityCalculator.new(qty = t.quantity, serving = @meal_plan.number_of_persons_to_be_served.to_f).call
-
-          Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{t.id}",
-            partial: "users/recipes/ingredient_quantity",
-            locals: {quantity: quantity, id: t.id}
-        end
-      end
+    if meal_plan_params[:update_serving]
+      handle_serving_update
+    elsif meal_plan_params[:delete_serving]
+      handle_serving_delete
+    else
+      update_meal_plan
     end
   end
 
@@ -107,6 +60,44 @@ class Users::MealPlansController < ApplicationController
   end
 
   def meal_plan_params
-    params.permit(:plan_id, :meal, :meal_type, :day)
+    params.permit(:plan_id, :meal, :meal_type, :day, :update_serving, :delete_serving)
+  end
+
+  def handle_serving_update
+    @meal_plan.increment!(:number_of_persons_to_be_served)
+    broadcast_serving_updates
+  end
+
+  def handle_serving_delete
+    if @meal_plan.number_of_persons_to_be_served > 1
+      @meal_plan.decrement!(:number_of_persons_to_be_served)
+      broadcast_serving_updates
+    end
+  end
+
+  def update_meal_plan
+    @meal_plan.meals[meal_plan_params[:day]] = meal_plan_params[:meal]
+    
+    respond_to do |format|
+      if @meal_plan.save
+        format.html { redirect_to meal_plan_url(@meal_plan), notice: "Meal plan was successfully updated." }
+        format.json { render :show, status: :ok, location: @meal_plan }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @meal_plan.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def broadcast_serving_updates
+    Turbo::StreamsChannel.broadcast_replace_to :servings, target: "servings", 
+      partial: "users/recipes/serving", locals: { serving: @meal_plan.number_of_persons_to_be_served }
+
+    @meal_plan.recipe.ingredients.each do |ingredient|
+      quantity = IngredientQuantityCalculator.new(qty: ingredient.quantity, serving: @meal_plan.number_of_persons_to_be_served).call
+
+      Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{ingredient.id}",
+        partial: "users/recipes/ingredient_quantity", locals: { quantity: quantity, id: ingredient.id }
+    end
   end
 end

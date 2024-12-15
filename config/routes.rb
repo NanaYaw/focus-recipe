@@ -77,12 +77,7 @@ Rails.application.routes.draw do
       end
 
       scope module: :users do
-        resources :meal_plans do
-          member do
-            patch "number-of-persons-to-be-served", to: "meal_plans#update_serving", as: :create_serving
-            delete "number-of-persons-to-be-served", to: "meal_plans#delete_serving", as: :delete_serving
-          end
-        end
+        resources :meal_plans
 
         resources :plans do
           collection do
