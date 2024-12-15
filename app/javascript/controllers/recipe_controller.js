@@ -2,205 +2,126 @@ import { patch, post, destroy } from '@rails/request.js';
 import { Controller } from '@hotwired/stimulus';
 import cash from 'cash-dom';
 export default class extends Controller {
-	static targets = ['title', 'dynamic', 'original', 'addDirection'];
-	static values = {
-		title: String,
-		ingredients: Array,
-		directions: Array,
-		description: String,
-		id: Number,
-		ingredientId: Number,
-	};
+  static targets = ['title', 'dynamic', 'original', 'addDirection'];
+  static values = {
+    title: String,
+    ingredients: Array,
+    directions: Array,
+    description: String,
+    id: Number,
+    ingredientId: Number,
+  };
 
-	connect() {
-		console.log('recipe controller');
-	}
+  connect() {}
 
-	async createTitle(event) {
-		let body = {};
-		body['title'] = this.titleTarget.value;
+  async handleApiRequest(url, method, body = null, formData = null) {
+    let options = {
+      method: method,
+      responseKind: 'json',
+    };
 
-		// console.log(body);
+    if (body) {
+      options.body = body;
+    }
 
-		let response = await post(`/recipes/title`, {
-			body: body,
-			responseKind: 'json',
-		});
+    if (formData) {
+      options.body = formData;
+    }
 
-		if (response.ok) {
-			response.text.then((result) => {
-				const { edit_url } = JSON.parse(result);
-				window.location = edit_url;
+    const response = await fetch(url, options);
+    
+    if (response.ok) {
+      const result = await response.json();
+      return result;
+    } else {
+      console.error('API Request Failed:', response);
+      return null;
+    }
+  }
 
-				// console.log(result.text.edit_url);
-			});
-		} else {
-			// console.log(response);
-		}
-	}
-	async editTitle(event) {
-		let body = {};
-		body['title'] = this.titleTarget.value;
-		body['id'] = this.idValue;
-		body['edit'] = 'edit';
+  async createTitle(event) {
+    const body = { title: this.titleTarget.value };
+    const result = await this.handleApiRequest('/recipes/title', 'POST', body);
 
-		console.log('Iam editing the title');
-		console.log(this.idValue);
+    if (result && result.edit_url) {
+      window.location = result.edit_url;
+    }
+  }
 
-		let response = await post(`/recipes/title`, {
-			body: body,
-			responseKind: 'json',
-		});
+  async editTitle(event) {
+    const body = {
+      title: this.titleTarget.value,
+      id: this.idValue,
+      edit: 'edit',
+    };
+    const result = await this.handleApiRequest('/recipes/title', 'POST', body);
 
-		if (response.ok) {
-			response.text.then((result) => {
-				const { edit_url } = JSON.parse(result);
-				window.location = edit_url;
-			});
-		} else {
-			// console.log(response);
-		}
-	}
+    if (result && result.edit_url) {
+      window.location = result.edit_url;
+    }
+  }
 
-	async create_ingredient(event) {
-		event.preventDefault();
-		const modal = cash('#recipeModal');
+  async createIngredient(event) {
+    event.preventDefault();
+    const form = cash('#_recipe_ingredient_form')[0];
+    const formData = new FormData(form);
+    formData.append('id', this.idValue);
 
-		const form = cash('#_recipe_ingredient_form')[0];
-		const formData = new FormData(form);
+    if (form.checkValidity()) {
+      await this.handleApiRequest('/recipes/create_ingredient', 'PATCH', null, formData);
+    }
+  }
 
-		formData.append('id', this.idValue);
+  async updateIngredient(event) {
+    const form = cash('#ingredient')[0];
+    const formData = new FormData(form);
 
-		if (form.checkValidity()) {
-			const response = await patch('/recipes/create_ingredient', {
-				body: formData,
-				responseKind: 'turbo-stream',
-			});
-			// console.log(response);
-			// if (response.ok) {
-			// 	modal.hide();
-			// } else {
-			// 	response.json.then(function (errors) {
-			// 		// console.log(errors);
-			// 		// me.dispatch('error', {
-			// 		// 	detail: { resourceName: resourceName, errors: errors },
-			// 		// });
-			// 	});
-			// }
-		}
-	}
+    if (form.checkValidity()) {
+      await this.handleApiRequest(`/ingredients/${this.ingredientIdValue}`, 'PATCH', null, formData);
+    }
+  }
 
-	async update_ingredient(event) {
-		const form = cash('#ingredient')[0];
-		const formData = new FormData(form);
+  async delete() {
+    await this.handleApiRequest(`/ingredients/${this.ingredientIdValue}`, 'DELETE');
+  }
 
-		// for (const result of formData.entries()) {
-		// 	// console.log(result);
-		// }
+  addDirectionFields() {
+    const form = cash('#recipe-direction')[0];
+    const submitDirectionButton = cash('#submit-direction-button')[0];
+    const cloneElement = this.originalTarget.cloneNode(true);
+    const formInputElementSize = form.getElementsByTagName('input').length - 1;
 
-		if (form.checkVisibility()) {
-			const response = await patch(`/ingredients/${this.ingredientIdValue}`, {
-				body: formData,
-				responseKind: 'turbo-stream',
-			});
-			if (response.ok) {
-				// console.log(response);
-			} else {
-				console.log('server response', response);
-			}
-		}
-	}
+    cloneElement.getElementsByTagName('input')[0].name = `direction[${formInputElementSize + 1}]`;
 
-	async delete() {
-		const response = await destroy(`/ingredients/${this.ingredientIdValue}`, {
-			responseKind: 'turbo-stream',
-		});
-		if (response.ok) {
-			console.log(response);
-		} else {
-			console.log('server response', response);
-		}
-	}
+    if (formInputElementSize > 0) {
+      submitDirectionButton.removeAttribute('hidden');
+    }
 
-	add_direction_fields() {
-		const form = cash('#recipe-direction')[0];
-		const submitDirectionButton = cash('#submit-direction-button')[0];
+    cloneElement.removeAttribute('hidden');
+    this.addDirectionTarget.removeAttribute('hidden');
+    this.dynamicTarget.append(cloneElement);
+  }
 
-		const cloneElement = this.originalTarget.cloneNode(true);
-		const formInputElementSize = form.getElementsByTagName('input').length - 1;
+  async submitDirection() {
+    const form = cash('#recipe-direction')[0];
+    const formData = new FormData(form);
 
-		cloneElement.getElementsByTagName('input')[0].name = `direction[${
-			formInputElementSize + 1
-		}]`;
+    if (form.checkValidity()) {
+      await this.handleApiRequest('/recipes/create_directions', 'PATCH', null, formData);
+    }
+  }
 
-		if (formInputElementSize > 0) {
-			submitDirectionButton.removeAttribute('hidden');
-		}
+  async updateDirection(event) {
+    const form = cash('#recipe-direction-edit')[0];
+    const formData = new FormData(form);
 
-		cloneElement.removeAttribute('hidden');
-		this.addDirectionTarget.removeAttribute('hidden');
+    if (form.checkValidity()) {
+      await this.handleApiRequest('/recipes/update_direction', 'PATCH', null, formData);
+    }
+  }
 
-		this.dynamicTarget.append(cloneElement);
-	}
-
-	async submitDirection() {
-		const form = cash('#recipe-direction')[0];
-		const formData = new FormData(form);
-
-		for (const result of formData.entries()) {
-			console.log(result);
-		}
-
-		if (form.checkVisibility()) {
-			const response = await patch(`/recipes/create_directions`, {
-				body: formData,
-				responseKind: 'turbo-stream',
-			});
-			if (response.ok) {
-				console.log(response);
-			} else {
-				console.log('server response', response);
-			}
-		}
-	}
-
-	edit_direction(event) {
-		const form = cash('#recipe-direction')[0];
-		// console.log(form);
-	}
-
-	async update_direction(event) {
-		const form = cash('#recipe-direction-edit')[0];
-
-		const formData = new FormData(form);
-
-		if (form.checkVisibility()) {
-			const response = await patch(`/recipes/update_direction`, {
-				body: formData,
-				responseKind: 'turbo-stream',
-			});
-			if (response.ok) {
-				console.log(response);
-			} else {
-				console.log('server response', response);
-			}
-		}
-	}
-
-	async delete_direction(event) {
-		console.log(this.idValue);
-		console.log(this.ingredientIdValue);
-		const recipe_id = '';
-		const ingredient_id = '';
-
-		const response = await patch(`/recipes/delete_direction`, {
-			body: { id: this.ingredientIdValue, recipe_id: this.idValue },
-			responseKind: 'turbo-stream',
-		});
-		if (response.ok) {
-			console.log(response);
-		} else {
-			console.log('server response', response);
-		}
-	}
+  async deleteDirection(event) {
+    const response = await this.handleApiRequest('/recipes/delete_direction', 'PATCH', { id: this.ingredientIdValue, recipe_id: this.idValue });
+  }
 }
+
