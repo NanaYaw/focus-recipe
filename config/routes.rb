@@ -17,20 +17,9 @@ Rails.application.routes.draw do
   # Admin Routes
   devise_scope :admin do
     authenticated :admin do
-      scope module: :admins do
-        # Dashboard and admin management
-        get "dashboard", to: "dashboard#index", as: :authenticated_root
-        resources :admins, except: [:create, :new]
-        
-        # Resources management
-        resources :ingredient_states
-        resources :measurement_units
-        resources :groceries
-        resources :grocery_categories
-        resources :ingredients
-
-        # Recipes management
-        resources :recipes do
+      # API Routes
+      namespace :api do  
+        resources :recipes, only: [] do
           collection do
             get :new_title
             post :create_title
@@ -50,6 +39,22 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      scope module: :admins do
+        # Dashboard and admin management
+        get "dashboard", to: "dashboard#index", as: :authenticated_root
+        resources :admins, except: [:create, :new]
+        
+        # Resources management
+        resources :ingredient_states
+        resources :measurement_units
+        resources :groceries
+        resources :grocery_categories
+        resources :ingredients
+
+        # Recipes management
+        resources :recipes
+      end
     end
   end
 
@@ -68,7 +73,6 @@ Rails.application.routes.draw do
             get :meal_plans_content, to: "v1/users/plans#meal_plans_content"
           end
         end
-        
       end
 
       # User-specific routes
