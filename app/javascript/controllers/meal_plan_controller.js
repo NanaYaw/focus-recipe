@@ -23,7 +23,7 @@ export default class extends Controller {
 		body['meal_type'] = mealtypeValue;
 		body['day'] = dayValue;
 
-		let response = await patch(`/plans/meal_update/`, {
+		let response = await patch(`/api/plans/meal_update/`, {
 			body: body,
 			responseKind: 'json',
 		});

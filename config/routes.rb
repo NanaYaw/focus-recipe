@@ -13,12 +13,7 @@ Rails.application.routes.draw do
     invitations: "admins/invitations"
   }
 
-  # API Routes
-  namespace :api do
-    resources :lazyloads, only: [:index], controller: "lazy_loads"
-    resources :mealplans, only: [:update, :show, :index], controller: "meal_plans"
-  end
-
+  
   # Admin Routes
   devise_scope :admin do
     authenticated :admin do
@@ -26,7 +21,7 @@ Rails.application.routes.draw do
         # Dashboard and admin management
         get "dashboard", to: "dashboard#index", as: :authenticated_root
         resources :admins, except: [:create, :new]
-
+        
         # Resources management
         resources :ingredient_states
         resources :measurement_units
@@ -61,6 +56,20 @@ Rails.application.routes.draw do
   # User Routes
   devise_scope :user do
     authenticated :user do
+      # API Routes
+      namespace :api do
+        resources :lazyloads, only: [:index], controller: "lazy_loads"
+        resources :mealplans, only: [:update, :show, :index], controller: "meal_plans"
+
+        
+        resources :plans, only: [] do
+          collection do
+            patch :meal_update, to: "v1/users/plans#meal_update"
+          end
+        end
+        
+      end
+
       # User-specific routes
       namespace :users do
         get "plans", to: "plans#index", as: :authenticated_root

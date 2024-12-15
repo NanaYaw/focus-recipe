@@ -3,7 +3,6 @@ module Api
     module Users
       class PlansController < ApplicationController
 
-
           def meal_update
             @mealplan = MealPlan.where({plan_id: params[:plan_id], meal_type: params[:meal_type], day: params[:day]}).includes(recipe: [:reviews, {image_attachment: :blob}])
             @mealplan = @mealplan[0]
