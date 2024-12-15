@@ -33,21 +33,7 @@ class Users::PlansController < ApplicationController
     @params = param
   end
 
-  # rrefactor this method into its proper controller
-  def meal_plans_content
-    p ">>>>>>>>>>>>>>>>>>>>>>"
-    p params
-    p ">>>>>>>>>>>>>>>>>>>>>>"
-    @meal_plans = Recipe.where(status: "published").includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
-    param = {}
-    param[:plan_id] = params[:plan_id]
-    param[:meal_type] = params[:meal_type]
-    param[:day] = params[:day]
 
-    @params = param
-
-    render(partial: "users/plans/meal_plans_content")
-  end
 
   def show
     @mealtypes = MealType::MEAL_TYPE

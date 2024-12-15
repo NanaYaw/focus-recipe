@@ -65,6 +65,7 @@ Rails.application.routes.draw do
         resources :plans, only: [] do
           collection do
             patch :meal_update, to: "v1/users/plans#meal_update"
+            get :meal_plans_content, to: "v1/users/plans#meal_plans_content"
           end
         end
         
