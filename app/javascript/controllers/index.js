@@ -13,8 +13,6 @@ application.register(
 	GsapDraggableCarouselController
 );
 
-import HelloController from './hello_controller';
-application.register('hello', HelloController);
 
 import MealPlanController from './meal_plan_controller';
 application.register('mealplan', MealPlanController);
