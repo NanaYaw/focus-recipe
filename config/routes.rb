@@ -18,31 +18,35 @@ Rails.application.routes.draw do
   devise_scope :admin do
     authenticated :admin do
       # API Routes
-      namespace :api do  
-        resources :recipes, only: [] do
-          collection do
-            get :new_title
-            post :create_title
-            get :edit_title
-          end
+      namespace :api do 
+        namespace :v1 do
+          namespace :admins do
+            resources :recipes, only: [] do
+              collection do
+                get :new_title
+                post :create_title
+                get :edit_title
+              end
 
-          member do
-            patch :update_title
-            patch :create_ingredient
-            get :new_ingredient
-            patch :edit_ingredient
-            get :delete_ingredient
-            patch :create_directions
-            get :edit_direction
-            patch :update_direction
-            patch :delete_direction
+              member do
+                patch :update_title
+                patch :create_ingredient
+                get :new_ingredient
+                patch :edit_ingredient
+                get :delete_ingredient
+                patch :create_directions
+                get :edit_direction
+                patch :update_direction
+                patch :delete_direction
+              end
+            end
           end
         end
       end
 
-      scope module: :admins do
+      get "dashboard", to: "admins/dashboard#index", as: :authenticated_root
+      namespace :admins do
         # Dashboard and admin management
-        get "dashboard", to: "dashboard#index", as: :authenticated_root
         resources :admins, except: [:create, :new]
         
         # Resources management

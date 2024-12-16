@@ -17,11 +17,11 @@
           </div>
         </div>
         <div class="flex justify-between">
-          <%= link_to groceries_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to admins_groceries_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
             Groceries 
             <!-- <i class="bi bi-arrow-right"></i> -->
           <% end %>
-          <%= link_to new_grocery_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to new_admins_grocery_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
             Add New <i class="bi bi-plus"></i>
           <% end %>
         </div>
@@ -43,11 +43,11 @@
           </div>
         </div>
         <div class="flex justify-between">
-          <%= link_to grocery_categories_url,  class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to admins_grocery_categories_url,  class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
             Grocery Category 
             <!-- <i class="bi bi-arrow-right"></i> -->
           <% end %>
-          <%= link_to new_grocery_category_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to new_admins_grocery_category_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
             Add New <i class="bi bi-plus"></i>
           <% end %>
         </div>
@@ -69,11 +69,11 @@
           </div>
         </div>
         <div class="flex justify-between">
-          <%= link_to ingredient_states_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to admins_ingredient_states_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
             Ingredient State 
             <!-- <i class="bi bi-arrow-right"></i> -->
           <% end %>
-          <%= link_to new_ingredient_state_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to new_admins_ingredient_state_url, method: :get, data: {turbo_frame: "modal"}, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
             Add New <i class="bi bi-plus"></i>
           <% end %>
         </div>
@@ -95,11 +95,11 @@
           </div>
         </div>
         <div class="flex justify-between">
-          <%= link_to recipes_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to admins_recipes_url, class: "flex gap-2 bg-gray-200 text-xs py-1 px-2 rounded-md" do %>
             Recipes 
             <!-- <i class="bi bi-arrow-right"></i> -->
           <% end %>
-          <%= link_to new_recipe_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
+          <%= link_to new_admins_recipe_url, class: "flex gap-2 bg-accent text-xs py-1 px-2 rounded-md" do %>
             Add New <i class="bi bi-plus"></i>
           <% end %>
         </div>

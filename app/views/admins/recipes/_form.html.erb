@@ -2,7 +2,7 @@
   <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  bg-accent/20">
     <span class="text-gray-700 text-3xl"><%= recipe.title %></span>
     <%# <span class="shadow-xl"> %>
-    <%= button_to  edit_title_recipe_path(recipe), method: :get,  data: {turbo_frame: "modal"}, class: "flex px-3 py-2 rounded-md text-xl shadow-md gap-2 bg-accent hover:bg-primary text-gray-700" do %>
+    <%= button_to  edit_title_api_recipes_path(recipe), method: :get,  data: {turbo_frame: "modal"}, class: "flex px-3 py-2 rounded-md text-xl shadow-md gap-2 bg-accent hover:bg-primary text-gray-700" do %>
       <i class="bi bi-pencil"></i>
       Edit Title
     <% end %>
@@ -14,7 +14,7 @@
     <!-- ------------ -->
     <div class="flex flex-col w-full p-3 my-4">
       <%#= image_tag image_render(image=recipe.image, width=nil, height=300) %>
-      <%= form_with(model: recipe, html: { class: "w-full flex flex-col sm:flex-row items-start gap-4 mb-3"}) do |form| %>
+      <%= form_with(model: recipe, url: admins_recipe_path(recipe), html: { class: "w-full flex flex-col sm:flex-row items-start gap-4 mb-3"}) do |form| %>
         <div class="w-full sm:w-8/12 lg:w-9/12 p-4 bg-gray-100"  data-controller="profile-form">
           <h5 class="mb-2">Recipe cover image</h5>
           <div class="w-fit relative">

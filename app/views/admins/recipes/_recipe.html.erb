@@ -20,7 +20,7 @@
           <% end %>
         </div>
         <div class="grow">
-          <%= link_to recipe do %>
+          <%= link_to admins_recipe_path(recipe) do %>
             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200"><%= recipe.title %>
             </span>
           <% end %>
@@ -50,13 +50,13 @@
   </td>
   <td class="h-px w-px whitespace-nowrap ">
     <div class="flex justify-end gap-2 px-6 py-1.5">
-      <%= link_to  edit_recipe_path(recipe), class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white button--primary rounded-full" do  %>
+      <%= link_to  edit_admins_recipe_path(recipe), class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white button--primary rounded-full" do  %>
         <i class="bi bi-pencil"></i>
       <% end %>
-      <%= link_to  recipe_path(recipe), class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white bg-accent  rounded-full" do  %>
+      <%= link_to  admins_recipe_path(recipe), class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white bg-accent  rounded-full" do  %>
         <i class="bi bi-eye"></i>
       <% end %>
-      <%= button_to recipe, method: :delete, class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white button--danger rounded-full" do %>
+      <%= button_to admins_recipe_path(recipe), method: :delete, class: "inline-flex items-center gap-x-1.5 text-sm px-2 py-1 text-white button--danger rounded-full" do %>
         <i class="bi bi-trash"></i>
       <% end %>
     </div>

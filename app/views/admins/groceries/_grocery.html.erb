@@ -12,7 +12,7 @@
     <div class="pl-6 lg:pl-3 xl:pl-0 pr-6 py-3">
       <div class="flex items-center gap-x-3">
         <div class="grow">
-          <%= link_to grocery do %>
+          <%= link_to admins_grocery_path(grocery.id) do %>
             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200"><%= grocery.name %>
             </span>
           <% end %>
@@ -37,10 +37,10 @@
   </td>
   <td class="h-px w-px whitespace-nowrap">
     <div class="flex justify-end gap-2 px-6 py-1.5">
-      <%= button_to  edit_grocery_path(grocery), method: :get,  data: {turbo_frame: 'modal'}, class: "inline-flex items-center gap-x-1.5 px-2 py-1 text-white rounded-full button--secondary" do  %>
+      <%= button_to  edit_admins_grocery_path(grocery), method: :get,  data: {turbo_frame: 'modal'}, class: "inline-flex items-center gap-x-1.5 px-2 py-1 text-white rounded-full button--secondary" do  %>
         <i class="bi bi-pencil"></i>
       <% end %>
-      <%= button_to grocery_path(grocery), method: :delete, data: {confirm: 'Are you sure?' }, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
+      <%= button_to admins_grocery_path(grocery), method: :delete, data: {confirm: 'Are you sure?' }, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
         <i class="bi bi-trash"></i>
       <% end %>
     </div>

@@ -18,15 +18,19 @@ export default class extends Controller {
     let options = {
       method: method,
       responseKind: 'json',
+      headers: {},
     };
 
     if (body) {
-      options.body = body;
+      options.body = JSON.stringify(body);
+      options.headers['Content-Type'] = 'application/json';
     }
 
     if (formData) {
       options.body = formData;
     }
+
+    console.log(options)
 
     const response = await fetch(url, options);
     
@@ -41,7 +45,7 @@ export default class extends Controller {
 
   async createTitle(event) {
     const body = { title: this.titleTarget.value };
-    const result = await this.handleApiRequest('/recipes/title', 'POST', body);
+    const result = await this.handleApiRequest('/api/v1/admins/recipes/create_title', 'POST', body);
 
     if (result && result.edit_url) {
       window.location = result.edit_url;

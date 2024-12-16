@@ -68,11 +68,11 @@
   </div>
 </table>
 <!-----------------------     ------------------------>
-<% @recipes.each do |meal_plan|  %>
+<% @meal_plans.each do |meal_plan|  %>
   <div class="portrait-page flex-wrap">
     <div class="head-wrap">
       <div class="recipe-image" style="" >
-        <% if meal_plan.recipe&.image.attached? %>
+        <% if meal_plan&.recipe&.image.attached? %>
           <%= image_tag meal_plan.recipe.image.variant(resize_to_fill: [600, 600]) %>
         <% else %>
           <%= image_tag '/images/sample.png', size: 600 %>
@@ -80,16 +80,16 @@
         <% end %>
       </div>
       <div class="recipe-head" style="">
-        <h1><%= meal_plan.recipe.title %></h1>
+        <h1><%= meal_plan&.recipe.title %></h1>
         <div class="background-color:#f1f1f1 padding:10px; border-radius: 10px">
           <div style="display:flex;font-size:28px;font-weight:bold">
             <span style="display:flex;position:relative;margin-right:20px">
               <%= wicked_pdf_image_tag asset_url('star.png') %>
-              <%= meal_plan.recipe.reviews.average_stars %>
+              <%= meal_plan&.recipe.reviews.average_stars %>
             </span>
             <span class="flex gap-2">
               <%= wicked_pdf_image_tag asset_url('user.png') %>
-              <%= meal_plan.number_of_persons_to_be_served %></span>
+              <%= meal_plan&.number_of_persons_to_be_served %></span>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
       <div style="float:left;width:49%">
         <h2>Ingredients</h2>
         <ul class="">
-          <% meal_plan.recipe.ingredients.each do |ingredient| %>
+          <% meal_plan&.recipe.ingredients.each do |ingredient| %>
             <li>
               <%= ingredient[:quantity] %>
               <%= ingredient.measurement_unit.name %>,
@@ -110,16 +110,16 @@
       <div style="float:right;width:49%">
         <h2>Directions</h2>
         <ul>
-          <%= meal_plan.recipe.directions.each do |direction| %>
+          <%= meal_plan&.recipe.directions.each do |direction| %>
             <li><%= direction %></li>
           <% end %>
         </ul>
       </div>
     </div>
-    <% unless meal_plan.recipe.description.nil? %>
+    <% unless meal_plan&.recipe.description.nil? %>
       <div style="margin-top:50px">
         <h2>Description</h2>
-        <%= meal_plan.recipe.description %>
+        <%= meal_plan&.recipe.description %>
       </div>
     <% end %>
   </div>

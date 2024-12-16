@@ -1,4 +1,4 @@
-<%= form_with(model: ingredient_state, html: { class: "flex flex-col gap-4"}) do |form| %>
+<%= form_with(model: admins_ingredient_state, html: { class: "flex flex-col gap-4"}) do |form| %>
   <% if ingredient_state.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(ingredient_state.errors.count, "error") %> prohibited this ingredient_state from being saved:</h2>

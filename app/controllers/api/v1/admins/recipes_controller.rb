@@ -1,7 +1,9 @@
 module Api
   module V1
     module Admins
-      class RecipeController < DashboardsController
+      class RecipesController < DashboardsController
+        protect_from_forgery with: :null_session # For API endpoints, avoids CSRF exceptions
+
         before_action :set_recipe, only: %i[  edit_title update_title create_directions ]
 
         def new_title
@@ -17,17 +19,15 @@ module Api
           end
 
 
-          respond_to do |format| 
-            if @recipe.save
-              # format.turbo_stream {render turbo_stream: turbo_stream.replace(@recipe)}
-              # format.turbo_stream
-              # format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
-              # Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, target: "recipe-update-#{@recipe.id}", partial: "recipes/recipe_sub_form", locals: {id: @recipe.id}
-              format.json { render :show, status: :created, location: @recipe }
-            else
-              format.html { render :new_title, status: :unprocessable_entity }
-              format.json { render json: @recipe.errors, status: :unprocessable_entity }
-            end
+          if @recipe.save
+            # format.turbo_stream {render turbo_stream: turbo_stream.replace(@recipe)}
+            # format.turbo_stream
+            # format.html { redirect_to recipe_url(@recipe), notice: "Recipe was successfully created." }
+            # Turbo::StreamsChannel.broadcast_replace_to :recipe_form_update, target: "recipe-update-#{@recipe.id}", partial: "recipes/recipe_sub_form", locals: {id: @recipe.id}
+            # format.json { render :json, status: :created, location: @recipe }
+            render json: { message: 'Recipe created successfully', edit_url: '/admins/recipes', recipe: @recipe }, status: :created
+          else
+            render json: { message: @recipe.errors, status: :unprocessable_entity }, status: :unprocessable_entity
           end
         end
 
@@ -131,6 +131,10 @@ module Api
 
         def set_recipe
           @recipe = Recipe.find(params[:id])
+        end
+
+        def recipe_params
+          params.require(:recipe).permit(:title, :image, :recipe_category_id, :status)
         end
 
       end

@@ -21,9 +21,9 @@
     </div>
   </div>
   <div class="flex justify-end gap-4 p-4 bg-gray-700 text-gray-200">
-    <% if admin_signed_in? %>
-      <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-      <%= link_to "Back to recipes", recipes_path %>
+    <% if admins_signed_in? %>
+      <%= link_to "Edit this recipe", edit_admins_recipe_path(@recipe) %> |
+      <%= link_to "Back to recipes", admins_recipes_path %>
       <%#= button_to "Destroy this recipe", @recipe, method: :delete %>
     <% end %>
   </div>

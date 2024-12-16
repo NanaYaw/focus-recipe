@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 <%= render @grocery_category %>
 <div>
-  <%= link_to "Edit this grocery_category", edit_grocery_category_path(@grocery_category) %> |
-  <%= link_to "Back to grocery_categories", grocery_categories_path %>
+  <%= link_to "Edit this grocery_category", edit_admins_grocery_category_path(@grocery_category) %> |
+  <%= link_to "Back to grocery_categories", admins_grocery_categories_url %>
   <%= button_to "Destroy this grocery_category", @grocery_category, method: :delete %>
 </div>

@@ -1,10 +1,7 @@
 <p style="color: green"><%= notice %></p>
-
 <%= render @ingredient_state %>
-
 <div>
-  <%= link_to "Edit this ingredient state", edit_ingredient_state_path(@ingredient_state) %> |
-  <%= link_to "Back to ingredient states", ingredient_states_path %>
-
+  <%= link_to "Edit this ingredient state", edit_admins_ingredient_state_path(@ingredient_state) %> |
+  <%= link_to "Back to ingredient states", admins_ingredient_states_url %>
   <%= button_to "Destroy this ingredient state", @ingredient_state, method: :delete %>
 </div>

@@ -10,18 +10,18 @@
   </div>
   <% #if admin_signed_in? %>
   <span class="flex items-center gap-1 py-1">
-    <%= button_to  ingredient_path(ingredient), 
+    <%= button_to  admins_ingredient_path(ingredient), 
       method: :get, 
       data: {turbo_frame: 'modal'}, class: "bg-gray-500 hover:bg-gray-700 text-gray-200 hover:text-white px-1 rounded-md" do %>
       <i class="bi bi-eye"></i>
     <% end %>
-    <%= button_to  edit_ingredient_path(ingredient), 
+    <%= button_to  edit_admins_ingredient_path(ingredient), 
       method: :get, 
       params: {recipe_id: ingredient.recipe_id}, 
       data: {turbo_frame: 'modal'}, class: "bg-gray-300 hover:bg-gray-700 text-black hover:text-white px-1 rounded-md" do %>
       <i class="bi bi-pencil"></i>
     <% end %>
-    <%= link_to ingredient_path(ingredient), 
+    <%= link_to admins_ingredient_path(ingredient), 
         data: { 'turbo-method': "delete", 'delete-target': "link", 
         action: "turbo:click->recipe#delete" },  
         class: "bg-gray-300 hover:bg-red-700 text-red-400 text-black hover:text-white px-1 rounded-md" do %>

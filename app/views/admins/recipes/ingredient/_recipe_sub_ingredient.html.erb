@@ -2,7 +2,7 @@
   <h3 class=" text-xl text-black font-bold">Ingredients</h3>
   <% if defined? edit%>
     <div class="flex flex-row justify-between absolute top-2 right-3">
-      <%= link_to new_ingredient_recipe_path, 
+      <%= link_to new_admins_ingredient_recipe_path, 
       method: :get,  data: {turbo_frame: "modal", "hs-overlay": "#hs-vertically-centered-modal"}, 
       class: "py-1 px-2 inline-flex justify-center items-center gap-2  rounded-md button--secondary text-gray-100" do  %>
         <i class="bi bi-plus-lg text-xl font-semibold"></i> Add

@@ -33,8 +33,6 @@ class Users::PlansController < ApplicationController
     @params = param
   end
 
-
-
   def show
     @mealtypes = MealType::MEAL_TYPE
     @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
@@ -107,27 +105,30 @@ class Users::PlansController < ApplicationController
   end
 
   def meal_plaan_grid(plan_id:, mealtypes:, days:)
-    mealplan_data = MealPlan.where(plan_id: plan_id).select(:meal_type, :recipe_id, :day, :id).includes(recipe: [:reviews, {image_attachment: :blob}]).group_by(&:meal_type).with_indifferent_access
+    mealplan_data = MealPlan
+                      .where(plan_id: plan_id)
+                      .select(:meal_type, :recipe_id, :day, :id)
+                      .includes(recipe: [:reviews, { image_attachment: :blob }])
+                      .where(day: days)  # Filter meal plans by days upfront
+                      .group_by(&:meal_type)
+                      .with_indifferent_access
 
-    mealplans = {}
-    mealtypes.each do |mealtype|
-      mealplans[mealtype] = if mealplan_data[mealtype].present?
-        mealplan_data[mealtype].each_with_object({}) do |mealplan, hash|
-          days.each do |day|
-            hash[day] ||= nil
-
-            if mealplan.day == day
-              hash[mealplan.day] = mealplan
-            end
-          end
-        end
-      else
-        days.each_with_object({}) do |day, hash|
-          hash[day] = nil
-        end
-      end
+    mealplans = mealtypes.each_with_object({}) do |mealtype, grid|
+      grid[mealtype] = build_mealplan_for_mealtype(mealplan_data[mealtype], days)
     end
 
     mealplans
+  end
+
+  def build_mealplan_for_mealtype(mealplans_for_type, days)
+    mealplans_for_type ||= []
+    
+    mealplans_for_type.each_with_object(default_mealplan(days)) do |mealplan, grid|
+      grid[mealplan.day] = mealplan
+    end
+  end
+
+  def default_mealplan(days)
+    days.each_with_object({}) { |day, hash| hash[day] = nil }
   end
 end

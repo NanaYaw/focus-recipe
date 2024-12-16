@@ -35,10 +35,10 @@
     </td>
     <td class="h-px w-px whitespace-nowrap ">
       <div class="flex justify-end gap-2 px-6 py-1.5">
-        <%= button_to  edit_ingredient_state_path(ingredient_state), method: :get,  data: {turbo_frame: 'modal'}, class: "inline-flex items-center gap-x-1.5 px-2 py-1 text-white rounded-full button--secondary" do  %>
+        <%= button_to  edit_admins_ingredient_state_path(ingredient_state), method: :get,  data: {turbo_frame: 'modal'}, class: "inline-flex items-center gap-x-1.5 px-2 py-1 text-white rounded-full button--secondary" do  %>
           <i class="bi bi-pencil"></i>
         <% end %>
-        <%= button_to ingredient_state_path(ingredient_state.id), method: :delete, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
+        <%= button_to admins_ingredient_state_path(ingredient_state.id), method: :delete, class: "inline-flex items-center gap-x-1.5 text-sm rounded-full text-white px-2 py-1 button--danger" do %>
           <i class="bi bi-trash"></i>
         <% end %>
         <%#= link_to "Back to recipes", recipes_path %>

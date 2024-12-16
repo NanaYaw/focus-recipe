@@ -14,8 +14,8 @@
       <%= @grocery.description %>
     </div>
     <div class="flex gap-4">
-      <%= link_to "Edit this grocery", edit_grocery_path(@grocery), method: :get, data: {turbo_frame: "modal"} %> |
-      <%= link_to "Back to groceries", groceries_path %> |
+      <%= link_to "Edit this grocery", edit_admins_grocery_path(@grocery), method: :get, data: {turbo_frame: "modal"} %> |
+      <%= link_to "Back to groceries", admins_groceries_path %> |
       <%= button_to "Destroy this grocery", @grocery, method: :delete %>
     </div>
   </div>

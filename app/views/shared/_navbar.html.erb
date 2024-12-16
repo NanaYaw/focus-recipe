@@ -22,7 +22,7 @@
           <a href="#" class="#">About</a>
           <% if admin_signed_in? %>
             <%= link_to "Dashboard",  authenticated_root_path, class: "font-medium sm:py-1 px-1" %>
-            <%= link_to "Users",  admins_path, class: "font-medium sm:py-1 px-1" %>
+            <%= link_to "Users",  admins_admins_path, class: "font-medium sm:py-1 px-1" %>
           <% end %>
           <% if user_signed_in? %>
             <%= link_to "Plan", plans_url, class: "font-medium sm:py-1 px-1" %>

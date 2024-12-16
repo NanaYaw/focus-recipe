@@ -27,8 +27,8 @@ module FocusRecipeApp
     config.action_view.image_loading = "lazy"
     config.active_storage.service = :local
 
-    config.exceptions_app = ->(env) {
-      ErrorsController.action(:show).call(env)
-    }
+    # config.exceptions_app = ->(env) {
+    #   ErrorsController.action(:show).call(env)
+    # }
   end
 end
