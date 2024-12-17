@@ -6,6 +6,12 @@ class MealPlan < ApplicationRecord
 
   scope :cooking, -> { sum(:number_of_persons_to_be_served) || 0 }
 
+  scope :with_plan_and_includes, ->(plan_id) {
+    where(plan_id: plan_id)
+      .select(:meal_type, :recipe_id, :day, :id)
+      .eager_load(recipe: [:image_attachment, :reviews, :favorites, ingredients: [:grocery, :measurement_unit, :ingredient_state]])
+  }
+
   default_scope { order(day: :asc) }
 
   # after_update_commit { broadcast_replace_to "mealplans_list" }
