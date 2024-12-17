@@ -114,8 +114,9 @@ Rails.application.routes.draw do
             end
           end
         end
-        end
-      
+
+        get "grocery-list", to: "grocery_list#show"
+      end
     end
 
     # Additional user routes
