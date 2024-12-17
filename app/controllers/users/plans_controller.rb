@@ -38,6 +38,10 @@ class Users::PlansController < ApplicationController
     @days = DaysOfTheWeek::DAYS_OF_THE_WEEK
 
     @mealplans = meal_plaan_grid(plan_id: params[:id], mealtypes: @mealtypes, days: @days)
+
+    
+    binding.pry
+    
   end
 
   def new
@@ -109,7 +113,6 @@ class Users::PlansController < ApplicationController
                       .where(plan_id: plan_id)
                       .select(:meal_type, :recipe_id, :day, :id)
                       .includes(recipe: [:reviews, { image_attachment: :blob }])
-                      .where(day: days)  # Filter meal plans by days upfront
                       .group_by(&:meal_type)
                       .with_indifferent_access
 
