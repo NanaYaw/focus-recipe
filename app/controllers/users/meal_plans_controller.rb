@@ -1,11 +1,14 @@
 class Users::MealPlansController < ApplicationController
+
   before_action :set_meal_plan, only: %i[show edit update destroy update_serving delete_serving]
 
   def index
     @meal_plans = MealPlan.all
   end
 
+
   def show
+  
   end
 
   def new
@@ -94,7 +97,7 @@ class Users::MealPlansController < ApplicationController
       partial: "users/recipes/serving", locals: { serving: @meal_plan.number_of_persons_to_be_served }
 
     @meal_plan.recipe.ingredients.each do |ingredient|
-      quantity = IngredientQuantityCalculator.new(qty: ingredient.quantity, serving: @meal_plan.number_of_persons_to_be_served).call
+      quantity = IngredientQuantityCalculatorService.new(qty: ingredient.quantity, serving: @meal_plan.number_of_persons_to_be_served).call
 
       Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{ingredient.id}",
         partial: "users/recipes/ingredient_quantity", locals: { quantity: quantity, id: ingredient.id }

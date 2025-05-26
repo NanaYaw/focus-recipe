@@ -10,7 +10,7 @@ class Users::GroceryListController < ApplicationController
         meal_plans_service.call
      
         recipes = meal_plans_service.recipe_ids
-        @groceries = GroceryShoppingList.new(recipes).grocery_list
+        @groceries = GroceryShoppingListService.new(recipes).grocery_list
         
         @meal_plans = meal_plans_service.grid_normalizer
 

@@ -1,4 +1,4 @@
-class IngredientQuantityCalculator
+class IngredientQuantityCalculatorService
 
     attr_reader :qty, :serving
     def initialize(qty, serving=1)

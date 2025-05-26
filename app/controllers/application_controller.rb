@@ -6,20 +6,20 @@ class ApplicationController < ActionController::Base
 
     rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-    
-
     helper_method :breadcrumbs
 
     def breadcrumbs
         @breadcrumbs ||= []
     end
 
+    
+    
+    private
+
     def add_breadcrumb(name, path = nil)
-        breadcrumbs << Breadcrumb.new(name, path)
+        breadcrumbs << Breadcrumb.call(name, path)
     end
 
-
-    private
     def user_not_authorized
         flash[:alert] = "You are not authorized to perform this action."
         redirect_back(fallback_location: root_path)

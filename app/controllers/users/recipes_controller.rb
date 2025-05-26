@@ -18,7 +18,7 @@ class Users::RecipesController < ApplicationController
         meal_plan.each do |t|
           t.recipe.ingredients.each do |ingredient|
            
-            quantity = IngredientQuantityCalculator.new(qty = ingredient.quantity, serving = t.number_of_persons_to_be_served).call
+            quantity = IngredientQuantityCalculatorService.new(qty = ingredient.quantity, serving = t.number_of_persons_to_be_served).call
            
             @recipe_ingredients[ingredient.id] = {
               :id => ingredient.id, 

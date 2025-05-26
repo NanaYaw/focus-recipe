@@ -1,7 +1,5 @@
 class Breadcrumb
-  attr_reader :name, :path
-
-  def initialize(name, path)
+  def self.call(name, path)
     @name = name
     @path = path
   end
@@ -9,4 +7,7 @@ class Breadcrumb
   def link?
     @path.present?
   end
+
+  private
+  attr_reader :name, :path
 end

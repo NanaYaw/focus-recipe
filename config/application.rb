@@ -1,4 +1,6 @@
 require_relative "boot"
+require "logger"
+
 
 require "rails/all"
 require "view_component"

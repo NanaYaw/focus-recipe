@@ -1,4 +1,4 @@
-class GroceryShoppingList
+class GroceryShoppingListService
     
     def initialize(recipe_ids)
         @recipe_ids = recipe_ids

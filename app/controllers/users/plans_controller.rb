@@ -7,6 +7,10 @@ class Users::PlansController < ApplicationController
     @plans = Plan.all
   end
 
+  def cc
+    Plan.all
+  end
+
   def lazy_update
     plans = if current_user.present?
       Plan.where(user_id: current_user.id)
@@ -36,7 +40,7 @@ class Users::PlansController < ApplicationController
   def show
     meal_plans_service = NormalizerService.new(params['id'])
     meal_plans_service.call
-
+    
     @mealplans = meal_plans_service.grid_normalizer
     
   end
