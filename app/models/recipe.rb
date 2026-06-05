@@ -31,6 +31,26 @@ class Recipe < ApplicationRecord
         end
     end
 
+        # Return precomputed average stars if set, otherwise compute on demand.
+        def average_stars
+            return @precomputed_average_stars if defined?(@precomputed_average_stars)
+            reviews.average(:stars)&.round(1) || 0.0
+        end
+
+        def precompute_average_stars(value)
+            @precomputed_average_stars = value
+        end
+
+        # Return precomputed meal plan sum (cooking) if set, otherwise compute on demand.
+        def cooking
+            return @precomputed_mealplan_sum if defined?(@precomputed_mealplan_sum)
+            meal_plans.sum(:number_of_persons_to_be_served) || 0
+        end
+
+        def precompute_mealplan_sum(value)
+            @precomputed_mealplan_sum = value
+        end
+
    
    
 end

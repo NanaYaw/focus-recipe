@@ -44,11 +44,11 @@ class RecipesController < ApplicationController
 
 private
     def set_recipe
-      @recipe = Recipe.where(id: params[:id]).includes(:reviews,:ingredients, :favorites, image_attachment: [:blob], plans: [:meal_plans])[0]
+      @recipe = Recipe.where(id: params[:id]).includes(reviews: { user: :profile }, :ingredients, :favorites, image_attachment: [:blob], plans: [:meal_plans])[0]
 
     end
 
     def set_review
-      @reviews = Review.where(recipe_id: params[:id])
+      @reviews = Review.where(recipe_id: params[:id]).includes(user: :profile)
     end
 end

@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
     before_action :set_rating_permission, only: %i[:update_rating]
 
     def index
-        @reviews = @recipe.reviews.includes(:user)
+        @reviews = @recipe.reviews.includes(user: :profile)
     end
 
     def new 

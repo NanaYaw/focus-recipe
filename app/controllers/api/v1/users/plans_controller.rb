@@ -33,7 +33,14 @@ module Api
 
         # rrefactor this method into its proper controller
         def meal_plans_content
-          @meal_plans = Recipe.where(status: "published").includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
+                  @meal_plans = Recipe.where(status: "published").includes(:favorites, :meal_plans, :reviews, image_attachment: :blob)
+                  recipe_ids = @meal_plans.map(&:id)
+                  @reviews_avg = Review.where(recipe_id: recipe_ids).group(:recipe_id).average(:stars).transform_values { |v| v&.round(1) || 0.0 }
+                  @mealplan_sums = MealPlan.where(recipe_id: recipe_ids).unscope(:order).group(:recipe_id).sum(:number_of_persons_to_be_served)
+                  @meal_plans.each do |r|
+                    r.precompute_average_stars(@reviews_avg[r.id] || 0.0)
+                    r.precompute_mealplan_sum(@mealplan_sums[r.id] || 0)
+                  end
           param = {}
           param[:plan_id] = params[:plan_id]
           param[:meal_type] = params[:meal_type]

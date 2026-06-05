@@ -36,7 +36,7 @@
                 size: '10% * 10%', 
                 class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-0.5"
               ) %>
-                <%= recipe.reviews.average_stars %>
+                <%= @reviews_avg[recipe.id] || 0.0 %>
               </span>
               <span class="flex gap-2">
                 <%= inline_svg_tag(
@@ -44,7 +44,7 @@
                 size: '10% * 10%', 
                 class: "w-6 h-6 mask is-squircle fill-purple-700 bg-purple-200 p-1"
               ) %>
-                <%= recipe.meal_plans.cooking %></span>
+                <%= @mealplan_sums[recipe.id] || 0 %></span>
             </div>
           </div>
         </div>

@@ -87,7 +87,7 @@
               <div style="display:flex;font-size:28px;font-weight:bold">
                 <span style="display:flex;position:relative;margin-right:20px">
                   <%= wicked_pdf_image_tag asset_url('star.png') %>
-                  <%= meal_plan&.recipe.reviews.average_stars %>
+                  <%= (@reviews_avg && @reviews_avg[meal_plan.recipe.id]) || 0.0 %>
                 </span>
                 <span class="flex gap-2">
                   <%= wicked_pdf_image_tag asset_url('user.png') %>

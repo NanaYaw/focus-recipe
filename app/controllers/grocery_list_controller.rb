@@ -13,6 +13,16 @@ class GroceryListController < ApplicationController
         @groceries = GroceryShoppingListService.new(recipes).grocery_list
         
         @meal_plans = meal_plans_service.grid_normalizer
+                recipe_ids = meal_plans_service.recipe_ids
+                @reviews_avg = Review.where(recipe_id: recipe_ids).group(:recipe_id).average(:stars).transform_values { |v| v&.round(1) || 0.0 }
+                @mealplan_sums = MealPlan.where(recipe_id: recipe_ids).unscope(:order).group(:recipe_id).sum(:number_of_persons_to_be_served)
+                @meal_plans.each do |_, days|
+                    days.each do |_, meal_plan|
+                        next if meal_plan.blank? || meal_plan.recipe.blank?
+                        meal_plan.recipe.precompute_average_stars(@reviews_avg[meal_plan.recipe.id] || 0.0)
+                        meal_plan.recipe.precompute_mealplan_sum(@mealplan_sums[meal_plan.recipe.id] || 0)
+                    end
+                end
 
             
         

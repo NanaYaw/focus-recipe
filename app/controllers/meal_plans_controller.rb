@@ -3,7 +3,7 @@ class MealPlansController < ApplicationController
   before_action :set_meal_plan, only: %i[show edit update destroy update_serving delete_serving]
 
   def index
-    @meal_plans = MealPlan.all
+    @meal_plans = MealPlan.includes(recipe: [:image_attachment, :ingredients]).all
   end
 
 
