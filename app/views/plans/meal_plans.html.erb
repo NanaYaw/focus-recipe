@@ -1,0 +1,35 @@
+<%= render Modal::FullModalComponent.new(title: "Recipes", overflow: false) do %>
+  <div class="flex flex-col sm:flex-row w-full xl:max-w-7xl xl:m-auto sm:gap-10 xl:gap-10">
+    <div class="w-full sm:w-3/12">
+      <h5 class="mb-2 text-md font-bolder">Grocery Category</h5>
+      <ul class="grid grid-cols-2 gap-4">
+        <% GroceryCategory.all.each do |gc| %>
+          <li class="text-sm py-1 px-2 text-center text-gray-600 rounded-lg border border-gray-200 bg-gray-200"><%=  gc.name  %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="w-full sm:w-8/12 h-full max-h-[90vh]  overflow-y-auto overflow-x-hidden">
+      <%= turbo_frame_tag :api_lazyloads, src: meal_plans_content_api_plans_path(params: @params), loading: :lazy, target: :top do %>
+        <div class="flex flex-wrap gap-4">
+          <% 10.times do %>
+            <div class="flex flex-col gap-1 rounded-lg w-full sm:w-[47%] lg:w-[31.7%] overflow-hidden border border-gray-700">
+              <div class="animate-pulse w-full h-52 bg-gray-500 overflow-hidden">
+                <div class=" w-full h-full"></div>
+              </div>
+              <div class="animate-pulse flex flex-col gap-2 p-2">
+                <div class="flex w-full gap-2">
+                  <div class="w-6 h-6 bg-gray-600 rounded-lg"></div>
+                  <div class="w-6 h-6 bg-gray-600 rounded-lg"></div>
+                </div>
+                <div class=" flex flex-col gap-2 w-full overflow-hidden">
+                  <p class="w-full py-1 bg-gray-500"></p>
+                  <p class="w-8/12 py-1 bg-gray-500"></p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

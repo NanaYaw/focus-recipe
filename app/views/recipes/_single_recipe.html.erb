@@ -1,0 +1,43 @@
+ <%= turbo_frame_tag "single_recipe_#{@recipe.id}" do %>
+  <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
+    <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
+  </h1>
+  <div class="w-full my-4">
+    <% if @recipe.image.attached? %>
+      <%= image_tag @recipe&.image.variant(resize_to_fill: [1000, 400]), class: "w-full object-cover" %>
+    <% else %>
+      <span class="text-red-700"> No image attached yet!!!</span>
+    <% end %>
+  </div>
+  <%= turbo_stream_from :servings %>
+  <div class="w-full py-2 my-4 flex flex-col justify-between">
+    <%# mealplan =  @recipe.meal_plans.find(params[:meal_plan_id]) %>
+    <div class="w-full flex justify-end gap-4">
+      <div class="flex items-center gap-2">
+        <span class="flex items-center border-x border-gray-500 px-2">
+          <i class="bi bi-printer"></i>
+        </span>
+        <!----------------------------------------------->
+        <div class="flex items-center">
+          <%= turbo_stream_from "favorite" %>
+          <%#= turbo_frame_tag "favorite_button" %>
+          <% if @recipe.favorites[0].present? %>
+            <%= render "favorite_fill", recipe: @recipe %>
+          <% else %>
+            <%= render "favorite_empty", recipe: @recipe %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div  data-value-id="<%= @recipe.id %>"  class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" id="recipe-update-33">
+      <% if @recipe.ingredients.present? %>
+        <%= render 'recipes/recipe_sub_ingredient', recipe_ingredient: @recipe.ingredients, recipe: @recipe %>
+      <% end %>
+    </div>
+  </div>
+  <!-- ----------------------------------------- -->
+  <!-- ------------- START REVIEWS ------------- -->
+  <%= render "recipes/single_recipe_reviews", review:   @recipe.reviews, recipe: @recipe  %>
+  <!-- ------------- END REVIEWS ------------- -->
+  <!-- --------------------------------------- -->
+<% end %>

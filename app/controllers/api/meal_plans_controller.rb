@@ -16,14 +16,14 @@ module Api
 
         if @meal_plan.save!
           Turbo::StreamsChannel.broadcast_replace_to :servings, target: "servings",
-            partial: "users/recipes/serving",
+            partial: "recipes/serving",
             locals: {serving: @meal_plan.number_of_persons_to_be_served}
 
           @meal_plan.recipe.ingredients.map do |t|
             quantity = IngredientQuantityCalculatorService.new(qty = t.quantity, serving = @meal_plan.number_of_persons_to_be_served.to_i).call
 
             Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{t.id}",
-              partial: "users/recipes/ingredient_quantity",
+              partial: "recipes/ingredient_quantity",
               locals: {quantity: quantity, id: t.id}
           end
         end
@@ -37,14 +37,14 @@ module Api
 
           if @meal_plan.save!
             Turbo::StreamsChannel.broadcast_replace_to :servings, target: "servings",
-              partial: "users/recipes/serving",
+              partial: "recipes/serving",
               locals: {serving: @meal_plan.number_of_persons_to_be_served}
 
             @meal_plan.recipe.ingredients.map do |t|
               quantity = IngredientQuantityCalculatorService.new(qty = t.quantity, serving = @meal_plan.number_of_persons_to_be_served.to_f).call
 
               Turbo::StreamsChannel.broadcast_replace_to :servings, target: "quantity-#{t.id}",
-                partial: "users/recipes/ingredient_quantity",
+                partial: "recipes/ingredient_quantity",
                 locals: {quantity: quantity, id: t.id}
             end
           end

@@ -1,0 +1,11 @@
+<%= turbo_frame_tag :lazy_loading do %>
+  <% if  @plans.count > 0 %>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="plans">
+      <% @plans.each do |plan| %>
+        <%= render plan %>
+      <% end %>
+    </div>
+  <% else %>
+    <%= render "empty_add" %>
+  <% end %>
+<% end %>

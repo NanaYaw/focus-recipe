@@ -19,7 +19,7 @@ module Api
             if @mealplan.save!
 
               Turbo::StreamsChannel.broadcast_replace_to :mealplans_list, target: "meal_plan_#{@mealplan[:plan_id]}_#{params[:meal_type]}_#{params[:day]}",
-                partial: "users/plans/meal_plan",
+                partial: "plans/meal_plan",
                 locals: {meals: @mealplan.recipe, meal_type: params[:meal_type], day: params[:day], recipe: @mealplan.recipe, plan_id: @mealplan[:plan_id], id: @mealplan.id}
 
               format.json { render json: {status: :ok} }
@@ -41,7 +41,7 @@ module Api
 
           @params = param
 
-          render(partial: "users/plans/meal_plans_content")
+          render partial: "plans/meal_plans_content"
         end
 
 

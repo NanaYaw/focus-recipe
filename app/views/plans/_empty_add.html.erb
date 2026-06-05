@@ -1,0 +1,10 @@
+<div class="" id="plan_0">
+    <h4  class="text-center py-4 sm:pt-24 sm:pb-10 text-gray-600">You have no plans yet, click and the button below and create one</h4>
+
+    <div class="flex justify-center w-full h-auto">
+    <%= button_to new_plan_path, method: :get, data: {turbo_frame: "modal"}, class: "flex flex-col items-center justify-center  p-4 rounded-md border border-primary hover:border-accent bg-primary/30" do %>
+        <span class="text-3xl font-bold">+</span>
+        <span class="text-2xl">New plan</span>
+    <% end %>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="page-container">
+  <div class="masonry-3-col">
+    <% @groceries.each do |key, grocery| %>
+      <div class="break-inside">
+        <h2 class="text-2xl font-bold"><%= key %></h2>
+        <% grocery.each do |grocery_item| %>
+          <div class="p-1 bg-gray-200 my-0.5">
+            <%#=  grocery.measurement_unit %>
+            <%= grocery_item.grocery.name + " - " + grocery_item.quantity.to_s + " " + grocery_item.measurement_unit.name %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

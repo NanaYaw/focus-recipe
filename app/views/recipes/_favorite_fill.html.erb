@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "favorite_button" do %>
+  <%= button_to recipe_favorite_path(recipe, recipe.favorites[0]), method: :delete, class: "flex items-center" do %>
+    <i class="bi bi-heart-fill"></i>
+  <% end %>
+<% end %>
