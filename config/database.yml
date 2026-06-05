@@ -21,12 +21,12 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
-  <<: *default
-  database: <%= ENV.fetch('POSTGRESS_DB') {'focus_recipe_development'} %>
-  username: <%= ENV.fetch('POSTGRES_USER') {'postgres'} %>
-  password: <%= ENV.fetch('POSTGRES_PASSWORD') {'postgres'} %>
-  host: <%= ENV.fetch('POSTGRES_HOST') {'db'} %>
+  development:
+    <<: *default
+    database: <%= ENV.fetch('POSTGRESS_DB') {'focus_recipe_development'} %>
+    username: <%= ENV.fetch('POSTGRES_USER') {'postgres'} %>
+    password: <%= ENV.fetch('POSTGRES_PASSWORD') {'postgres'} %>
+    host: <%= ENV.fetch('POSTGRES_HOST') {'db'} %>
 
 
   # The specified database role being used to connect to postgres.
