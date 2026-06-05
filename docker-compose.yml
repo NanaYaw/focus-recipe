@@ -1,0 +1,152 @@
+x-app: &app
+  build:
+    context: .
+    dockerfile: Dockerfile.dev
+    args:
+      RUBY_VERSION: '3.2.2'
+      PG_MAJOR: '17'
+      NODE_MAJOR: '20'
+  image: focus-recipe:latest
+  working_dir: ${PWD}
+  tmpfs:
+    - /tmp
+    - ${PWD}/tmp/pids
+
+x-backend: &backend
+  <<: *app
+  stdin_open: true
+  tty: true
+  env_file:
+    - ".env"
+  environment: &backend_environment
+    COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+    YARN_IGNORE_NODE: 1
+    RAILS_ENV: ${RAILS_ENV:-development}
+    NODE_ENV: ${NODE_ENV:-development}
+    REDIS_URL: redis://redis:6379/
+    DATABASE_URL: postgres://postgres:postgres@postgres:5432
+    BUNDLE_PATH: /usr/local/bundle
+    BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
+    YARN_CACHE_FOLDER: ${PWD}/node_modules/.yarn-cache
+    # VITE_RUBY_HOST: vite
+    SECRET_KEY_BASE: ${SECRET_KEY_BASE:-dummy_secret_key_base_for_development_only}
+    MALLOC_ARENA_MAX: 2
+    WEB_CONCURRENCY: ${WEB_CONCURRENCY:-1}
+    RUBY_GC_HEAP_INIT_SLOTS: 400000
+    RUBY_GC_HEAP_FREE_SLOTS: 400000
+    # Shell/REPL history
+    HISTFILE: /usr/local/hist/.bash_history
+    PSQL_HISTFILE: /usr/local/hist/.psql_history
+    IRB_HISTFILE: /usr/local/hist/.irb_history
+    EDITOR: vi
+  volumes:
+    - ${PWD}:${PWD}:cached
+    - bundle:/usr/local/bundle
+    - rails_cache:${PWD}/tmp/cache
+    - assets:${PWD}/public/assets
+    - node_modules:${PWD}/node_modules
+    # - vite_dev:${PWD}/public/vite-dev
+    # - vite_test:${PWD}/public/vite-test
+    - history:/usr/local/hist
+  # depends_on: &backend_depends_on
+  #   postgres:
+  #     condition: service_healthy
+  #   redis:
+  #     condition: service_healthy
+
+services:
+  web:
+    <<: *backend
+    profiles: ["web", "backend", "fullstack"]
+    command: >
+      bash -c "
+        bundle install &&
+        yarn install &&
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      "
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  sidekiq:
+    <<: *backend
+    command: bundle exec sidekiq
+    profiles: ["sidekiq"]
+
+  # vite:
+  #   <<: *backend
+  #   depends_on: []
+  #   profiles: ["vite", "web", "fullstack"]
+  #   command: bin/vite dev
+  #   environment:
+  #     <<: *backend_environment
+  #     VITE_RUBY_HOST: 0.0.0.0
+  #   volumes:
+  #     - ${PWD}:${PWD}:cached
+  #     - bundle:/usr/local/bundle
+  #     - node_modules:${PWD}/node_modules
+  #     - vite_dev:${PWD}/public/vite-dev
+  #     - vite_test:${PWD}/public/vite-test
+  #   ports:
+  #     - "3036:3036"
+
+  postgres:
+    image: postgres:17-alpine
+    profiles: ["backend", "web", "fullstack"]
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - history:/usr/local/hist
+      - ./.psqlrc:/root/.psqlrc:ro
+    environment:
+      POSTGRES_PASSWORD: postgres
+      PSQL_HISTFILE: /usr/local/hist/.psql_history
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U postgres -h 127.0.0.1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: >
+      postgres
+      -c max_connections=20
+      -c shared_buffers=128MB
+      -c effective_cache_size=512MB
+      -c maintenance_work_mem=32MB
+      -c checkpoint_completion_target=0.9
+      -c random_page_cost=1.1
+      -c effective_io_concurrency=200
+
+  redis:
+    image: redis:7-alpine
+    profiles: ["backend", "web", "fullstack"]
+    volumes:
+      - redis:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: redis-cli ping
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    command: >
+      redis-server
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+      --save ""
+      --appendonly no
+
+volumes:
+  postgres:
+  redis:
+  bundle:
+  node_modules:
+  rails_cache:
+  assets:
+  # vite_dev:
+  # vite_test:
+  history:

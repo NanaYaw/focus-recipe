@@ -1,0 +1,75 @@
+# syntax=docker/dockerfile:1
+
+ARG RUBY_VERSION
+ARG DISTRO_NAME=bookworm
+
+FROM ruby:$RUBY_VERSION-slim-$DISTRO_NAME
+
+ARG DISTRO_NAME
+ARG PG_MAJOR
+ARG NODE_MAJOR
+
+# Common dependencies
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=tmpfs,target=/var/log \
+    rm -f /etc/apt/apt.conf.d/docker-clean; \
+    echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache; \
+    apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+      build-essential \
+      gnupg2 \
+      curl \
+      less \
+      git \
+      ca-certificates
+
+# PostgreSQL client from PGDG
+RUN curl -sSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+    gpg --dearmor -o /usr/share/keyrings/postgres-archive-keyring.gpg \
+    && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/postgres-archive-keyring.gpg] https://apt.postgresql.org/pub/repos/apt/" \
+    $DISTRO_NAME-pgdg main $PG_MAJOR | tee /etc/apt/sources.list.d/postgres.list > /dev/null
+
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=tmpfs,target=/var/log \
+    apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+      libpq-dev \
+      postgresql-client-$PG_MAJOR
+
+# Node + Yarn via corepack
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=tmpfs,target=/var/log \
+    curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR.x | bash - && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends nodejs && \
+    corepack enable && \
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0 corepack prepare yarn@4.13.0 --activate
+
+# Aptfile — project system dependencies
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    --mount=type=tmpfs,target=/var/log \
+    --mount=type=bind,source=Aptfile,target=/tmp/Aptfile \
+    DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
+      $(grep -Ev '^\s*#' /tmp/Aptfile | xargs)
+
+ENV LANG=C.UTF-8 \
+    BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3 \
+    BUNDLE_PATH=/usr/local/bundle \
+    BUNDLE_WITHOUT= \
+    BUNDLE_APP_CONFIG=.bundle \
+    BOOTSNAP_CACHE_DIR=/usr/local/bundle/_bootsnap \
+    COREPACK_ENABLE_DOWNLOAD_PROMPT=0 \
+    COREPACK_HOME=/usr/local/share/.cache/node/corepack \
+    PATH="/usr/local/bin:/app/node_modules/.bin:$PATH"
+
+RUN gem update --system && gem install bundler -v '2.6.6'
+
+RUN mkdir -p /app
+WORKDIR /app
+
+EXPOSE 3000
+CMD ["/bin/bash"]
