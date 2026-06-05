@@ -2,7 +2,7 @@ x-app: &app
   build:
     context: .
     dockerfile: Dockerfile.dev
-    command: bash -lc "yarn install && exec node esbuild.config.js --rebuild --watch"
+    args:
       RUBY_VERSION: '3.2.2'
       PG_MAJOR: '17'
       NODE_MAJOR: '20'
@@ -10,7 +10,7 @@ x-app: &app
   working_dir: ${PWD}
   tmpfs:
     - /tmp
-    command: bash -lc "yarn install && exec ./node_modules/.bin/tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch"
+    - ${PWD}/tmp/pids
 
 x-backend: &backend
   <<: *app
@@ -75,7 +75,7 @@ services:
   js:
     <<: *backend
     profiles: ["frontend", "fullstack"]
-    command: bash -lc "yarn install && yarn run build -- --rebuild --watch"
+    command: yarn build --rebuild --watch
     stdin_open: false
     tty: false
     depends_on: []
@@ -83,7 +83,7 @@ services:
   css:
     <<: *backend
     profiles: ["frontend", "fullstack"]
-    command: bash -lc "yarn install && exec ./node_modules/.bin/tailwindcss --postcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch"
+    command: yarn build:css --watch
     stdin_open: false
     tty: false
     depends_on: []
