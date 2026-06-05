@@ -1,0 +1,20 @@
+<%# Shared Devise helper links for sessions/registrations/passwords/confirmations %>
+<div class="flex flex-col sm:flex-row gap-3 sm:gap-6 mt-4 items-center text-sm">
+  <% if defined?(resource_name) && defined?(devise_mapping) %>
+    <% scope = resource_name.to_s %>
+    <% if devise_mapping.recoverable? %>
+      <%= link_to "Forgot your password?", send("new_#{scope}_password_path"), class: "text-blue-600 hover:underline" %>
+    <% end %>
+    <% if devise_mapping.confirmable? %>
+      <%= link_to "Didn't receive confirmation instructions?", send("new_#{scope}_confirmation_path"), class: "text-blue-600 hover:underline" %>
+    <% end %>
+    <% if devise_mapping.registerable? %>
+      <%= link_to "Sign up", send("new_#{scope}_registration_path"), class: "text-gray-700 hover:underline" %>
+    <% else %>
+      <%= link_to "Sign in", send("new_#{scope}_session_path"), class: "text-gray-700 hover:underline" %>
+    <% end %>
+  <% else %>
+    <%= link_to "Sign In", new_user_session_path, class: "text-gray-700 hover:underline" %>
+    <%= link_to "Sign Up", new_user_registration_path, class: "text-gray-700 hover:underline" %>
+  <% end %>
+</div>

@@ -1,0 +1,11 @@
+<%# Displays validation errors for Devise resources and other forms %>
+<% if local_assigns[:resource].present? && resource.errors.any? %>
+  <div class="bg-red-50 border border-red-200 text-red-800 rounded-md p-3 mb-4">
+    <p class="font-semibold"><%= pluralize(resource.errors.count, "error") %> prohibited this from being saved:</p>
+    <ul class="mt-2 list-disc list-inside">
+      <% resource.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

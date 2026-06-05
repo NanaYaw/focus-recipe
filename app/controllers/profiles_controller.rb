@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  # before_action :set_profile
+  before_action :authenticate_user!
   before_action :set_permission, only: %i[show edit update]
 
   def show

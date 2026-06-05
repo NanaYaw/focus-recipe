@@ -1,5 +1,5 @@
 class MealPlansController < ApplicationController
-
+  before_action :authenticate_user!
   before_action :set_meal_plan, only: %i[show edit update destroy update_serving delete_serving]
 
   def index

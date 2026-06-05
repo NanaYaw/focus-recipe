@@ -8,7 +8,6 @@
       - <%= ingredient.grocery.name %> - <%= ingredient.ingredient_state.name %>
     </span>
   </div>
-  <% #if admin_signed_in? %>
   <span class="flex items-center gap-1 py-1">
     <%= button_to  admins_ingredient_path(ingredient), 
       method: :get, 
@@ -28,5 +27,4 @@
       <i class="bi bi-trash"></i>
     <% end %>
   </span>
-  <% #end %>
 </li>
