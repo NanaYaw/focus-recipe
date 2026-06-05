@@ -1,5 +1,4 @@
- <%= turbo_frame_tag "single_recipe_#{@recipe.id}" do %>
-  <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
+<h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
     <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
   </h1>
   <div class="w-full my-4">
@@ -40,4 +39,3 @@
   <%= render "recipes/single_recipe_reviews", review:   @recipe.reviews, recipe: @recipe  %>
   <!-- ------------- END REVIEWS ------------- -->
   <!-- --------------------------------------- -->
-<% end %>

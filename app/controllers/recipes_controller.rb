@@ -37,15 +37,13 @@ class RecipesController < ApplicationController
 
 
     def single_post
-      
       render partial: "recipes/single_recipe"
     end
 
 
 private
     def set_recipe
-      @recipe = Recipe.where(id: params[:id]).includes(reviews: { user: :profile }, :ingredients, :favorites, image_attachment: [:blob], plans: [:meal_plans])[0]
-
+      @recipe = Recipe.includes(reviews: { user: :profile }, :ingredients, :favorites, image_attachment: [:blob], plans: [:meal_plans]).find(params[:id])
     end
 
     def set_review

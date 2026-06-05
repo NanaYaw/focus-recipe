@@ -1,0 +1,3 @@
+<%= turbo_frame_tag :lazy_loading do %>
+  <%= render partial: "plans/lazy_update", locals: { plans: @plans } %>
+<% end %>

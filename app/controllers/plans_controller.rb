@@ -22,19 +22,21 @@ class PlansController < ApplicationController
 
     @plans = plans
 
-    render partial: "plans/lazy_update", locals: {plans: @plans}
+    render template: "plans/lazy_update", layout: false
   end
 
   def photo
   end
 
   def meal_plans
-    param = {}
-    param[:plan_id] = params[:plan_id]
-    param[:meal_type] = params[:meal_type]
-    param[:day] = params[:day]
+    @meal_plans_query = params.to_unsafe_h.slice("plan_id", "meal_type", "day")
 
-    @params = param
+    Rails.logger.debug "[PLANS_CONTROLLER] meal_plans render without layout"
+
+    respond_to do |format|
+      format.html { render layout: false }
+      format.turbo_stream { render template: "plans/meal_plans", formats: [:html], layout: false }
+    end
   end
 
   def show
@@ -58,9 +60,11 @@ class PlansController < ApplicationController
 
   def new
     @plan = Plan.new
+    render layout: false
   end
 
   def edit
+    render layout: false
   end
 
   def create

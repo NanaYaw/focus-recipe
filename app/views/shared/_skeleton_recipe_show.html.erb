@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-4 animate-pulse" aria-busy="true" aria-live="polite">
+  <div class="flex gap-4">
+    <div class="bg-gray-400 h-20 w-3"></div>
+    <div class="bg-gray-400 h-20 w-5/12"></div>
+  </div>
+  <div class="bg-gray-500 h-96 w-full rounded-md"></div>
+  <div class="flex justify-end gap-4">
+    <div class="bg-gray-200 h-10 w-20 rounded-md"></div>
+    <div class="bg-gray-200 h-10 w-24 rounded-md"></div>
+  </div>
+  <div class="w-full flex flex-col gap-4">
+    <div class="h-10 w-2/12 rounded-md bg-gray-500"></div>
+    <div class="h-10 w-20 rounded-md bg-gray-500"></div>
+  </div>
+  <div class="space-y-4">
+    <% 5.times do %>
+      <div class="w-full flex flex-col gap-4 bg-gray-100 p-4 rounded-md">
+        <div class="flex gap-1">
+          <% 5.times do %>
+            <div class="h-4 w-4 rounded-full bg-yellow-300"></div>
+          <% end %>
+        </div>
+        <div class="h-4 w-3/12 rounded-md bg-gray-300"></div>
+        <div class="h-4 w-full rounded-md bg-gray-300"></div>
+        <div class="h-4 w-full rounded-md bg-gray-300"></div>
+        <div class="h-10 w-20 rounded-md bg-gray-400"></div>
+      </div>
+    <% end %>
+  </div>
+</div>

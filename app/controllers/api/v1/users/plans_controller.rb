@@ -41,14 +41,13 @@ module Api
                     r.precompute_average_stars(@reviews_avg[r.id] || 0.0)
                     r.precompute_mealplan_sum(@mealplan_sums[r.id] || 0)
                   end
-          param = {}
-          param[:plan_id] = params[:plan_id]
-          param[:meal_type] = params[:meal_type]
-          param[:day] = params[:day]
+          @params = params.permit(:plan_id, :meal_type, :day).to_h
 
-          @params = param
+          html = view_context.turbo_frame_tag("api_lazyloads") do
+            render_to_string(partial: "plans/meal_plans_content")
+          end
 
-          render partial: "plans/meal_plans_content"
+          render html: html.html_safe, layout: false
         end
 
 

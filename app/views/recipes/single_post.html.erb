@@ -1,5 +1,4 @@
- <%= turbo_frame_tag id: "single_recipe_#{@recipe.id}" do %>
-  <h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
+<h1 class="flex flex-col sm:flex-row sm:justify-between p-4  border-l-8 border-accent/20">
     <span class="text-gray-700 text-3xl"><%= @recipe.title %></span>
   </h1>
   <div class="w-full my-4">
@@ -29,13 +28,11 @@
       </div>
     </div>
     <!-- -------------------------------------------- -->
-    <%= debug @recipe.ingredients %>
     <% unless @recipe.ingredients.empty? %>
       <div  data-value-id="<%= @recipe.id %>"  class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4" id="recipe-update-33">
         <!----- Ingredients  ------>
         <%= render 'recipes/recipe_sub_ingredient', recipe_ingredient: @recipe.ingredients, recipe: @recipe %>
-        <!----- Instructions ------>
-        <%#= debug @recipe.ingredients %>
+        <!----- Instructions ---->
       </div>
     <% end %>
   </div>
@@ -89,4 +86,3 @@
       <%# --------------------------------- %>
     </div>
   </div>
-<% end %>
