@@ -4,23 +4,23 @@
 #   conn.execute("TRUNCATE ingredients, groceries, grocery_categories, ingredient_states, measurement_units, recipes, reviews, favorites  RESTART IDENTITY")
 # end
 
-# User.create(
-#     email: ""aa@EXAMPLE.COM"",
-#     password: """",
-#     # password_confirmation: """",
-#     # profile_attributes: {
-#     #     first_name: "Joyce",
-#     #     last_name: "Chau"
-#     # }
-# );
+User.create(
+    email: ""aa@EXAMPLE.COM"",
+    password: """",
+    # password_confirmation: """",
+    # profile_attributes: {
+    #     first_name: "Joyce",
+    #     last_name: "Chau"
+    # }
+);
 
-# 20.times do |num|
-#   User.create(
-#     email: Faker::Internet.email,
-#     password: "rgfioghjrg",
-#     # password_confirmation: "rgfioghjrg",
-#   );
-# end
+20.times do |num|
+  User.create(
+    email: Faker::Internet.email,
+    password: "rgfioghjrg",
+    # password_confirmation: "rgfioghjrg",
+  );
+end
 
 # Grocery Categories -
 # Ingredient state -
