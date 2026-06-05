@@ -5,13 +5,8 @@
 # end
 
 User.create(
-    email: ""aa@EXAMPLE.COM"",
-    password: """",
-    # password_confirmation: """",
-    # profile_attributes: {
-    #     first_name: "Joyce",
-    #     last_name: "Chau"
-    # }
+    email: "dev@development.com",
+    password: "12345890"
 );
 
 20.times do |num|
