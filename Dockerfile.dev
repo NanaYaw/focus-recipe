@@ -66,7 +66,7 @@ ENV LANG=C.UTF-8 \
     COREPACK_HOME=/usr/local/share/.cache/node/corepack \
     PATH="/usr/local/bin:/app/node_modules/.bin:$PATH"
 
-RUN gem update --system && gem install bundler -v '2.6.6'
+RUN gem update --system 3.6.9 && gem install bundler -v '2.6.6'
 
 RUN mkdir -p /app
 WORKDIR /app

@@ -39,6 +39,10 @@ group :development, :test do
   gem "debug", platforms: %i[mri mingw x64_mingw]
   gem 'pry-rails'
 
+  gem "rspec-rails", "~> 7.0"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers", "~> 5.0"
+
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers", "~> 5.3.0"
