@@ -3,7 +3,7 @@ class Favorite < ApplicationRecord
   belongs_to :recipe
 
   validates :user_id, presence: true
-  validates :recipe_id, presence: true, uniqueness: {scope: [:user, :recipe]}
+  validates :recipe_id, presence: true, uniqueness: {scope: :user_id}
 
 
   scope :by_user, lambda { |user|
