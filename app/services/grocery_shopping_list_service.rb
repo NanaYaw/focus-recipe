@@ -6,10 +6,19 @@ class GroceryShoppingListService
     
 
     def grocery_list
-        Ingredient.where(recipe_id: @recipe_ids).includes(:grocery, :measurement_unit, :ingredient_state, :recipe).group_by{|t| t.grocery.grocery_category.name }
+          ingredients.group_by { |i| i.grocery.grocery_category.name }
     end
+
     def recipe_list
-        Ingredient.where(recipe_id:@recipe_ids).includes(:grocery, :measurement_unit, :ingredient_state, :recipe).group_by{|t| t.grocery.grocery_category.name }
+        ingredients.group_by { |t| t.grocery.grocery_category.name }   
     end
+
+    private
+
+    def ingredients
+        @ingredients ||= Ingredient.where(recipe_id: @recipe_ids)
+            .includes(:measurement_unit, :ingredient_state, :recipe, grocery: :grocery_category)
+    end
+
 
 end
